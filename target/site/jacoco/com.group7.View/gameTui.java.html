@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>gameTui.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">earthgame</a> &gt; <a href="index.source.html" class="el_package">com.group7.View</a> &gt; <span class="el_source">gameTui.java</span></div><h1>gameTui.java</h1><pre class="source lang-java linenums">package com.group7.View;
+
+import com.group7.Model.Cards.Card;
+import com.group7.Model.Game;
+
+import com.googlecode.lanterna.TerminalPosition;
+import com.googlecode.lanterna.TerminalSize;
+import com.googlecode.lanterna.TextColor;
+import com.googlecode.lanterna.graphics.TextGraphics;
+import com.googlecode.lanterna.gui2.*;
+import com.googlecode.lanterna.screen.Screen;
+import com.googlecode.lanterna.screen.TerminalScreen;
+import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
+import com.googlecode.lanterna.terminal.Terminal;
+
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.ArrayList;
+
+import static com.googlecode.lanterna.gui2.Window.Hint.FULL_SCREEN;
+
+public class gameTui {
+
+    Terminal terminal;
+    Screen screen;
+    TextGraphics tGraphics;
+    MultiWindowTextGUI gameWindows;
+    GridLayout gameLayout;
+    Panel gameGrid;
+    gameWindow mainGameWindow;
+    Game game;
+
+<span class="nc" id="L33">    int tColSize = 132; //number of terminal columns</span>
+<span class="nc" id="L34">    int tRowSize = 43; //number of terminal rows</span>
+    ArrayList&lt;Card&gt; handCards; //cards in hand
+    ArrayList&lt;Card&gt; viewHandCards; //cards in hand that are currently on screen
+<span class="nc" id="L37">    int viewHandMax = 6; //how many cards will be displayed on screen at once</span>
+<span class="nc" id="L38">    int viewHandIndex = 0; //keeps track of what cards should be in view</span>
+
+    ArrayList&lt;Card&gt; viewTableau; //cards in viewable Tableau
+
+    ArrayList&lt;Card&gt; HabIsl; //current habitat and island cards
+
+<span class="nc" id="L44">    public gameTui(Game game) throws IOException {</span>
+<span class="nc" id="L45">        this.game = game;</span>
+
+        //Initialize TUI layers
+<span class="nc" id="L48">        terminal = new DefaultTerminalFactory().setInitialTerminalSize(new TerminalSize(tColSize, tRowSize)).createTerminal();</span>
+        //screen size is hardcoded. The more dynamic layout managers make it difficult to ensure that
+        //each element is in the correct location. I don't see this as a big issue, but it could potentially be changed
+        //later with some effort if needed.
+<span class="nc" id="L52">        screen = new TerminalScreen(terminal);</span>
+<span class="nc" id="L53">        screen.startScreen();</span>
+<span class="nc" id="L54">        gameWindows = new MultiWindowTextGUI(screen, new DefaultWindowManager(), new EmptySpace(TextColor.ANSI.BLUE));</span>
+<span class="nc" id="L55">        mainGameWindow = new gameWindow();</span>
+<span class="nc" id="L56">        mainGameWindow.setHints(Arrays.asList(FULL_SCREEN));</span>
+        //Creates fullscreen panel for main game UI
+
+<span class="nc" id="L59">        gameGrid = new Panel(new AbsoluteLayout());</span>
+        //creates a grid that allows elements to be placed at specific locations
+
+<span class="nc" id="L62">        handCards = game.getActivePlayer().getHand(); //get cards from active player</span>
+<span class="nc" id="L63">        viewHandCards = new ArrayList&lt;Card&gt;(); //cards that are currently in view</span>
+
+        //DEBUG to help test card scrolling
+<span class="nc bnc" id="L66" title="All 2 branches missed.">        for (int i = 0; i &lt; 8; i++){</span>
+<span class="nc" id="L67">            handCards.add(handCards.get(0));</span>
+        }
+
+<span class="nc" id="L70">        refreshScreen();</span>
+        //initial draw
+
+<span class="nc" id="L73">    }</span>
+
+    private class gameWindow extends BasicWindow{
+<span class="nc" id="L76">        public gameWindow(){</span>
+<span class="nc" id="L77">            super(&quot;Player Name&quot;);</span>
+<span class="nc" id="L78">        }</span>
+    }
+    public void refreshScreen(){
+
+<span class="nc" id="L82">        drawGrid();</span>
+<span class="nc" id="L83">        infoPanel();</span>
+<span class="nc" id="L84">        drawHand();</span>
+
+<span class="nc" id="L86">        mainGameWindow.setComponent(gameGrid);</span>
+<span class="nc" id="L87">        gameWindows.addWindowAndWait(mainGameWindow);</span>
+<span class="nc" id="L88">    }</span>
+
+    private void infoPanel(){
+
+<span class="nc" id="L92">        int infoStartCol = 0;</span>
+<span class="nc" id="L93">        int infoStartRow = 0;</span>
+
+<span class="nc" id="L95">        int infoColSize = 45;</span>
+<span class="nc" id="L96">        int infoRowSize = 34;</span>
+
+<span class="nc" id="L98">        drawBorder(infoStartCol, infoStartRow, infoColSize, infoRowSize, &quot;Game Info&quot;);</span>
+<span class="nc" id="L99">        drawCardSlots(infoStartCol+1,infoStartRow+1,2,1,HabIsl);</span>
+<span class="nc" id="L100">    }</span>
+    private void drawGrid(){
+<span class="nc" id="L102">        int gridCol = 46;</span>
+<span class="nc" id="L103">        int gridRow = 0;</span>
+
+<span class="nc" id="L105">        drawBorder(gridCol,gridRow,miniCard.getCardColSize()*4+2 ,miniCard.getCardRowSize()*4+2, &quot;Tableau&quot;);</span>
+<span class="nc" id="L106">        drawCardSlots(gridCol + 1,gridRow + 1,4,4, viewTableau);</span>
+<span class="nc" id="L107">    }</span>
+
+    private void drawHand(){
+<span class="nc" id="L110">        int gridCol = 0;</span>
+<span class="nc" id="L111">        int gridRow = tRowSize - miniCard.getCardRowSize() -2;</span>
+
+<span class="nc" id="L113">        drawBorder(0,gridRow,tColSize -2,miniCard.getCardRowSize()+2, &quot;Hand&quot;);</span>
+
+        // buttons for scrolling through cards
+<span class="nc" id="L116">        Panel prev = new Panel();</span>
+<span class="nc" id="L117">        Panel next = new Panel();</span>
+
+        //this next bit is a hardcoded mess
+
+        //button functions for scrolling.
+<span class="nc" id="L122">        prev.addComponent(new Button(&quot;Prev&quot;, new Runnable() {</span>
+            @Override
+            public void run() {
+<span class="nc" id="L125">                viewHandIndex = viewHandIndex - viewHandMax;</span>
+<span class="nc bnc" id="L126" title="All 2 branches missed.">                if (viewHandIndex &lt; 0){</span>
+<span class="nc" id="L127">                    viewHandIndex = 0;</span>
+                }
+<span class="nc" id="L129">                refreshScreen();</span>
+<span class="nc" id="L130">            }</span>
+        }));
+<span class="nc" id="L132">        next.addComponent(new Button(&quot;Next&quot;, new Runnable() {</span>
+            @Override
+            public void run() {
+<span class="nc" id="L135">                viewHandIndex = viewHandIndex + viewHandMax;</span>
+<span class="nc" id="L136">                refreshScreen();</span>
+<span class="nc" id="L137">            }</span>
+        }));
+
+        //sets position of pre/next buttons.
+<span class="nc" id="L141">        prev.setPosition(new TerminalPosition(1, tRowSize - 3));</span>
+<span class="nc" id="L142">        prev.setSize(new TerminalSize(6, 5));</span>
+
+<span class="nc" id="L144">        next.setPosition(new TerminalPosition(tColSize - 9, tRowSize - 3));</span>
+<span class="nc" id="L145">        next.setSize(new TerminalSize(6,5));</span>
+
+
+        //if next/previous cards aren't available, buttons are not added to display
+<span class="nc bnc" id="L149" title="All 2 branches missed.">        if (handCards.size() &gt; viewHandIndex + viewHandMax){</span>
+<span class="nc" id="L150">            gameGrid.addComponent(next);</span>
+        }
+
+<span class="nc bnc" id="L153" title="All 2 branches missed.">        if (viewHandIndex != 0) {</span>
+<span class="nc" id="L154">            gameGrid.addComponent(prev);</span>
+        }
+
+
+        //center hand display
+<span class="nc" id="L159">        gridCol = (tColSize - (miniCard.getCardColSize() * viewHandMax)) / 2;</span>
+
+<span class="nc" id="L161">        getHandView();</span>
+        //populates viewHandCards
+<span class="nc" id="L163">        drawCardSlots(gridCol,gridRow + 1,viewHandCards.size(),1, viewHandCards);</span>
+<span class="nc" id="L164">    }</span>
+
+    private void getHandView(){
+        //gets the cards that should be in view and places them in viewHandCards
+
+        int cardsToGet;
+
+        //clears viewable cards
+<span class="nc bnc" id="L172" title="All 2 branches missed.">        if (viewHandCards != null){</span>
+<span class="nc" id="L173">        viewHandCards.clear();</span>
+        }
+
+        //changes how many cards to get if there are less cards in hand than the max viewable
+<span class="nc bnc" id="L177" title="All 2 branches missed.">        if (handCards.size() &lt; viewHandIndex + viewHandMax){</span>
+<span class="nc" id="L178">            cardsToGet = handCards.size() - viewHandIndex;</span>
+        }
+        else {
+<span class="nc" id="L181">            cardsToGet = viewHandMax;</span>
+        }
+
+        //Places desired cards in viewHandCards
+<span class="nc bnc" id="L185" title="All 2 branches missed.">        for (int i = 0; i &lt; cardsToGet; i++){</span>
+<span class="nc" id="L186">            viewHandCards.add(handCards.get(viewHandIndex + i));</span>
+        }
+
+<span class="nc" id="L189">    }</span>
+    private void drawCardSlots(int startCol, int startRow, int cols,int rows, ArrayList&lt;Card&gt; drawnCards){
+
+<span class="nc" id="L192">        int cardIndex = 0;</span>
+        //used to iterate through card slot panels
+
+        miniCard curCard;
+        //temporary miniCard for creating slots
+
+<span class="nc bnc" id="L198" title="All 2 branches missed.">        for (int i = 0; i &lt; rows; i++){</span>
+<span class="nc bnc" id="L199" title="All 2 branches missed.">            for( int j = 0; j &lt; cols; j++){</span>
+<span class="nc bnc" id="L200" title="All 2 branches missed.">                if (drawnCards == null){</span>
+<span class="nc" id="L201">                    curCard = new miniCard();</span>
+                }
+<span class="nc bnc" id="L203" title="All 2 branches missed.">                else if (cardIndex &gt;= drawnCards.size()){</span>
+<span class="nc" id="L204">                    curCard = new miniCard();</span>
+                }
+                else {
+<span class="nc" id="L207">                    curCard = new miniCard(drawnCards.get(cardIndex));</span>
+                }
+                //if a card isn't found in the vector, generate empty card slot
+
+<span class="nc" id="L211">                curCard.setCardPosition(startCol + (miniCard.getCardColSize()) * j, startRow + (miniCard.getCardRowSize()) * i);</span>
+                //sets card position
+
+<span class="nc" id="L214">                gameGrid.addComponent(curCard.getPanel());</span>
+<span class="nc" id="L215">                cardIndex++;</span>
+            }
+        }
+<span class="nc" id="L218">    }</span>
+
+    private void drawBorder(int startCol, int startRow, int borderColSize, int borderRowSize, String title){
+        //Draws borders around display elements
+
+<span class="nc" id="L223">        Panel borderContainer = new Panel();</span>
+<span class="nc" id="L224">        Panel borderPanel = new Panel();</span>
+
+<span class="nc" id="L226">        borderContainer.setLayoutManager(new BorderLayout());</span>
+<span class="nc" id="L227">        borderContainer.setSize(new TerminalSize(borderColSize, borderRowSize));</span>
+<span class="nc" id="L228">        borderContainer.setPosition(new TerminalPosition(startCol, startRow));</span>
+
+<span class="nc" id="L230">        borderContainer.addComponent(borderPanel.withBorder(Borders.singleLine(title)));</span>
+
+<span class="nc" id="L232">        gameGrid.addComponent(borderContainer);</span>
+<span class="nc" id="L233">    }</span>
+}
+
+
+
+
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>

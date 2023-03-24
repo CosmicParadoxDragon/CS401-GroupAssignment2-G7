@@ -1,7 +1,7 @@
 // This contains a running instance of the game.
 package com.group7.Model;
 
-// import com.group7.View.gameTui;
+import com.group7.View.gameTui;
 // import com.group7.Model.Cards.Card;
 
 
@@ -12,9 +12,9 @@ class Main {
         
         Game currentGame = new Game(1);
 
-        
+        // System.out.println("Hello, Maven!");
 
-        //gameTui Interface = new gameTui(currentGame);
+        gameTui Interface = new gameTui(currentGame);
 
         }
 }

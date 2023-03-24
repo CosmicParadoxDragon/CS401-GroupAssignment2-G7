@@ -1,1 +1,2 @@
 /usr/bin/env /usr/lib/jvm/java-19-openjdk/bin/java @/tmp/cp_4pq8yz60wcpewp1r9mcly82lz.argfile com.group7.Model.Main
+cd /home/skazak-gk3222/cswork/earth-game/CS401-GroupAssignment2-G7 ; /usr/bin/env /usr/lib/jvm/java-11-openjdk-amd64/bin/java @/tmp/cp_3f10tefto3c41ou80jql02vn1.argfile com.group7.Model.Main

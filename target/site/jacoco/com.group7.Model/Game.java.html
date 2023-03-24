@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Game.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">earthgame</a> &gt; <a href="index.source.html" class="el_package">com.group7.Model</a> &gt; <span class="el_source">Game.java</span></div><h1>Game.java</h1><pre class="source lang-java linenums">package com.group7.Model;
+
+import com.group7.Model.Cards.Card;
+
+import java.util.ArrayList;
+
+public class Game {
+
+    int m_numberOfPlayers;
+    ArrayList &lt;Card&gt; FuanaCards;
+    ArrayList &lt;Integer&gt; Scores;
+    ArrayList &lt;Player&gt; players;
+    Deck EarthDeck;
+    Deck IslandDeck;
+    Deck ClimateDeck;
+    Deck FuanaDeck;
+    Deck discardPile;
+
+    Player activePlayer;
+
+    Game(int numberOfPlayers)
+<span class="nc" id="L22">    {   </span>
+<span class="nc" id="L23">        EarthDeck = new Deck();</span>
+<span class="nc" id="L24">        IslandDeck = new Deck();</span>
+<span class="nc" id="L25">        ClimateDeck = new Deck();</span>
+<span class="nc" id="L26">        FuanaDeck = new Deck();</span>
+<span class="nc" id="L27">        discardPile = new Deck();</span>
+<span class="nc" id="L28">        FuanaCards = new ArrayList&lt;Card&gt;();</span>
+<span class="nc" id="L29">        Scores = new ArrayList&lt;Integer&gt;();</span>
+<span class="nc" id="L30">        players = new ArrayList&lt;Player&gt;();</span>
+<span class="nc" id="L31">        m_numberOfPlayers = numberOfPlayers;</span>
+        // Game Setup Phase
+<span class="nc" id="L33">        SetupPhase();</span>
+        // if ( numboerOfPlayers == 1)
+        //         SetupGaia();
+
+<span class="nc" id="L37">        activePlayer = players.get(0);</span>
+        // takeTurnZero(); // Island and Climate Setup
+        // mainTurnLoop(); // Take a regular turn, and being the checks for complete Island
+
+<span class="nc" id="L41">    }</span>
+    
+    //! Assumeing Solo Game
+    private void SetupPhase()
+    {
+        try{
+<span class="nc" id="L47">            EarthDeck.fillEarthDeck();</span>
+<span class="nc" id="L48">            ClimateDeck.fillClimateDeck();</span>
+<span class="nc" id="L49">            FuanaDeck.fillFuanaDeck();</span>
+<span class="nc" id="L50">            IslandDeck.fillIslandDeck();</span>
+        }
+<span class="nc" id="L52">        catch (Exception e)</span>
+        {
+<span class="nc" id="L54">            System.out.println(e.toString());</span>
+<span class="nc" id="L55">        }</span>
+<span class="nc bnc" id="L56" title="All 2 branches missed.">        for (int i = 0; i &lt; m_numberOfPlayers; i++)</span>
+        {
+<span class="nc" id="L58">            players.add(new Player(this));</span>
+        }
+
+<span class="nc bnc" id="L61" title="All 2 branches missed.">        for (int j = 0; j&lt;4; j++)</span>
+        {
+<span class="nc" id="L63">            FuanaCards.add(FuanaDeck.dealCard());</span>
+        }
+        // 1 Player game is standard expect everything to break
+<span class="nc bnc" id="L66" title="All 2 branches missed.">        for (int i = 0; i &lt; m_numberOfPlayers; i++)</span>
+        {
+<span class="nc" id="L68">            Card island = IslandDeck.dealCard();</span>
+<span class="nc" id="L69">            players.get(i).getHand().add(island);</span>
+            // Activate the island immediate ability with black background
+            // E.g: island.parseAbility(&quot;black&quot;);
+            //island.parseAbilities(island.getM_abilities()) ;
+            // This should work if parseAbility is complete
+<span class="nc" id="L74">            players.get(i).getHand().add(ClimateDeck.dealCard());</span>
+            // players.get(i).getHand().add(EcosystemDeck.dealCard()); // if we ever get here
+        }
+<span class="nc" id="L77">    }</span>
+
+    void mainTurnLoop()
+    {
+        // This is purely for GUI purpose
+<span class="nc" id="L82">        int no_of_turn = 0;</span>
+<span class="nc" id="L83">        boolean TableauDeckisFilled = false;</span>
+        // End game condition
+        // If a player tableau is filled and everyone has taken the same no_of_turn
+        // The game is completed
+<span class="nc bnc" id="L87" title="All 2 branches missed.">        while (!TableauDeckisFilled) {</span>
+<span class="nc bnc" id="L88" title="All 2 branches missed.">            for (Player currentPlayer : players) {</span>
+                // Checking if the tableau is filled
+                // This line will use the getTableau function
+                // if (currentPlayer.getTableau().isBoardFilled()) {
+                //    TableauDeckisFilled = true;
+                //}
+<span class="nc" id="L94">                System.out.printf(&quot;Now it is player %s turn. \n&quot;, currentPlayer.getName());</span>
+<span class="nc" id="L95">                currentPlayer.takeTurn();</span>
+                // Can calculate the player point in here
+<span class="nc" id="L97">            }</span>
+<span class="nc" id="L98">            no_of_turn++;</span>
+        }
+        // Declare the winner based on their points
+<span class="nc" id="L101">    }</span>
+
+    public ArrayList&lt;Card&gt; getFuanaCards()
+    {
+<span class="nc" id="L105">        return FuanaCards;</span>
+    }
+
+    public ArrayList&lt;Player&gt; getPlayers()
+    {
+<span class="nc" id="L110">        return players;</span>
+    }
+<span class="nc" id="L112">    public Player getActivePlayer() {return activePlayer;}</span>
+    void planting()
+    {
+        // Active Player Action
+        // Plant 2 Cards
+        // Draw 4 Discard 3 (not compost)
+        
+        // Gaia Action
+        // Your Discards move to compost
+
+        // Trigger Green Abilities
+<span class="nc" id="L123">    }</span>
+
+    void compostion()
+    {
+        // Player Action
+        // Gain 5 Soil
+        // Compost 2 Cards from the EarthDeck
+
+        // Gaia Action
+        // Compost 2 cards, Compost 1 for every 2 soil gained this turn
+
+        // Trugger Red and Multicolored Abilities
+<span class="nc" id="L135">    }</span>
+
+    void watering()
+    {
+        //Player Action
+        // Gain 6 sprouts
+        // May gain 2 soul
+
+        // Gaia Action
+        // you gain 1 sprout per red ability you have
+
+        // Trigger all blue and multicolored abilities
+<span class="nc" id="L147">    }</span>
+    
+    void growing()
+    {
+        // Player Action
+        // Draw 4 to hand
+        // Place 2 growth
+
+        // Gaia Action
+        // gain 1 growth for each draw this turn
+
+        // Trigger Yellow and Multicolored Abilities
+<span class="nc" id="L159">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>

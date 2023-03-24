@@ -1,10 +1,11 @@
 com/group7/Model/Cards/Card.class
+com/group7/Model/Cards/AbilityPair.class
 com/group7/Model/Cards/TerrainCard.class
 com/group7/Model/Board/Tableau.class
-com/group7/Model/Deck.class
 com/group7/View/gameTui$2.class
-com/group7/Model/Cards/IslandCard.class
+com/group7/Model/Deck.class
 com/group7/Model/Cards/EventCard.class
+com/group7/Model/Cards/IslandCard.class
 com/group7/View/gameTui$gameWindow.class
 com/group7/App.class
 com/group7/Model/Cards/FuanaCard.class

@@ -1,0 +1,24 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+earthgame,com.group7.View,miniCard,145,0,0,0,31,0,8,0,8,0
+earthgame,com.group7.View,gameTui,474,0,20,0,84,0,18,0,8,0
+earthgame,com.group7.View,gameTui.gameWindow,7,0,0,0,3,0,1,0,1,0
+earthgame,com.group7.View,gameTui.new Runnable() {...},20,0,0,0,4,0,2,0,2,0
+earthgame,com.group7.View,gameTui.new Runnable() {...},28,0,2,0,6,0,3,0,2,0
+earthgame,com.group7.View,cardView,3,0,0,0,1,0,1,0,1,0
+earthgame,com.group7.View,Main,4,0,0,0,2,0,2,0,2,0
+earthgame,com.group7,App,4,0,0,0,2,0,1,0,1,0
+earthgame,com.group7.Model.Board,Tableau,93,0,8,0,22,0,13,0,9,0
+earthgame,com.group7.Model,Game,184,0,10,0,45,0,15,0,10,0
+earthgame,com.group7.Model,Deck,267,0,0,0,72,0,8,0,8,0
+earthgame,com.group7.Model,Player,158,0,15,0,48,0,26,0,17,0
+earthgame,com.group7.Model,Main,12,0,0,0,4,0,2,0,2,0
+earthgame,com.group7.Model.Cards,FuanaCard,20,0,0,0,6,0,2,0,2,0
+earthgame,com.group7.Model.Cards,ClimateCard,9,0,0,0,3,0,1,0,1,0
+earthgame,com.group7.Model.Cards,Card,116,0,6,0,31,0,12,0,9,0
+earthgame,com.group7.Model.Cards,EcosystemCard,6,0,0,0,2,0,1,0,1,0
+earthgame,com.group7.Model.Cards,TerrainCard,13,0,0,0,4,0,1,0,1,0
+earthgame,com.group7.Model.Cards,AbilityPair,15,0,0,0,6,0,3,0,3,0
+earthgame,com.group7.Model.Cards,FloraCard,31,0,0,0,10,0,1,0,1,0
+earthgame,com.group7.Model.Cards,EventCard,10,0,0,0,3,0,1,0,1,0
+earthgame,com.group7.Model.Cards,IslandCard,9,0,0,0,3,0,1,0,1,0
+earthgame,com.group7.Model.Cards,EarthCard,11,0,0,0,4,0,1,0,1,0
