@@ -27,8 +27,10 @@ public class Player {
     }
     Player(Game currentGame)
     {
-        hand = new ArrayList<Card>();
-        compostPile = new ArrayList<Card>();
+        hand = new ArrayList<>();
+        compostPile = new ArrayList<>();
+        discardPile = new ArrayList<>();
+        eventStack = new ArrayList<>();
         m_game = currentGame;
 
         playerTabulue = new ArrayList<ArrayList <Card>>();
@@ -87,7 +89,8 @@ public class Player {
 
         discard(3);
     }
-    void discard(int numberToDiscard)
+    // Public for testing purposes
+    public void discard(int numberToDiscard)
     {
         for ( int i = 0; i < numberToDiscard; i++)
         {
@@ -149,5 +152,68 @@ public class Player {
                 
             }
         }
+    }
+
+    /**
+     * @return the compostPile
+     */
+    public ArrayList<Card> getCompostPile() {
+        return compostPile;
+    }
+
+    /**
+     * @return the gainedSoil
+     */
+    public int getGainedSoil() {
+        return gainedSoil;
+    }
+
+    /**
+     * @return the eventStack
+     */
+    public ArrayList<Card> getEventStack() {
+        return eventStack;
+    }
+
+    /**
+     * @return the discardPile
+     */
+    public ArrayList<Card> getDiscardPile() {
+        return discardPile;
+    }
+
+    /**
+     * @return the gainedCards
+     */
+    public int getGainedCards() {
+        return gainedCards;
+    }
+
+    /**
+     * @return the m_climateCard
+     */
+    public Card getM_climateCard() {
+        return m_climateCard;
+    }
+
+    /**
+     * @return the m_islandCard
+     */
+    public Card getM_islandCard() {
+        return m_islandCard;
+    }
+
+    /**
+     * @return the playerTabulue
+     */
+    public ArrayList<ArrayList<Card>> getPlayerTabulue() {
+        return playerTabulue;
+    }
+
+    /**
+     * @return the soil
+     */
+    public int getSoil() {
+        return soil;
     }
 }

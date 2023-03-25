@@ -18,7 +18,7 @@ public class Game {
 
     Player activePlayer;
 
-    Game(int numberOfPlayers)
+    public Game(int numberOfPlayers)
     {   
         EarthDeck = new Deck();
         IslandDeck = new Deck();
@@ -157,4 +157,54 @@ public class Game {
 
         // Trigger Yellow and Multicolored Abilities
     }
+
+    /**
+     * @return the climateDeck
+     */
+    public Deck getClimateDeck() {
+        return ClimateDeck;
+    }
+
+    /**
+     * @return the earthDeck
+     */
+    public Deck getEarthDeck() {
+        return EarthDeck;
+    }
+
+    /**
+     * @return the fuanaDeck
+     */
+    public Deck getFuanaDeck() {
+        return FuanaDeck;
+    }
+
+    /**
+     * @return the islandDeck
+     */
+    public Deck getIslandDeck() {
+        return IslandDeck;
+    }
+
+    /**
+     * @return the scores
+     */
+    public ArrayList<Integer> getScores() {
+        return Scores;
+    }
+
+    /**
+     * @return the m_numberOfPlayers
+     */
+    public int getM_numberOfPlayers() {
+        return m_numberOfPlayers;
+    }
+
+    /**
+     * @return the discardPile
+     */
+    public Deck getDiscardPile() {
+        return discardPile;
+    }
+    
 }
