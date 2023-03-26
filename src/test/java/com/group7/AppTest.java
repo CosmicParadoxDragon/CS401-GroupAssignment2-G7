@@ -66,12 +66,12 @@ class AppTest {
 
     @Test
     void playerDrawTest() {
-        assertEquals(2, game_state.getActivePlayer().getHand().size());
+        assertEquals(3, game_state.getActivePlayer().getHand().size());
     }
     @Test
     void playerDiscardActionTest() {
         game_state.getActivePlayer().discard(1);
-        assertEquals(1, game_state.getActivePlayer().getHand().size());
+        assertEquals(2, game_state.getActivePlayer().getHand().size());
     }
 
     /**
@@ -112,7 +112,12 @@ class AppTest {
     // Complex Testing
 
     //TODO need the takeTurn function
-
+    // Test if the first player taking turn is the first player in the ArrayList
+    @Test
+    void takeTurnTest()
+    {
+        assertEquals(game_state.getActivePlayer(), game_state.getPlayers().get(0));
+    }
 
     
 }

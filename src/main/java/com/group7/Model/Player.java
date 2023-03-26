@@ -3,6 +3,7 @@ package com.group7.Model;
 import java.util.ArrayList;
 import java.util.Stack;
 
+import com.group7.Model.Board.Tableau;
 import com.group7.Model.Cards.Card;
 import com.group7.Model.Cards.AbilityPair;
 
@@ -47,7 +48,17 @@ public class Player {
     {
         m_climateCard = cliamteCard;
     }
-    
+
+    public Boolean isBoardFilled(){
+        for (ArrayList<Card> row : playerTabulue){
+            for (Card column : row){
+                if(column == null){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
     String takeTurn()
     {
         String actionChosen = "";

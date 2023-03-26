@@ -36,7 +36,7 @@ public class Game {
 
         activePlayer = players.get(0);
         // takeTurnZero(); // Island and Climate Setup
-        // mainTurnLoop(); // Take a regular turn, and being the checks for complete Island
+        mainTurnLoop(); // Take a regular turn, and being the checks for complete Island
 
     }
     
@@ -76,8 +76,7 @@ public class Game {
         }
     }
 
-    void mainTurnLoop()
-    {
+    void mainTurnLoop() {
         // This is purely for GUI purpose
         int no_of_turn = 0;
         boolean TableauDeckisFilled = false;
@@ -88,18 +87,17 @@ public class Game {
             for (Player currentPlayer : players) {
                 // Checking if the tableau is filled
                 // This line will use the getTableau function
-                // if (currentPlayer.getTableau().isBoardFilled()) {
-                //    TableauDeckisFilled = true;
-                //}
-                System.out.printf("Now it is player %s turn. \n", currentPlayer.getName());
-                currentPlayer.takeTurn();
-                // Can calculate the player point in here
+                if (currentPlayer.isBoardFilled()) {
+                    TableauDeckisFilled = true;
+                    //}
+                    currentPlayer.takeTurn();
+                    // Can calculate the player point in here
+                }
+                no_of_turn++;
             }
-            no_of_turn++;
+            // Declare the winner based on their points
         }
-        // Declare the winner based on their points
     }
-
     public ArrayList<Card> getFuanaCards()
     {
         return FuanaCards;
