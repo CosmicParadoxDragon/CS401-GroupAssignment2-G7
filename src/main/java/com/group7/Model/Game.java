@@ -16,6 +16,7 @@ public class Game {
     Deck FuanaDeck;
     Deck discardPile;
 
+    int turn = 0;
     Player activePlayer;
 
     public Game(int numberOfPlayers)
@@ -37,7 +38,6 @@ public class Game {
         activePlayer = players.get(0);
         // takeTurnZero(); // Island and Climate Setup
         mainTurnLoop(); // Take a regular turn, and being the checks for complete Island
-
     }
     
     //! Assumeing Solo Game
@@ -78,7 +78,6 @@ public class Game {
 
     void mainTurnLoop() {
         // This is purely for GUI purpose
-        int no_of_turn = 0;
         boolean TableauDeckisFilled = false;
         // End game condition
         // If a player tableau is filled and everyone has taken the same no_of_turn
@@ -89,11 +88,11 @@ public class Game {
                 // This line will use the getTableau function
                 if (currentPlayer.isBoardFilled()) {
                     TableauDeckisFilled = true;
-                    //}
-                    currentPlayer.takeTurn();
-                    // Can calculate the player point in here
                 }
-                no_of_turn++;
+                    currentPlayer.takeTurn();
+                    currentPlayer.placeCardontoTableau(0);
+                    // Can calculate the player point in here
+                turn++;
             }
             // Declare the winner based on their points
         }

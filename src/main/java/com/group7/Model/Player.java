@@ -49,7 +49,15 @@ public class Player {
         m_climateCard = cliamteCard;
     }
 
+    void placeCardontoTableau(int cardIndex) {
+        ArrayList row = new ArrayList();
+        row.add(hand.get(cardIndex));
+        playerTabulue.add(row);
+    }
     public Boolean isBoardFilled(){
+        if (playerTabulue.size() == 0) {
+            return false;
+        }
         for (ArrayList<Card> row : playerTabulue){
             for (Card column : row){
                 if(column == null){
@@ -97,7 +105,6 @@ public class Player {
         // tableau.plant(Card, Card);
         for (int i = 0; i < 4; i++)
             hand.add(m_game.EarthDeck.dealCard());
-
         discard(3);
     }
     // Public for testing purposes

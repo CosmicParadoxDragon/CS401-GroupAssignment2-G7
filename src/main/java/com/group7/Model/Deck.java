@@ -10,7 +10,6 @@ import com.group7.Model.Cards.*;
 
 public class Deck {
     ArrayList <Card> deckList;
-            
     Deck() { deckList = new ArrayList<Card>(); /* Suppose to start by building a deck from a given file */ }
 
     Deck(String Test)
@@ -20,13 +19,16 @@ public class Deck {
     }
 
     Card dealCard()
-    {   
+    {
+        int cardDrawnIndex = (int)(Math.random() * deckList.size());
+
+        //deckList.remove(cardDrawnIndex);
         // Meant for setup call
         // return a random card from the deck
         // TODO make card draw irreplacable and get random cards
         // implement shuffle() function?
 
-        return deckList.get(0);
+        return deckList.get(cardDrawnIndex);
     }
 
     /**
@@ -44,18 +46,20 @@ public class Deck {
         try {
             file = new File("src/main/java/com/group7/Model/Cards/decklists/terrain_cards.csv");
             deck_file = new Scanner(file);
-            deck_file.nextLine();
-            deck_file.nextLine();
-            deck_file.nextLine();
-            String line = deck_file.nextLine();
-            String []list = line.split(",");
+            while (deck_file.hasNext()) {
+                deck_file.nextLine();
+                deck_file.nextLine();
+                deck_file.nextLine();
+                String line = deck_file.nextLine();
+                String[] list = line.split(",");
 
-            String name = list[0],
-            habitat     = list[1],
-            abilities   = list[2];
-            int cost    = Integer.parseInt(list[3]),
-            vp          = Integer.parseInt(list[4]);
-            deckList.add(new TerrainCard(name, habitat, abilities, cost, vp));
+                String name = list[0],
+                        habitat = list[1],
+                        abilities = list[2];
+                int cost = Integer.parseInt(list[3]),
+                        vp = Integer.parseInt(list[4]);
+                deckList.add(new TerrainCard(name, habitat, abilities, cost, vp));
+            }
             deck_file.close();
         }
         catch(Exception e) {
@@ -72,18 +76,19 @@ public class Deck {
         try {
             file = new File("src/main/java/com/group7/Model/Cards/decklists/climate_cards.csv");
             deck_file = new Scanner(file);
-            deck_file.nextLine();
-            deck_file.nextLine();
-            deck_file.nextLine();
-            String line = deck_file.nextLine();
-            String []list = line.split(",");
+                deck_file.nextLine();
+                deck_file.nextLine();
+                deck_file.nextLine();
+                String line = deck_file.nextLine();
+                String[] list = line.split(",");
 
-            String name = list[0],
-            habitat     = list[1],
-            abilities   = list[3];
-            int vp      = Integer.parseInt(list[2]);
+                String name = list[0],
+                        habitat = list[1],
+                        abilities = list[3];
+                int vp = Integer.parseInt(list[2]);
 
-            deckList.add(new ClimateCard(name, habitat, vp, abilities));
+                deckList.add(new ClimateCard(name, habitat, vp, abilities));
+
             deck_file.close();
         }
         catch(Exception e) {
@@ -100,15 +105,16 @@ public class Deck {
         try {
             file = new File("src/main/java/com/group7/Model/Cards/decklists/fuana_cards.csv");
             deck_file = new Scanner(file);
-            deck_file.nextLine();
-            deck_file.nextLine();
-            deck_file.nextLine();
-            String line = deck_file.nextLine();
-            String []list = line.split(",");
+                deck_file.nextLine();
+                deck_file.nextLine();
+                deck_file.nextLine();
+                String line = deck_file.nextLine();
+                String[] list = line.split(",");
 
-            String name = list[0],
-            objective   = list[1];
-            deckList.add(new FuanaCard(name, objective));
+                String name = list[0],
+                        objective = list[1];
+                deckList.add(new FuanaCard(name, objective));
+
             deck_file.close();
         }
         catch(Exception e) {
@@ -127,17 +133,18 @@ public class Deck {
         try {
             file = new File("src/main/java/com/group7/Model/Cards/decklists/island_cards.csv");
             deck_file = new Scanner(file);
-            deck_file.nextLine();
-            deck_file.nextLine();
-            deck_file.nextLine();
-            String line = deck_file.nextLine();
-            String []list = line.split(",");
+                deck_file.nextLine();
+                deck_file.nextLine();
+                deck_file.nextLine();
+                String line = deck_file.nextLine();
+                String[] list = line.split(",");
 
-            String name = list[0],
-            habitat     = list[1],
-            abilities   = list[3];
-            int vp      = Integer.parseInt(list[2]);
-            deckList.add(new IslandCard(name, habitat, vp, abilities));
+                String name = list[0],
+                        habitat = list[1],
+                        abilities = list[3];
+                int vp = Integer.parseInt(list[2]);
+                deckList.add(new IslandCard(name, habitat, vp, abilities));
+
             deck_file.close();
         }
         catch(Exception e) {
