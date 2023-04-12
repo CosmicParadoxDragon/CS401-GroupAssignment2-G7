@@ -1,7 +1,8 @@
 package com.group7.view;
 
-import com.group7.model.Cards.Card;
+import com.group7.model.cards.Card;
 import com.group7.model.Game;
+import com.group7.controller.Controller;
 
 import com.googlecode.lanterna.TerminalPosition;
 import com.googlecode.lanterna.TerminalSize;
@@ -28,7 +29,7 @@ public class gameTui {
     GridLayout gameLayout;
     Panel gameGrid;
     gameWindow mainGameWindow;
-    Game game;
+    Controller game;
 
     int tColSize = 132; //number of terminal columns
     int tRowSize = 43; //number of terminal rows
@@ -41,7 +42,7 @@ public class gameTui {
 
     ArrayList<Card> HabIsl; //current habitat and island cards
 
-    public gameTui(Game game) throws IOException {
+    public gameTui(Controller game) throws IOException {
         this.game = game;
 
         //Initialize TUI layers
