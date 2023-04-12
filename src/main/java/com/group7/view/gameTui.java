@@ -29,7 +29,8 @@ public class gameTui {
     GridLayout gameLayout;
     Panel gameGrid;
     gameWindow mainGameWindow;
-    Controller game;
+    Controller control;
+    Game game;
 
     int tColSize = 132; //number of terminal columns
     int tRowSize = 43; //number of terminal rows
@@ -42,8 +43,10 @@ public class gameTui {
 
     ArrayList<Card> HabIsl; //current habitat and island cards
 
-    public gameTui(Controller game) throws IOException {
-        this.game = game;
+    public gameTui(Controller control) throws IOException {
+
+
+        this.game = control.getGame();
 
         //Initialize TUI layers
         terminal = new DefaultTerminalFactory().setInitialTerminalSize(new TerminalSize(tColSize, tRowSize)).createTerminal();
