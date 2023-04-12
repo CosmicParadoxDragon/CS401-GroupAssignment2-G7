@@ -2,12 +2,13 @@ package com.group7;
 
 import org.junit.jupiter.api.Test;
 
-import com.group7.Model.Game;
+import com.group7.controller.Controller;
+import com.group7.model.Game;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.BeforeEach;
-
+import java.io.IOException;
 /**
  * Unit test for simple App.
  */
@@ -17,11 +18,14 @@ class AppTest {
      */
 
      // Testing setup phase completion
+    Controller controller;
     Game game_state;    
     @BeforeEach
-    void setupTest()
+    void setupTest() throws IOException
     {
-        game_state = new Game(1);
+
+        controller = new Controller();
+        game_state = controller.getGame();
     }
 
     @Test

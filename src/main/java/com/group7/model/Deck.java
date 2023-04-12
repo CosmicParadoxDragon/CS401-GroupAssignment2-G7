@@ -44,7 +44,7 @@ public class Deck {
         Scanner deck_file;
 
         try {
-            file = new File("src/main/java/com/group7/model/Cards/decklists/terrain_cards.csv");
+            file = new File("src/main/java/com/group7/model/cards/decklists/terrain_cards.csv");
             deck_file = new Scanner(file);
             while (deck_file.hasNext()) {
                 deck_file.nextLine();
@@ -65,7 +65,7 @@ public class Deck {
         catch(Exception e) {
             System.out.println(e.toString());
         }
-        // deckList.add(new TerrainCard("Prairie", "Sunny|Rocky|Cold", "Green:+1 Cards 3 Victory Points per Herb in this Row", 4, 2));
+        // deckList.add(new TerrainCard("Prairie", "Sunny|Rocky|Cold", "Green:+1 cards 3 Victory Points per Herb in this Row", 4, 2));
     }   
 
     void fillClimateDeck()
@@ -74,7 +74,7 @@ public class Deck {
         Scanner deck_file;
 
         try {
-            file = new File("src/main/java/com/group7/model/Cards/decklists/climate_cards.csv");
+            file = new File("src/main/java/com/group7/model/cards/decklists/climate_cards.csv");
             deck_file = new Scanner(file);
                 deck_file.nextLine();
                 deck_file.nextLine();
@@ -103,7 +103,7 @@ public class Deck {
         Scanner deck_file;
 
         try {
-            file = new File("src/main/java/com/group7/model/Cards/decklists/fuana_cards.csv");
+            file = new File("src/main/java/com/group7/model/cards/decklists/fuana_cards.csv");
             deck_file = new Scanner(file);
                 deck_file.nextLine();
                 deck_file.nextLine();
@@ -131,7 +131,7 @@ public class Deck {
         Scanner deck_file;
 
         try {
-            file = new File("src/main/java/com/group7/model/Cards/decklists/island_cards.csv");
+            file = new File("src/main/java/com/group7/model/cards/decklists/island_cards.csv");
             deck_file = new Scanner(file);
                 deck_file.nextLine();
                 deck_file.nextLine();
