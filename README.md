@@ -2,7 +2,7 @@
 
 ---
 
-~~First~~ Thrid group assignment for the CS401 Class, Spring 2023 semester at CSUEB.
+~~First~~ Third group assignment for the CS401 Class, Spring 2023 semester at CSUEB.
 
 Game Setup
 ---
