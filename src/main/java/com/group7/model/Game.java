@@ -1,11 +1,11 @@
-package com.group7.Model;
+package com.group7.model;
 
-import com.group7.Model.Cards.Card;
+import com.group7.model.Cards.Card;
 
 import java.util.ArrayList;
 
 public class Game {
-
+    Controller m_control;
     int m_numberOfPlayers;
     ArrayList <Card> FuanaCards;
     ArrayList <Integer> Scores;
@@ -19,8 +19,9 @@ public class Game {
     int turn = 0;
     Player activePlayer;
 
-    public Game(int numberOfPlayers)
+    public Game(Controller controller, int numberOfPlayers)
     {   
+        m_control = controller;
         EarthDeck = new Deck();
         IslandDeck = new Deck();
         ClimateDeck = new Deck();
@@ -69,7 +70,7 @@ public class Game {
             players.get(i).getHand().add(island);
             // Activate the island immediate ability with black background
             // E.g: island.parseAbility("black");
-            //island.parseAbilities(island.getM_abilities()) ;
+            // island.parseAbilities(island.getM_abilities()) ;
             // This should work if parseAbility is complete
             players.get(i).getHand().add(ClimateDeck.dealCard());
             // players.get(i).getHand().add(EcosystemDeck.dealCard()); // if we ever get here
@@ -97,6 +98,8 @@ public class Game {
             // Declare the winner based on their points
         }
     }
+
+    
     public ArrayList<Card> getFuanaCards()
     {
         return FuanaCards;

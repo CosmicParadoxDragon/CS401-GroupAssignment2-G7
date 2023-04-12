@@ -1,4 +1,4 @@
-package com.group7.Model;
+package com.group7.model;
 
 // import java.util.Random;
 import java.util.ArrayList;
@@ -6,7 +6,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
-import com.group7.Model.Cards.*;
+import com.group7.model.Cards.*;
 
 public class Deck {
     ArrayList <Card> deckList;
@@ -44,7 +44,7 @@ public class Deck {
         Scanner deck_file;
 
         try {
-            file = new File("src/main/java/com/group7/Model/Cards/decklists/terrain_cards.csv");
+            file = new File("src/main/java/com/group7/model/Cards/decklists/terrain_cards.csv");
             deck_file = new Scanner(file);
             while (deck_file.hasNext()) {
                 deck_file.nextLine();
@@ -74,7 +74,7 @@ public class Deck {
         Scanner deck_file;
 
         try {
-            file = new File("src/main/java/com/group7/Model/Cards/decklists/climate_cards.csv");
+            file = new File("src/main/java/com/group7/model/Cards/decklists/climate_cards.csv");
             deck_file = new Scanner(file);
                 deck_file.nextLine();
                 deck_file.nextLine();
@@ -103,7 +103,7 @@ public class Deck {
         Scanner deck_file;
 
         try {
-            file = new File("src/main/java/com/group7/Model/Cards/decklists/fuana_cards.csv");
+            file = new File("src/main/java/com/group7/model/Cards/decklists/fuana_cards.csv");
             deck_file = new Scanner(file);
                 deck_file.nextLine();
                 deck_file.nextLine();
@@ -131,7 +131,7 @@ public class Deck {
         Scanner deck_file;
 
         try {
-            file = new File("src/main/java/com/group7/Model/Cards/decklists/island_cards.csv");
+            file = new File("src/main/java/com/group7/model/Cards/decklists/island_cards.csv");
             deck_file = new Scanner(file);
                 deck_file.nextLine();
                 deck_file.nextLine();

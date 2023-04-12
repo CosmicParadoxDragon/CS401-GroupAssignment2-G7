@@ -1,11 +1,11 @@
-package com.group7.Model;
+package com.group7.model;
 
 import java.util.ArrayList;
 import java.util.Stack;
 
-import com.group7.Model.Board.Tableau;
-import com.group7.Model.Cards.Card;
-import com.group7.Model.Cards.AbilityPair;
+import com.group7.model.Board.Tableau;
+import com.group7.model.Cards.Card;
+import com.group7.model.Cards.AbilityPair;
 
 
 public class Player {
@@ -101,22 +101,13 @@ public class Player {
         // Active Player Action
         // Plant 2 Cards
         // Draw 4 Discard 3 (not compost)
-
+        plant();
         // tableau.plant(Card, Card);
         for (int i = 0; i < 4; i++)
             hand.add(m_game.EarthDeck.dealCard());
         discard(3);
     }
-    // Public for testing purposes
-    public void discard(int numberToDiscard)
-    {
-        for ( int i = 0; i < numberToDiscard; i++)
-        {
-            Card someCard;
-            someCard = getHand().get(0); // TODO way to select a card from the hand
-            hand.remove(someCard);
-        }
-    }
+    
     void inactivePlanting()
     {
         // Gaia Action
@@ -127,7 +118,17 @@ public class Player {
             compostPile.remove(discardPile.size());
         }
     }
+    void plant()
+    {
+        // Select a card from Hand
+        // Place it in the Tabelu anywhere on first planting
+        // only adjacent to existing cards after.
+        String message = "Select a card to plant.";
+        // push message to GUI along with input for a number
+        
 
+
+    }
     void activeComposting()
     {
 
@@ -233,5 +234,16 @@ public class Player {
      */
     public int getSoil() {
         return soil;
+    }
+
+    // Public for testing purposes
+    public void discard(int numberToDiscard)
+    {
+        for ( int i = 0; i < numberToDiscard; i++)
+        {
+            Card someCard;
+            someCard = getHand().get(0); // TODO way to select a card from the hand
+            hand.remove(someCard);
+        }
     }
 }

@@ -1,7 +1,7 @@
-package com.group7.Model.Cards;
+package com.group7.model.cards;
 
 
-import com.group7.Model.Player;
+import com.group7.model.Player;
 
 import java.util.Vector;
 

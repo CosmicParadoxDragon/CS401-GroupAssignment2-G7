@@ -1,4 +1,4 @@
-package com.group7.View;
+package com.group7.view;
 
 import java.io.IOException;
 

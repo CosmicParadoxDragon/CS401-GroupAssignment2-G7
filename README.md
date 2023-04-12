@@ -2,7 +2,7 @@
 
 ---
 
-First group assignment for the CS401 Class, Spring 2023 semester at CSUEB.
+~~First~~ Thrid group assignment for the CS401 Class, Spring 2023 semester at CSUEB.
 
 Game Setup
 ---
@@ -62,3 +62,5 @@ Sohrab Kazak
 Truong Dinh
 
 Jed Faalam
+
+Jacob Smith

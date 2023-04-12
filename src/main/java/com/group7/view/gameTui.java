@@ -1,7 +1,7 @@
-package com.group7.View;
+package com.group7.view;
 
-import com.group7.Model.Cards.Card;
-import com.group7.Model.Game;
+import com.group7.model.Cards.Card;
+import com.group7.model.Game;
 
 import com.googlecode.lanterna.TerminalPosition;
 import com.googlecode.lanterna.TerminalSize;

@@ -1,4 +1,4 @@
-package com.group7.Model.Cards;
+package com.group7.model.cards;
 
 import java.util.ArrayList;
 import java.util.Stack;
