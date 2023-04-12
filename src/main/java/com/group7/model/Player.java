@@ -93,6 +93,7 @@ public class Player {
     String selectAction()
     {
         String action = "planting";
+        action = m_game.getActionChoice();
         return action;
     }
 
@@ -118,6 +119,7 @@ public class Player {
             compostPile.remove(discardPile.size());
         }
     }
+
     void plant()
     {
         // Select a card from Hand

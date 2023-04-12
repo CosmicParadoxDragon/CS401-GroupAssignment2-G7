@@ -23,9 +23,9 @@ class AppTest {
     @BeforeEach
     void setupTest() throws IOException
     {
-
-        controller = new Controller();
-        game_state = controller.getGame();
+        // controller = new Controller();
+        // Game game = new Game(1);
+        game_state = game;
     }
 
     @Test

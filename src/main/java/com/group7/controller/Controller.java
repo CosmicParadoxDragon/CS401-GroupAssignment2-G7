@@ -18,4 +18,13 @@ public class Controller {
 
     public Game getGame() { return m_game; }
     gameTui getTui() {return m_tui; }
+
+    public String getActionChoice()
+    {
+        String action = "";
+
+        // m_tui.promptForActionChoice();
+
+        return action;
+    }
 }

@@ -99,6 +99,10 @@ public class Game {
         }
     }
 
+    String getActionChoice()
+    {
+        return m_control.getActionChoice();
+    }
     
     public ArrayList<Card> getFuanaCards()
     {
