@@ -1,7 +1,7 @@
 // This contains a running instance of the game.
 package com.group7.model;
 
-import com.group7.View.gameTui;
+import com.group7.view.gameTui;
 // import com.group7.Model.Cards.Card;
 
 
@@ -16,7 +16,7 @@ public final class Main {
 
         // gameTui Interface = new gameTui(currentGame);
 
-        
+
 
     }
 }

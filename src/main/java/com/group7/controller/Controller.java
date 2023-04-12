@@ -15,6 +15,6 @@ public class Controller {
         m_tui = new gameTui(this);//this);
     }
 
-
-
+    Game getGame() { return m_game; }
+    gameTui getTui() {return m_tui; }
 }
