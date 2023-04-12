@@ -1,0 +1,8 @@
+com/group7/model/cards/EarthCard.class
+com/group7/model/board/Tableau.class
+com/group7/view/cardView.class
+com/group7/model/cards/EventCard.class
+com/group7/model/cards/AbilityPair.class
+com/group7/model/cards/Card.class
+com/group7/model/Game.class
+com/group7/model/Player.class

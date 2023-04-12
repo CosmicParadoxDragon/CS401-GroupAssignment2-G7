@@ -3,9 +3,9 @@ package com.group7.model;
 import java.util.ArrayList;
 import java.util.Stack;
 
-import com.group7.model.Board.Tableau;
-import com.group7.model.Cards.Card;
-import com.group7.model.Cards.AbilityPair;
+import com.group7.model.board.Tableau;
+import com.group7.model.cards.Card;
+import com.group7.model.cards.AbilityPair;
 
 
 public class Player {

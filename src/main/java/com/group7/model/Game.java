@@ -1,7 +1,7 @@
 package com.group7.model;
 
-import com.group7.model.Cards.Card;
-
+import com.group7.model.cards.Card;
+import com.group7.controller.Controller;
 import java.util.ArrayList;
 
 public class Game {

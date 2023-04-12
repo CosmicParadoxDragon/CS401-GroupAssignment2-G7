@@ -1,6 +1,6 @@
-package com.group7.model.Board;
+package com.group7.model.board;
 
-import com.group7.model.Cards.Card;
+import com.group7.model.cards.Card;
 
 public class Tableau {
     /**

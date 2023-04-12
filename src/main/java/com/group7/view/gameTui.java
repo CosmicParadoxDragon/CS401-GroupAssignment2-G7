@@ -1,6 +1,6 @@
 package com.group7.view;
 
-import com.group7.model.Cards.Card;
+import com.group7.model.cards.Card;
 import com.group7.model.Game;
 
 import com.googlecode.lanterna.TerminalPosition;

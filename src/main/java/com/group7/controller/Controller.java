@@ -1,8 +1,8 @@
 
-package main.java.com.group7.controller;
+package com.group7.controller;
 
-import main.java.com.group7.model.Game;
-import main.java.com.group7.model.gameTui;
+import com.group7.model.Game;
+import com.group7.view.gameTui;
 
 
 public class Controller {
@@ -12,7 +12,7 @@ public class Controller {
     Controller()
     {
         m_game = new Game(this, 1);
-        m_tui = new gameTui(this);
+        m_tui = new gameTui(this);//this);
     }
 
 

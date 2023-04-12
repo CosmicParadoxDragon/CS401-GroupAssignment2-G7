@@ -1,4 +1,4 @@
-package com.group7.model.Cards;
+package com.group7.model.cards;
 
 public class AbilityPair {
     String m_item1, m_item2;

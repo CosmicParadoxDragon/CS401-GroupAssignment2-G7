@@ -6,7 +6,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
-import com.group7.model.Cards.*;
+import com.group7.model.cards.*;
 
 public class Deck {
     ArrayList <Card> deckList;
