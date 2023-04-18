@@ -67,15 +67,15 @@ class AppTest {
      * Player Action Tests
      */
 
-
+    // At the beginning of the game each player deal one island and one climate card
     @Test
     void playerDrawTest() {
-        assertEquals(4, game_state.getActivePlayer().getHand().size());
+        assertEquals(2, game_state.getActivePlayer().getHand().size());
     }
     @Test
     void playerDiscardActionTest() {
         game_state.getActivePlayer().discard(1);
-        assertEquals(3, game_state.getActivePlayer().getHand().size());
+        assertEquals(1, game_state.getActivePlayer().getHand().size());
     }
 
     /**
@@ -88,21 +88,21 @@ class AppTest {
     void climateDeckSizeTest()
     {
 
-        assertEquals(1, game_state.getClimateDeck().getDeckList().size());
+        assertEquals(20, game_state.getClimateDeck().getDeckList().size());
     }
 
     @Test
     void fuanaDeckSizeTest()
     {
 
-        assertEquals(1, game_state.getFuanaDeck().getDeckList().size());
+        assertEquals(46, game_state.getFuanaDeck().getDeckList().size());
     }
 
     @Test
     void islandDeckSizeTest()
     {
 
-        assertEquals(1, game_state.getIslandDeck().getDeckList().size());
+        assertEquals(10, game_state.getIslandDeck().getDeckList().size());
     }
 
     @Test
