@@ -3,7 +3,7 @@ Name,habitat,abilityLine,cost,victoryPoints
 
 Prairie,Sunny|Rocky|Cold,Green:+1 Cards 3 Victory Points per Herb in this Row,4,2
 Shurbland,All,Green:+1 Soil Green:+3 VictoryPoints per Bush Orthogonally Adjacent to Terrain,2,0
-Moutain Ridge,Wet|Rocky|Cold,Green:+2 VictoryPoints per Rocky Terrain in an Orthogonal Line through this Terrain (includeing this one)
+Moutain Ridge,Wet|Rocky|Cold,Green:+2 VictoryPoints per Rocky Terrain in an Orthogonal Line through this Terrain (includeing this one),9,0
 Beach,All,Green:+4 VictoryPoints empty Orthogonal Space,7,9
 Crater,Rocky|Cold,Green:+5 VictoryPoints per Tree Adjacent to This,9,10
 Pasture,All,Brown:+1 Trunks Green:+3 VictoryPoints per Herb Orthogonally Adjacent to This,2,1
@@ -31,8 +31,3 @@ Mixed Forest,Wet|Rocky|Cold,Green:+2 Compost Brown:+3 VictoryPoints per Mushroom
 Scrublandm,Sunny|Wet|Rocky,Green:+1 Cards Brown:+3 VictoryPoints per Bush in Column,4,2
 Grassland,Wet,Green:+2 Sprouts Brown:+3 VictoryPoints per Herb in Column,4,2
 Cloud Forest,All,Green:+1 Trunks Brown:+3 VictoryPoints per Tree Orthogonal to This,2,1
-
-
-
-
-

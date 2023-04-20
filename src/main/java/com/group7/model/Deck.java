@@ -46,10 +46,10 @@ public class Deck {
         try {
             file = new File("src/main/java/com/group7/model/cards/decklists/terrain_cards.csv");
             deck_file = new Scanner(file);
+            deck_file.nextLine();
+            deck_file.nextLine();
+            deck_file.nextLine();
             while (deck_file.hasNext()) {
-                deck_file.nextLine();
-                deck_file.nextLine();
-                deck_file.nextLine();
                 String line = deck_file.nextLine();
                 String[] list = line.split(",");
 
@@ -76,9 +76,10 @@ public class Deck {
         try {
             file = new File("src/main/java/com/group7/model/cards/decklists/climate_cards.csv");
             deck_file = new Scanner(file);
-                deck_file.nextLine();
-                deck_file.nextLine();
-                deck_file.nextLine();
+            deck_file.nextLine();
+            deck_file.nextLine();
+            deck_file.nextLine();
+            while (deck_file.hasNext()) {
                 String line = deck_file.nextLine();
                 String[] list = line.split(",");
 
@@ -88,7 +89,7 @@ public class Deck {
                 int vp = Integer.parseInt(list[2]);
 
                 deckList.add(new ClimateCard(name, habitat, vp, abilities));
-
+            }
             deck_file.close();
         }
         catch(Exception e) {
@@ -105,16 +106,17 @@ public class Deck {
         try {
             file = new File("src/main/java/com/group7/model/cards/decklists/fuana_cards.csv");
             deck_file = new Scanner(file);
-                deck_file.nextLine();
-                deck_file.nextLine();
-                deck_file.nextLine();
+            deck_file.nextLine();
+            deck_file.nextLine();
+            deck_file.nextLine();
+            while (deck_file.hasNext()) {
                 String line = deck_file.nextLine();
                 String[] list = line.split(",");
 
                 String name = list[0],
                         objective = list[1];
                 deckList.add(new FuanaCard(name, objective));
-
+            }
             deck_file.close();
         }
         catch(Exception e) {
@@ -130,12 +132,14 @@ public class Deck {
         File file;
         Scanner deck_file;
 
+
         try {
             file = new File("src/main/java/com/group7/model/cards/decklists/island_cards.csv");
             deck_file = new Scanner(file);
-                deck_file.nextLine();
-                deck_file.nextLine();
-                deck_file.nextLine();
+            deck_file.nextLine();
+            deck_file.nextLine();
+            deck_file.nextLine();
+            while (deck_file.hasNext()) {
                 String line = deck_file.nextLine();
                 String[] list = line.split(",");
 
@@ -144,7 +148,7 @@ public class Deck {
                         abilities = list[3];
                 int vp = Integer.parseInt(list[2]);
                 deckList.add(new IslandCard(name, habitat, vp, abilities));
-
+            }
             deck_file.close();
         }
         catch(Exception e) {
