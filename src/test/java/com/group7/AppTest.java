@@ -24,7 +24,7 @@ class AppTest {
     void setupTest() throws IOException
     {
         // controller = new Controller();
-        // Game game = new Game(1);
+        Game game = new Game(1);
         game_state = game;
     }
 

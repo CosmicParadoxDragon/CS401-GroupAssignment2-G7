@@ -18,7 +18,30 @@ public class Game {
 
     int turn = 0;
     Player activePlayer;
+    
+    // For testing purposes
+    public Game(int numberOfPlayers)
+    {   
+        EarthDeck = new Deck();
+        IslandDeck = new Deck();
+        ClimateDeck = new Deck();
+        FuanaDeck = new Deck();
+        discardPile = new Deck();
+        FuanaCards = new ArrayList<Card>();
+        Scores = new ArrayList<Integer>();
+        players = new ArrayList<Player>();
+        m_numberOfPlayers = numberOfPlayers;
+        // Game Setup Phase
+        SetupPhase();
+        // if ( numboerOfPlayers == 1)
+        //         SetupGaia();
 
+        activePlayer = players.get(0);
+        // takeTurnZero(); // Island and Climate Setup
+        mainTurnLoop(); // Take a regular turn, and being the checks for complete Island
+    }
+
+    
     public Game(Controller controller, int numberOfPlayers)
     {   
         m_control = controller;
