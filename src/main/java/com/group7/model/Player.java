@@ -92,7 +92,7 @@ public class Player {
     
     String selectAction()
     {
-        String action = "planting";
+        String action;// = "planting";
         action = m_game.getActionChoice();
         return action;
     }
@@ -243,9 +243,12 @@ public class Player {
     {
         for ( int i = 0; i < numberToDiscard; i++)
         {
-            Card someCard;
-            someCard = getHand().get(0); // TODO way to select a card from the hand
-            hand.remove(someCard);
+            if (hand.size() == 0) {return;} // No discard possible, should never reach this from 
+            // the way the game is designed but you never know so its here.
+            Card someCardToDiscard;
+            someCardToDiscard = m_game.getController().getCardChoice();
+            // someCard = getHand().get(0); // TODO way to select a card from the hand
+            hand.remove(someCardToDiscard);
         }
     }
 }

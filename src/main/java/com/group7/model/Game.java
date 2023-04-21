@@ -233,5 +233,5 @@ public class Game {
     public Deck getDiscardPile() {
         return discardPile;
     }
-    
+    Controller getController() { return m_control; }
 }
