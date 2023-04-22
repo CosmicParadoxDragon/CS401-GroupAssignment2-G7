@@ -4,6 +4,8 @@ package com.group7.model;
 import java.util.ArrayList;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.Collections;
+import java.util.Random;
 import java.util.Scanner;
 
 import com.group7.model.cards.*;
@@ -20,15 +22,18 @@ public class Deck {
 
     Card dealCard()
     {
-        int cardDrawnIndex = (int)(Math.random() * deckList.size());
-
-        //deckList.remove(cardDrawnIndex);
-        // Meant for setup call
-        // return a random card from the deck
-        // TODO make card draw irreplacable and get random cards
-        // implement shuffle() function?
-
-        return deckList.get(cardDrawnIndex);
+        if (deckList.size() == 0) {
+           // return;
+        }
+        // Return a random card from the deck
+        Random random = new Random();
+        int cardDrawnIndex = random.nextInt(deckList.size());
+        Card drawnCard = deckList.get(cardDrawnIndex);
+        // Remove the card from the deck
+        // deckList.remove(cardDrawnIndex);
+        // The shuffle the remaining card
+        Collections.shuffle(deckList);
+        return drawnCard;
     }
 
     /**
@@ -155,4 +160,11 @@ public class Deck {
             System.out.println(e.toString());
         }
     }
+
+    // Action needed for composting. Remove two card on top of the deck
+    void compostCard() {
+        deckList.remove(deckList.size()-1);
+        deckList.remove(deckList.size()-1);
+    }
+    public boolean isEmpty () { return deckList.isEmpty();}
 }
