@@ -19,10 +19,28 @@ public class Game {
 
     int turn = 0;
     Player activePlayer;
-
+    
     // For testing purposes
     public Game(int numberOfPlayers)
-    {
+    {   
+        EarthDeck = new Deck();
+        IslandDeck = new Deck();
+        ClimateDeck = new Deck();
+        FuanaDeck = new Deck();
+        discardPile = new Deck();
+        FuanaCards = new ArrayList<Card>();
+        Scores = new ArrayList<Integer>();
+        players = new ArrayList<Player>();
+        m_numberOfPlayers = numberOfPlayers;
+        // Game Setup Phase
+        SetupPhase();
+        // if ( numboerOfPlayers == 1)
+        //         SetupGaia();
+     }
+ 
+    public Game(Controller controller, int numberOfPlayers)
+    {   
+        m_control = controller;
         EarthDeck = new Deck();
         IslandDeck = new Deck();
         ClimateDeck = new Deck();
@@ -261,5 +279,5 @@ public class Game {
     public Deck getDiscardPile() {
         return discardPile;
     }
-    
+    Controller getController() { return m_control; }
 }

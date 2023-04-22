@@ -236,7 +236,7 @@ public class Player {
     {
         for ( int i = 0; i < numberToDiscard; i++)
         {
-            if (hand.size() == 0) {return;} // No discard possible, should never reach this from
+            if (hand.size() == 0) {return;} // No discard possible, should never reach this from 
             // the way the game is designed but you never know so its here.
             Card someCardToDiscard;
             someCardToDiscard = m_game.getController().getCardChoice();
