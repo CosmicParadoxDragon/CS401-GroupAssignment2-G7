@@ -2,7 +2,7 @@ package com.group7.model;
 
 import java.util.ArrayList;
 import java.util.Stack;
-import java.util.Random;
+
 import com.group7.model.board.Tableau;
 import com.group7.model.cards.Card;
 import com.group7.model.cards.AbilityPair;
@@ -20,7 +20,7 @@ public class Player {
     ArrayList <Card> compostPile;
     ArrayList <Card> discardPile;
     ArrayList <Card> eventStack;
-    Tableau playerTableau;
+    ArrayList<ArrayList <Card>> playerTabulue;
     Game m_game;
     public String getName()
     {
@@ -34,7 +34,7 @@ public class Player {
         eventStack = new ArrayList<>();
         m_game = currentGame;
 
-        playerTableau = new Tableau();
+        playerTabulue = new ArrayList<ArrayList <Card>>();
     }
     public ArrayList <Card> getHand()
     {
@@ -49,14 +49,28 @@ public class Player {
         m_climateCard = cliamteCard;
     }
 
-    void placeCardontoTableau(int row, int collumn, Card cardDrawn) {
-        playerTableau.setCard(row, collumn, cardDrawn);
+    void placeCardontoTableau(int cardIndex) {
+        ArrayList row = new ArrayList();
+        row.add(hand.get(cardIndex));
+        playerTabulue.add(row);
     }
-
-
+    public Boolean isBoardFilled(){
+        if (playerTabulue.size() == 0) {
+            return false;
+        }
+        for (ArrayList<Card> row : playerTabulue){
+            for (Card column : row){
+                if(column == null){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
     String takeTurn()
     {
         String actionChosen = "";
+
         //Choose an action
         // Switch to correct branch
         actionChosen = selectAction();
@@ -64,21 +78,18 @@ public class Player {
         switch (actionChosen)
         {
             case "planting":
-                activePlanting();
-                break;
+                activePlanting(); break;
             case "composting":
-                activeComposting();
-                break;
+                activeComposting(); break;
             case "growing":
-                activeGrowing();
-                break;
+                activeGrowing(); break;
             case "watering":
-                activeWatering();
-                break;
+                activeWatering(); break;
         }
 
         return actionChosen;
     }
+    
     String selectAction()
     {
         String action;// = "planting";
@@ -86,12 +97,11 @@ public class Player {
         return action;
     }
 
-
     void activePlanting()
     {
         // Active Player Action
-        // Plant Up to 2 cards
-        // Then draw the same number of cards that you plant
+        // Plant 2 Cards
+        // Draw 4 Discard 3 (not compost)
         plant();
         // tableau.plant(Card, Card);
         for (int i = 0; i < 4; i++)
@@ -101,7 +111,8 @@ public class Player {
     
     void inactivePlanting()
     {
-        // Other players may plant one card and draw one card
+        // Gaia Action
+        // discarded cards become compost
         for (int i = 0; i < 3; i ++)
         {
             compostPile.add(discardPile.get(discardPile.size()));
@@ -122,36 +133,32 @@ public class Player {
     }
     void activeComposting()
     {
-        //The active player gains five soil
-        //setGainedSoil(2);
-        // They also adds two cards from the deck to their
-        //compost pile
-//        compostPile.add
+
     }
 
     void inactiveComposting()
     {
-        // Gain two soil or compost two card
+
     }
 
     void activeWatering()
     {
-        // Gain up to six sprout and two soil
+
     }
     
     void inactiveWatering()
     {
-        // Gain two sprout or two soil
+
     }
 
     void activeGrowing()
     {
-        // Draw four card from the pile and add two growth token cards
+
     }
 
     void inactiveGrowing()
     {
-        // Draw two card or gain two growth
+
     }
 
     void abilityParser(Stack<AbilityPair> theStack) // temporary location for the ability parser function
@@ -220,8 +227,8 @@ public class Player {
     /**
      * @return the playerTabulue
      */
-    public Tableau getPlayerTabulue() {
-        return playerTableau;
+    public ArrayList<ArrayList<Card>> getPlayerTabulue() {
+        return playerTabulue;
     }
 
     /**
@@ -236,7 +243,7 @@ public class Player {
     {
         for ( int i = 0; i < numberToDiscard; i++)
         {
-            if (hand.size() == 0) {return;} // No discard possible, should never reach this from
+            if (hand.size() == 0) {return;} // No discard possible, should never reach this from 
             // the way the game is designed but you never know so its here.
             Card someCardToDiscard;
             someCardToDiscard = m_game.getController().getCardChoice();
