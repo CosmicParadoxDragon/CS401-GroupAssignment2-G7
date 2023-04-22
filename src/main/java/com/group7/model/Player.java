@@ -20,7 +20,7 @@ public class Player {
     ArrayList <Card> compostPile;
     ArrayList <Card> discardPile;
     ArrayList <Card> eventStack;
-    ArrayList<ArrayList <Card>> playerTabulue;
+    Tableau playerTabulue;
     Game m_game;
     public String getName()
     {
@@ -34,7 +34,7 @@ public class Player {
         eventStack = new ArrayList<>();
         m_game = currentGame;
 
-        playerTabulue = new ArrayList<ArrayList <Card>>();
+        playerTabulue = new Tableau();
     }
     public ArrayList <Card> getHand()
     {
@@ -49,23 +49,12 @@ public class Player {
         m_climateCard = cliamteCard;
     }
 
-    void placeCardontoTableau(int cardIndex) {
-        ArrayList row = new ArrayList();
-        row.add(hand.get(cardIndex));
-        playerTabulue.add(row);
+    void placeCardontoTableau(int row, int collumn, Card cardDrawn) {
+        playerTabulue.setCard(row, collumn, cardDrawn);
     }
+
     public Boolean isBoardFilled(){
-        if (playerTabulue.size() == 0) {
-            return false;
-        }
-        for (ArrayList<Card> row : playerTabulue){
-            for (Card column : row){
-                if(column == null){
-                    return false;
-                }
-            }
-        }
-        return true;
+        return playerTabulue.isBoardFilled();
     }
     String takeTurn()
     {
@@ -100,8 +89,8 @@ public class Player {
     void activePlanting()
     {
         // Active Player Action
-        // Plant 2 Cards
-        // Draw 4 Discard 3 (not compost)
+        // Plant Up to 2 cards
+        // Then draw the same number of cards that you plant
         plant();
         // tableau.plant(Card, Card);
         for (int i = 0; i < 4; i++)
@@ -111,8 +100,7 @@ public class Player {
     
     void inactivePlanting()
     {
-        // Gaia Action
-        // discarded cards become compost
+        // Players may plant one card and draw one card
         for (int i = 0; i < 3; i ++)
         {
             compostPile.add(discardPile.get(discardPile.size()));
@@ -133,32 +121,34 @@ public class Player {
     }
     void activeComposting()
     {
-
+        //The active player gains five soil
+        //They also and adds two cards from the deck to their
+        //compost pile
     }
 
     void inactiveComposting()
     {
-
+        // Gain two soil or compost two card
     }
 
     void activeWatering()
     {
-
+        // Gain up to six sprout and two soil
     }
     
     void inactiveWatering()
     {
-
+        // Gain two sprout or two soil
     }
 
     void activeGrowing()
     {
-
+        // Draw four card from the pile and add two growth token cards
     }
 
     void inactiveGrowing()
     {
-
+        // Draw two card or gain two growth
     }
 
     void abilityParser(Stack<AbilityPair> theStack) // temporary location for the ability parser function
@@ -227,7 +217,7 @@ public class Player {
     /**
      * @return the playerTabulue
      */
-    public ArrayList<ArrayList<Card>> getPlayerTabulue() {
+    public Tableau getPlayerTabulue() {
         return playerTabulue;
     }
 
@@ -251,4 +241,6 @@ public class Player {
             hand.remove(someCardToDiscard);
         }
     }
+    public void setGainedSoil(int soilGained) { this.soil += soilGained;}
+
 }
