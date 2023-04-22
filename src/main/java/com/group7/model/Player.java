@@ -20,6 +20,7 @@ public class Player {
     ArrayList <Card> compostPile;
     ArrayList <Card> discardPile;
     ArrayList <Card> eventStack;
+
     Tableau playerTableau;
     Game m_game;
     public String getName()
@@ -33,6 +34,7 @@ public class Player {
         discardPile = new ArrayList<>();
         eventStack = new ArrayList<>();
         m_game = currentGame;
+
 
         playerTableau = new Tableau();
     }
@@ -50,7 +52,11 @@ public class Player {
     }
 
     void placeCardontoTableau(int row, int collumn, Card cardDrawn) {
-        playerTableau.setCard(row, collumn, cardDrawn);
+        playerTabulue.setCard(row, collumn, cardDrawn);
+    }
+
+    public Boolean isBoardFilled(){
+        return playerTabulue.isBoardFilled();
     }
 
 
@@ -101,7 +107,7 @@ public class Player {
     
     void inactivePlanting()
     {
-        // Other players may plant one card and draw one card
+        // Players may plant one card and draw one card
         for (int i = 0; i < 3; i ++)
         {
             compostPile.add(discardPile.get(discardPile.size()));
@@ -126,7 +132,7 @@ public class Player {
         //setGainedSoil(2);
         // They also adds two cards from the deck to their
         //compost pile
-//        compostPile.add
+        //compostPile.add
     }
 
     void inactiveComposting()
@@ -244,4 +250,6 @@ public class Player {
             hand.remove(someCardToDiscard);
         }
     }
+    public void setGainedSoil(int soilGained) { this.soil += soilGained;}
+
 }
