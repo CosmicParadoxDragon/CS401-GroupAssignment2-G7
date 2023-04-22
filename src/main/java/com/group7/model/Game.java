@@ -20,8 +20,29 @@ public class Game {
     int turn = 0;
     Player activePlayer;
 
+    // For testing purposes
+    public Game(int numberOfPlayers)
+    {
+        EarthDeck = new Deck();
+        IslandDeck = new Deck();
+        ClimateDeck = new Deck();
+        FuanaDeck = new Deck();
+        discardPile = new Deck();
+        FuanaCards = new ArrayList<Card>();
+        Scores = new ArrayList<Integer>();
+        players = new ArrayList<Player>();
+        m_numberOfPlayers = numberOfPlayers;
+        // Game Setup Phase
+        SetupPhase();
+        // if ( numboerOfPlayers == 1)
+        //         SetupGaia();
+
+        activePlayer = players.get(0);
+        // takeTurnZero(); // Island and Climate Setup
+        mainTurnLoop(); // Take a regular turn, and being the checks for complete Island
+    }
     public Game(Controller controller, int numberOfPlayers)
-    {   
+    {
         m_control = controller;
         EarthDeck = new Deck();
         IslandDeck = new Deck();
@@ -43,7 +64,7 @@ public class Game {
         // takeTurnZero(); // Island and Climate Setup
         //mainTurnLoop(iter); // Take a regular turn, and being the checks for complete Island
     }
-    
+
     //! Assumeing Solo Game
     private void SetupPhase()
     {
@@ -84,7 +105,6 @@ public class Game {
             if (!iter.hasNext()) {
                 iter = players.iterator();
             }
-            activePlayer = iter.next();
             String nextAction = activePlayer.takeTurn();
             if (nextAction == "composting") {
                 if (!EarthDeck.isEmpty()) {
@@ -96,6 +116,7 @@ public class Game {
                 }
             }
             turn++;
+            activePlayer = iter.next();
         }
     }
     boolean isTableauDeckFilled() {
@@ -212,7 +233,7 @@ public class Game {
     public Deck getFuanaDeck() {
         return FuanaDeck;
     }
-
+    Controller getController() { return m_control; }
     /**
      * @return the islandDeck
      */

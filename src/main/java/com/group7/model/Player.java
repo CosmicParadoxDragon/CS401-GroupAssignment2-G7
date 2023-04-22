@@ -57,40 +57,35 @@ public class Player {
     String takeTurn()
     {
         String actionChosen = "";
-        int actionChosenInt;
         //Choose an action
         // Switch to correct branch
-        actionChosenInt = selectAction();
+        actionChosen = selectAction();
 
-        switch (actionChosenInt)
+        switch (actionChosen)
         {
-            case 1:
+            case "planting":
                 activePlanting();
-                actionChosen = "planting";
                 break;
-            case 2:
+            case "composting":
                 activeComposting();
-                actionChosen = "composting";
                 break;
-            case 3:
+            case "growing":
                 activeGrowing();
-                actionChosen = "growing";
                 break;
-            case 4:
+            case "watering":
                 activeWatering();
-                actionChosen = "watering";
                 break;
         }
 
         return actionChosen;
     }
-    
-    int selectAction()
+    String selectAction()
     {
-        Random rand = new Random();
-        int actionChosen = rand.nextInt(3) + 1;
-        return actionChosen;
+        String action;// = "planting";
+        action = m_game.getActionChoice();
+        return action;
     }
+
 
     void activePlanting()
     {
@@ -241,9 +236,12 @@ public class Player {
     {
         for ( int i = 0; i < numberToDiscard; i++)
         {
-            Card someCard;
-            someCard = getHand().get(0); // TODO way to select a card from the hand
-            hand.remove(someCard);
+            if (hand.size() == 0) {return;} // No discard possible, should never reach this from
+            // the way the game is designed but you never know so its here.
+            Card someCardToDiscard;
+            someCardToDiscard = m_game.getController().getCardChoice();
+            // someCard = getHand().get(0); // TODO way to select a card from the hand
+            hand.remove(someCardToDiscard);
         }
     }
 }
