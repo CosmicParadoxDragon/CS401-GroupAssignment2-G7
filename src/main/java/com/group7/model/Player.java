@@ -2,7 +2,7 @@ package com.group7.model;
 
 import java.util.ArrayList;
 import java.util.Stack;
-
+import java.util.Random;
 import com.group7.model.board.Tableau;
 import com.group7.model.cards.Card;
 import com.group7.model.cards.AbilityPair;
@@ -20,7 +20,7 @@ public class Player {
     ArrayList <Card> compostPile;
     ArrayList <Card> discardPile;
     ArrayList <Card> eventStack;
-    ArrayList<ArrayList <Card>> playerTabulue;
+    Tableau playerTableau;
     Game m_game;
     public String getName()
     {
@@ -34,7 +34,7 @@ public class Player {
         eventStack = new ArrayList<>();
         m_game = currentGame;
 
-        playerTabulue = new ArrayList<ArrayList <Card>>();
+        playerTableau = new Tableau();
     }
     public ArrayList <Card> getHand()
     {
@@ -49,59 +49,54 @@ public class Player {
         m_climateCard = cliamteCard;
     }
 
-    void placeCardontoTableau(int cardIndex) {
-        ArrayList row = new ArrayList();
-        row.add(hand.get(cardIndex));
-        playerTabulue.add(row);
+    void placeCardontoTableau(int row, int collumn, Card cardDrawn) {
+        playerTableau.setCard(row, collumn, cardDrawn);
     }
-    public Boolean isBoardFilled(){
-        if (playerTabulue.size() == 0) {
-            return false;
-        }
-        for (ArrayList<Card> row : playerTabulue){
-            for (Card column : row){
-                if(column == null){
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
+
+
     String takeTurn()
     {
         String actionChosen = "";
-
+        int actionChosenInt;
         //Choose an action
         // Switch to correct branch
-        actionChosen = selectAction();
+        actionChosenInt = selectAction();
 
-        switch (actionChosen)
+        switch (actionChosenInt)
         {
-            case "planting":
-                activePlanting(); break;
-            case "composting":
-                activeComposting(); break;
-            case "growing":
-                activeGrowing(); break;
-            case "watering":
-                activeWatering(); break;
+            case 1:
+                activePlanting();
+                actionChosen = "planting";
+                break;
+            case 2:
+                activeComposting();
+                actionChosen = "composting";
+                break;
+            case 3:
+                activeGrowing();
+                actionChosen = "growing";
+                break;
+            case 4:
+                activeWatering();
+                actionChosen = "watering";
+                break;
         }
 
         return actionChosen;
     }
     
-    String selectAction()
+    int selectAction()
     {
-        String action = "planting";
-        action = m_game.getActionChoice();
-        return action;
+        Random rand = new Random();
+        int actionChosen = rand.nextInt(3) + 1;
+        return actionChosen;
     }
 
     void activePlanting()
     {
         // Active Player Action
-        // Plant 2 Cards
-        // Draw 4 Discard 3 (not compost)
+        // Plant Up to 2 cards
+        // Then draw the same number of cards that you plant
         plant();
         // tableau.plant(Card, Card);
         for (int i = 0; i < 4; i++)
@@ -111,8 +106,7 @@ public class Player {
     
     void inactivePlanting()
     {
-        // Gaia Action
-        // discarded cards become compost
+        // Other players may plant one card and draw one card
         for (int i = 0; i < 3; i ++)
         {
             compostPile.add(discardPile.get(discardPile.size()));
@@ -133,32 +127,36 @@ public class Player {
     }
     void activeComposting()
     {
-
+        //The active player gains five soil
+        //setGainedSoil(2);
+        // They also adds two cards from the deck to their
+        //compost pile
+//        compostPile.add
     }
 
     void inactiveComposting()
     {
-
+        // Gain two soil or compost two card
     }
 
     void activeWatering()
     {
-
+        // Gain up to six sprout and two soil
     }
     
     void inactiveWatering()
     {
-
+        // Gain two sprout or two soil
     }
 
     void activeGrowing()
     {
-
+        // Draw four card from the pile and add two growth token cards
     }
 
     void inactiveGrowing()
     {
-
+        // Draw two card or gain two growth
     }
 
     void abilityParser(Stack<AbilityPair> theStack) // temporary location for the ability parser function
@@ -227,8 +225,8 @@ public class Player {
     /**
      * @return the playerTabulue
      */
-    public ArrayList<ArrayList<Card>> getPlayerTabulue() {
-        return playerTabulue;
+    public Tableau getPlayerTabulue() {
+        return playerTableau;
     }
 
     /**

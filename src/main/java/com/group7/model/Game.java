@@ -3,6 +3,7 @@ package com.group7.model;
 import com.group7.model.cards.Card;
 import com.group7.controller.Controller;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class Game {
     Controller m_control;
@@ -36,9 +37,11 @@ public class Game {
         // if ( numboerOfPlayers == 1)
         //         SetupGaia();
 
-        activePlayer = players.get(0);
+        //activePlayer = players.get(0);
+        Iterator<Player> iter = players.iterator();
+        activePlayer = iter.next();
         // takeTurnZero(); // Island and Climate Setup
-        mainTurnLoop(); // Take a regular turn, and being the checks for complete Island
+        //mainTurnLoop(iter); // Take a regular turn, and being the checks for complete Island
     }
     
     //! Assumeing Solo Game
@@ -76,7 +79,33 @@ public class Game {
             // players.get(i).getHand().add(EcosystemDeck.dealCard()); // if we ever get here
         }
     }
-
+    void mainTurnLoop(Iterator<Player> iter) {
+        while (!isTableauDeckFilled()) {
+            if (!iter.hasNext()) {
+                iter = players.iterator();
+            }
+            activePlayer = iter.next();
+            String nextAction = activePlayer.takeTurn();
+            if (nextAction == "composting") {
+                if (!EarthDeck.isEmpty()) {
+                    EarthDeck.compostCard();
+                }
+                else {
+                    // There no card left to compost
+                    continue;
+                }
+            }
+            turn++;
+        }
+    }
+    boolean isTableauDeckFilled() {
+        for (Player currentPlayer : players) {
+            if (currentPlayer.playerTableau.isBoardFilled()) {
+                return true;
+            }
+        }
+        return false;
+    }
     void mainTurnLoop() {
         // This is purely for GUI purpose
         boolean TableauDeckisFilled = false;
@@ -87,17 +116,18 @@ public class Game {
             for (Player currentPlayer : players) {
                 // Checking if the tableau is filled
                 // This line will use the getTableau function
-                if (currentPlayer.isBoardFilled()) {
+                if (currentPlayer.playerTableau.isBoardFilled()) {
                     TableauDeckisFilled = true;
                 }
                     currentPlayer.takeTurn();
-                    currentPlayer.placeCardontoTableau(0);
+//                    currentPlayer.placeCardontoTableau(0,0,Card);
                     // Can calculate the player point in here
                 turn++;
             }
             // Declare the winner based on their points
         }
     }
+
 
     String getActionChoice()
     {
