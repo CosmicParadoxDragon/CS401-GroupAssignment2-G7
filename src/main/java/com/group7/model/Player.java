@@ -104,6 +104,21 @@ public class Player {
             hand.add(m_game.EarthDeck.dealCard());
         discard(3);
     }
+
+    void takeInactiveAction(String inactiveAction)
+    {
+        switch (inactiveAction)
+        {
+            case "planting":
+                inactivePlanting(); break;
+            case "composting":
+                inactiveComposting(); break;
+            case "growing":
+                inactiveGrowing(); break;
+            case "watering":
+                inactiveWatering(); break;
+        }
+    }
     
     void inactivePlanting()
     {
@@ -122,8 +137,6 @@ public class Player {
         // only adjacent to existing cards after.
         String message = "Select a card to plant.";
         // push message to GUI along with input for a number
-        
-
 
     }
     void activeComposting()
