@@ -116,6 +116,21 @@ public class Player {
             hand.add(m_game.EarthDeck.dealCard());
         discard(3);
     }
+
+    void takeInactiveAction(String inactiveAction)
+    {
+        switch (inactiveAction)
+        {
+            case "planting":
+                inactivePlanting(); break;
+            case "composting":
+                inactiveComposting(); break;
+            case "growing":
+                inactiveGrowing(); break;
+            case "watering":
+                inactiveWatering(); break;
+        }
+    }
     
     void inactivePlanting()
     {
@@ -140,7 +155,9 @@ public class Player {
         int x = 0,y = 0;
         // Place it in the Tabelu anywhere on first planting
         // only adjacent to existing cards after.
-        
+        String message = "Select a card to plant.";
+        // push message to GUI along with input for a number
+
         // m_tableau.setCard(x, y, cardToPlant);
         
         // cardToPlant.get_abilities();

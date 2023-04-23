@@ -34,11 +34,11 @@ public class Game {
         // Game Setup Phase
         SetupPhase();
         // if ( numboerOfPlayers == 1)
-        //         SetupGaia();
+        Iterator<Player> iter = players.iterator();
+        activePlayer = iter.next();
 
-        activePlayer = players.get(0);
         // takeTurnZero(); // Island and Climate Setup
-        mainTurnLoop(); // Take a regular turn, and being the checks for complete Island
+        mainTurnLoop(iter); // Take a regular turn, and being the checks for complete Island
     }
 
     
@@ -59,9 +59,10 @@ public class Game {
         // if ( numboerOfPlayers == 1)
         //         SetupGaia();
 
-        activePlayer = players.get(0);
+        Iterator<Player> iters = players.iterator();
+        activePlayer = iters.next();
         // takeTurnZero(); // Island and Climate Setup
-        mainTurnLoop(); // Take a regular turn, and being the checks for complete Island
+        mainTurnLoop(iters); // Take a regular turn, and being the checks for complete Island
     }
     
     //! Assumeing Solo Game
@@ -106,32 +107,32 @@ public class Game {
         }
     }
 
-    void mainTurnLoop() {
-        // This is purely for GUI purpose
-        boolean TableauDeckisFilled = false;
-        // End game condition
-        // If a player tableau is filled and everyone has taken the same no_of_turn
-        // The game is completed
-        while (!TableauDeckisFilled) {
-            for (Player currentPlayer : players) {
-                // Checking if the tableau is filled
-                // This line will use the getTableau function
-                if (currentPlayer.isBoardFilled()) {
-                    TableauDeckisFilled = true;
-                }
-                currentPlayer.takeTurn();
-                // currentPlayer.placeCardontoTableau(0); <- This is gonna happen in takeTurn()
-                // Can calculate the player point in here
-                
-                // Reset these trackers that effect some gameplay elements 
-                currentPlayer.gainedSoil = 0;
-                currentPlayer.gainedCards = 0;
-
-                turn++;
+    void mainTurnLoop(Iterator<Player> iter) {
+        while (!isTableauDeckFilled()) {
+            if (!iter.hasNext()) {
+                iter = players.iterator();
             }
-            // Declare the winner based on their points
+            // The current Player taking turn
+            String nextAction = activePlayer.takeTurn();
+            // Now iterate to the other player and perform inactive action
+            for (int i = 0; i < this.players.size(); i++) {
+                if (!iter.hasNext()) {
+                    iter = players.iterator();
+                }
+                iter.next().takeInactiveAction(nextAction);
+            }
+            turn++;
+            activePlayer = iter.next();
         }
     }
+    boolean isTableauDeckFilled() {
+        for (Player currentPlayer : players) {
+            if (currentPlayer.playerTabulue.isBoardFilled()) {
+                return true;
+            }
+        }
+        return false;
+   }
 
     String getActionChoice()
     {
