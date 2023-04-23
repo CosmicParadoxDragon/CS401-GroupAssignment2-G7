@@ -107,17 +107,14 @@ public class Game {
             if (!iter.hasNext()) {
                 iter = players.iterator();
             }
-
+            // The current Player taking turn
             String nextAction = activePlayer.takeTurn();
-            if (nextAction == "Compost") {
-                if (!EarthDeck.isEmpty()) {
-                    EarthDeck.compostCard();
+            // Now iterate to the other player and perform inactive action
+            for (int i = 0; i < this.players.size(); i++) {
+                if (!iter.hasNext()) {
+                    iter = players.iterator();
                 }
-                else {
-                    // There no card left to compost
-                    // Proceed
-                    continue;
-                }
+                iter.next().takeInactiveAction(nextAction);
             }
             turn++;
             activePlayer = iter.next();
