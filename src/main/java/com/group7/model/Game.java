@@ -3,6 +3,7 @@ package com.group7.model;
 import com.group7.model.cards.Card;
 import com.group7.controller.Controller;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class Game {
     Controller m_control;
