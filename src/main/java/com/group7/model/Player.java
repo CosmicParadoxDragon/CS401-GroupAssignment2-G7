@@ -2,7 +2,7 @@ package com.group7.model;
 
 import java.util.ArrayList;
 import java.util.Stack;
-
+import java.util.Random;
 import com.group7.model.board.Tableau;
 import com.group7.model.cards.Card;
 import com.group7.model.cards.AbilityPair;
@@ -20,7 +20,8 @@ public class Player {
     ArrayList <Card> compostPile;
     ArrayList <Card> discardPile;
     ArrayList <Card> eventStack;
-    Tableau playerTabulue;
+
+    Tableau playerTableau;
     Game m_game;
     public String getName()
     {
@@ -34,7 +35,8 @@ public class Player {
         eventStack = new ArrayList<>();
         m_game = currentGame;
 
-        playerTabulue = new Tableau();
+
+        playerTableau = new Tableau();
     }
     public ArrayList <Card> getHand()
     {
@@ -56,10 +58,11 @@ public class Player {
     public Boolean isBoardFilled(){
         return playerTabulue.isBoardFilled();
     }
+
+
     String takeTurn()
     {
         String actionChosen = "";
-
         //Choose an action
         // Switch to correct branch
         actionChosen = selectAction();
@@ -67,24 +70,28 @@ public class Player {
         switch (actionChosen)
         {
             case "planting":
-                activePlanting(); break;
+                activePlanting();
+                break;
             case "composting":
-                activeComposting(); break;
+                activeComposting();
+                break;
             case "growing":
-                activeGrowing(); break;
+                activeGrowing();
+                break;
             case "watering":
-                activeWatering(); break;
+                activeWatering();
+                break;
         }
 
         return actionChosen;
     }
-    
     String selectAction()
     {
         String action;// = "planting";
         action = m_game.getActionChoice();
         return action;
     }
+
 
     void activePlanting()
     {
@@ -122,8 +129,10 @@ public class Player {
     void activeComposting()
     {
         //The active player gains five soil
-        //They also and adds two cards from the deck to their
+        //setGainedSoil(2);
+        // They also adds two cards from the deck to their
         //compost pile
+        //compostPile.add
     }
 
     void inactiveComposting()
@@ -218,7 +227,7 @@ public class Player {
      * @return the playerTabulue
      */
     public Tableau getPlayerTabulue() {
-        return playerTabulue;
+        return playerTableau;
     }
 
     /**
