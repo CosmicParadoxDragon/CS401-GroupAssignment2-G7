@@ -122,7 +122,7 @@ public class Game {
     }
     boolean isTableauDeckFilled() {
         for (Player currentPlayer : players) {
-            if (currentPlayer.playerTabulue.isBoardFilled()) {
+            if (currentPlayer.playerTableau.isBoardFilled()) {
                 return true;
             }
         }
