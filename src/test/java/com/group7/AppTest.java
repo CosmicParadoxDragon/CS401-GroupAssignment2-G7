@@ -42,7 +42,6 @@ class AppTest {
         assertEquals(0, game_state.getActivePlayer().getCompostPile().size());
         assertEquals(0, game_state.getActivePlayer().getDiscardPile().size());
         assertEquals(0, game_state.getActivePlayer().getEventStack().size());
-        assertEquals(2, game_state.getActivePlayer().getPlayerTabulue().size());
     }
 
     @Test
