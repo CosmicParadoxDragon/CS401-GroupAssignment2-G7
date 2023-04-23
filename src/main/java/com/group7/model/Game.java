@@ -3,7 +3,6 @@ package com.group7.model;
 import com.group7.model.cards.Card;
 import com.group7.controller.Controller;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 public class Game {
     Controller m_control;
@@ -35,9 +34,9 @@ public class Game {
         // Game Setup Phase
         SetupPhase();
         // if ( numboerOfPlayers == 1)
-        //         SetupGaia();
         Iterator<Player> iter = players.iterator();
         activePlayer = iter.next();
+
         // takeTurnZero(); // Island and Climate Setup
         mainTurnLoop(iter); // Take a regular turn, and being the checks for complete Island
     }
@@ -89,6 +88,12 @@ public class Game {
             FuanaCards.add(FuanaDeck.dealCard());
         }
         // 1 Player game is standard expect everything to break
+        PlayerSetup();
+    }
+
+    
+    private void PlayerSetup()
+    {
         for (int i = 0; i < m_numberOfPlayers; i++)
         {
             Card island = IslandDeck.dealCard();
@@ -127,7 +132,7 @@ public class Game {
             }
         }
         return false;
-    }
+   }
 
     String getActionChoice()
     {
