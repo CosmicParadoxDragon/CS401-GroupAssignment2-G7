@@ -141,10 +141,9 @@ public class Player {
 
         // cardToPlant = m_game.m_control.getCardChoice();
         int x = 0,y = 0;
+        
         // Place it in the Tabelu anywhere on first planting
         // only adjacent to existing cards after.
-        // String message = "Select a card to plant.";
-        // push message to GUI along with input for a number
 
         // m_tableau.setCard(x, y, cardToPlant);
         
