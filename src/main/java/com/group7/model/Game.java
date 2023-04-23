@@ -87,6 +87,12 @@ public class Game {
             FuanaCards.add(FuanaDeck.dealCard());
         }
         // 1 Player game is standard expect everything to break
+        PlayerSetup();
+    }
+
+    
+    private void PlayerSetup()
+    {
         for (int i = 0; i < m_numberOfPlayers; i++)
         {
             Card island = IslandDeck.dealCard();
