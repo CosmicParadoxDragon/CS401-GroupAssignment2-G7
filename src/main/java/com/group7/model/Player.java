@@ -2,9 +2,10 @@ package com.group7.model;
 
 import java.util.ArrayList;
 import java.util.Stack;
-import java.util.Random;
+
 import com.group7.model.board.Tableau;
 import com.group7.model.cards.Card;
+import com.group7.model.cards.EarthCard;
 import com.group7.model.cards.AbilityPair;
 
 
@@ -14,15 +15,19 @@ public class Player {
     int soil;
     int gainedSoil = 0;
     int gainedCards = 0;
+    int trunks = 0;
+    int sprouts = 0;
 
     Card m_islandCard, m_climateCard;
     ArrayList <Card> hand;
     ArrayList <Card> compostPile;
     ArrayList <Card> discardPile;
     ArrayList <Card> eventStack;
-
-    Tableau playerTableau;
+    ArrayList<ArrayList <Card>> playerTabulue;
     Game m_game;
+    Tableau m_tableau;
+
+
     public String getName()
     {
         return playerName;
@@ -34,9 +39,8 @@ public class Player {
         discardPile = new ArrayList<>();
         eventStack = new ArrayList<>();
         m_game = currentGame;
-
-
-        playerTableau = new Tableau();
+        m_tableau = new Tableau();
+        playerTabulue = new ArrayList<ArrayList <Card>>();
     }
     public ArrayList <Card> getHand()
     {
@@ -51,18 +55,29 @@ public class Player {
         m_climateCard = cliamteCard;
     }
 
-    void placeCardontoTableau(int row, int collumn, Card cardDrawn) {
-        playerTabulue.setCard(row, collumn, cardDrawn);
-    }
+    // void placeCardontoTableau(int cardIndex) {
+    //     ArrayList row = new ArrayList();
+    //     row.add(hand.get(cardIndex));
+    //     playerTabulue.add(row);
+    // }
 
     public Boolean isBoardFilled(){
-        return playerTabulue.isBoardFilled();
+        if (playerTabulue.size() == 0) {
+            return false;
+        }
+        for (ArrayList<Card> row : playerTabulue){
+            for (Card column : row){
+                if(column == null){
+                    return false;
+                }
+            }
+        }
+        return true;
     }
-
-
     String takeTurn()
     {
         String actionChosen = "";
+
         //Choose an action
         // Switch to correct branch
         actionChosen = selectAction();
@@ -70,21 +85,18 @@ public class Player {
         switch (actionChosen)
         {
             case "planting":
-                activePlanting();
-                break;
+                activePlanting(); break;
             case "composting":
-                activeComposting();
-                break;
+                activeComposting(); break;
             case "growing":
-                activeGrowing();
-                break;
+                activeGrowing(); break;
             case "watering":
-                activeWatering();
-                break;
+                activeWatering(); break;
         }
 
         return actionChosen;
     }
+    
     String selectAction()
     {
         String action;// = "planting";
@@ -92,13 +104,13 @@ public class Player {
         return action;
     }
 
-
     void activePlanting()
     {
         // Active Player Action
-        // Plant Up to 2 cards
-        // Then draw the same number of cards that you plant
+        // Plant 2 Cards
         plant();
+        plant();
+        // Draw 4 Discard 3 (not compost)
         // tableau.plant(Card, Card);
         for (int i = 0; i < 4; i++)
             hand.add(m_game.EarthDeck.dealCard());
@@ -122,7 +134,8 @@ public class Player {
     
     void inactivePlanting()
     {
-        // Players may plant one card and draw one card
+        // Gaia Action
+        // discarded cards become compost
         for (int i = 0; i < 3; i ++)
         {
             compostPile.add(discardPile.get(discardPile.size()));
@@ -132,57 +145,119 @@ public class Player {
 
     void plant()
     {
+        Card cardToPlant;
+
+        String message = "Select a card to plant.";
+        // push message to GUI along with input for a number
         // Select a card from Hand
+
+        // cardToPlant = m_game.m_control.getCardChoice();
+        int x = 0,y = 0;
         // Place it in the Tabelu anywhere on first planting
         // only adjacent to existing cards after.
         String message = "Select a card to plant.";
         // push message to GUI along with input for a number
 
+        // m_tableau.setCard(x, y, cardToPlant);
+        
+        // cardToPlant.get_abilities();
+
     }
+
+    private int placeInIsland(Card card)
+    {
+        // Get a specific Tile number from tui
+        // m_game.m_control.getIslandCoords();
+
+        // 
+
+        return 0;
+    }
+
+
     void activeComposting()
     {
-        //The active player gains five soil
-        //setGainedSoil(2);
-        // They also adds two cards from the deck to their
-        //compost pile
-        //compostPile.add
+        
     }
 
     void inactiveComposting()
     {
-        // Gain two soil or compost two card
+
     }
 
     void activeWatering()
     {
-        // Gain up to six sprout and two soil
+
     }
     
     void inactiveWatering()
     {
-        // Gain two sprout or two soil
+
     }
 
     void activeGrowing()
     {
-        // Draw four card from the pile and add two growth token cards
+
     }
 
     void inactiveGrowing()
     {
-        // Draw two card or gain two growth
+
     }
 
-    void abilityParser(Stack<AbilityPair> theStack) // temporary location for the ability parser function
+
+    // example ability section: 
+    // Yellow:+1 Trunks +1 Sprouts
+    void abilityParser(AbilityPair ability) // temporary location for the ability parser function
     {
-        if (theStack.isEmpty())
-            return;
-        else
+        int num = 0;
+        String number;
+        String ability_text = ability.getText();
+        String [] ability_split = ability_text.split(" ");
+        for ( String word : ability_split )
         {
-            AbilityPair currentAbility = theStack.pop();
-            if (currentAbility.getColor().equals("Black"))
+            if ( word.contains("then") )
             {
-                
+                // skip or stack maybe not sure if we need to stack abilities
+                // like this in this context
+            }
+            if (word.contains("+") || word.contains("-"))
+            {
+                number = word.substring(1);
+                num = Integer.valueOf(number);
+            }
+            else if ( word.contains("Trunks") )
+            {
+                trunks += num;
+            }
+            else if ( word.contains("Sprouts") )
+            {
+                sprouts += num;
+            }
+            else if ( word.contains("Soil") && num < 0)
+            {
+                soil += num;
+            }
+            else if ( word.contains("Soil") )
+            {
+                soil += num;
+                gainedSoil += num; 
+                // Soil gained need to be reset somewhere putting at the end of the turn for now
+            }
+            else if ( word.contains("Cards") )
+            {
+                for (int y = 0; y < num; y++)
+                {
+                    hand.add(m_game.EarthDeck.dealCard());
+                }
+            }
+            else if ( word.contains("Compost") && num < 0)
+            {
+                // Move top most compost card to discard pile
+            }
+            else if ( word.contains("Compost") )
+            {
+                // Move a card to the compost pile
             }
         }
     }
@@ -239,8 +314,8 @@ public class Player {
     /**
      * @return the playerTabulue
      */
-    public Tableau getPlayerTabulue() {
-        return playerTableau;
+    public ArrayList<ArrayList<Card>> getPlayerTabulue() {
+        return playerTabulue;
     }
 
     /**
@@ -255,7 +330,7 @@ public class Player {
     {
         for ( int i = 0; i < numberToDiscard; i++)
         {
-            if (hand.size() == 0) {return;} // No discard possible, should never reach this from 
+            if (hand.size() == 0) { return; } // No discard possible, should never reach this from 
             // the way the game is designed but you never know so its here.
             Card someCardToDiscard;
             someCardToDiscard = m_game.getController().getCardChoice();
@@ -263,6 +338,4 @@ public class Player {
             hand.remove(someCardToDiscard);
         }
     }
-    public void setGainedSoil(int soilGained) { this.soil += soilGained;}
-
 }
