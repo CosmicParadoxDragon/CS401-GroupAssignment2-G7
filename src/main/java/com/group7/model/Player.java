@@ -25,6 +25,8 @@ public class Player {
     ArrayList <Card> eventStack;
     ArrayList<ArrayList <Card>> playerTabulue;
     Game m_game;
+    Tableau m_tableau;
+
 
     public String getName()
     {
@@ -37,7 +39,7 @@ public class Player {
         discardPile = new ArrayList<>();
         eventStack = new ArrayList<>();
         m_game = currentGame;
-
+        m_tableau = new Tableau();
         playerTabulue = new ArrayList<ArrayList <Card>>();
     }
     public ArrayList <Card> getHand()
@@ -53,11 +55,12 @@ public class Player {
         m_climateCard = cliamteCard;
     }
 
-    void placeCardontoTableau(int cardIndex) {
-        ArrayList row = new ArrayList();
-        row.add(hand.get(cardIndex));
-        playerTabulue.add(row);
-    }
+    // void placeCardontoTableau(int cardIndex) {
+    //     ArrayList row = new ArrayList();
+    //     row.add(hand.get(cardIndex));
+    //     playerTabulue.add(row);
+    // }
+
     public Boolean isBoardFilled(){
         if (playerTabulue.size() == 0) {
             return false;
@@ -105,8 +108,9 @@ public class Player {
     {
         // Active Player Action
         // Plant 2 Cards
-        // Draw 4 Discard 3 (not compost)
         plant();
+        plant();
+        // Draw 4 Discard 3 (not compost)
         // tableau.plant(Card, Card);
         for (int i = 0; i < 4; i++)
             hand.add(m_game.EarthDeck.dealCard());
@@ -133,11 +137,11 @@ public class Player {
         // Select a card from Hand
 
         // cardToPlant = m_game.m_control.getCardChoice();
-
+        int x = 0,y = 0;
         // Place it in the Tabelu anywhere on first planting
         // only adjacent to existing cards after.
-        // placeInIsland(cardToPlant, x, y);
-
+        
+        // m_tableau.setCard(x, y, cardToPlant);
         
         // cardToPlant.get_abilities();
 
@@ -156,7 +160,7 @@ public class Player {
 
     void activeComposting()
     {
-
+        
     }
 
     void inactiveComposting()
