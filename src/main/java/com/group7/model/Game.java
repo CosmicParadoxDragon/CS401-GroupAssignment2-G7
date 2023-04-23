@@ -113,9 +113,14 @@ public class Game {
                 if (currentPlayer.isBoardFilled()) {
                     TableauDeckisFilled = true;
                 }
-                    currentPlayer.takeTurn();
-                    currentPlayer.placeCardontoTableau(0);
-                    // Can calculate the player point in here
+                currentPlayer.takeTurn();
+                // currentPlayer.placeCardontoTableau(0); <- This is gonna happen in takeTurn()
+                // Can calculate the player point in here
+                
+                // Reset these trackers that effect some gameplay elements 
+                currentPlayer.gainedSoil = 0;
+                currentPlayer.gainedCards = 0;
+
                 turn++;
             }
             // Declare the winner based on their points

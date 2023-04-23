@@ -36,11 +36,11 @@ public class Card {
      * Will check the passed turn action and return the ability string for the 
      * activated ability of the card can be used.
      * @param encodedString
-     * @return
+     * @return a stack of ability operations to perform
      */
     Stack<AbilityPair> stackAbility(String colorOfTurnAction)
     {
-        Stack<AbilityPair> abilityStack= new Stack<>();
+        Stack<AbilityPair> abilityStack = new Stack<>();
         for ( AbilityPair ability : m_encodedAbilities )
         {
             if (ability.getColor().equals(colorOfTurnAction))
@@ -56,7 +56,7 @@ public class Card {
         // where the ability string will be passed to
         // needs color check -> defining actions -> resolution
         
-        // Black:+12 Cards +5 Compost +6 Soil Green:+1 Card Per Terrain Planted This Turn
+        // Black:+12 Cards +5 Compost +6 Soil'Green:+1 Card Per Terrain Planted This Turn
         String[] text_abilities = encodedString.split("'");
         for (int i = 0; i < text_abilities.length; i++ )
         {
@@ -74,8 +74,8 @@ public class Card {
     /**
      * @return the m_abilities
      */
-    public String getM_abilities() {
-        return m_abilitiesLine;
+    public ArrayList<AbilityPair> get_abilities() {
+        return m_encodedAbilities;
     }
     /**
      * @return the m_text
@@ -83,4 +83,6 @@ public class Card {
     public String getM_text() {
         return m_text;
     }
+
+
 }

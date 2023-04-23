@@ -5,6 +5,7 @@ import java.util.Stack;
 
 import com.group7.model.board.Tableau;
 import com.group7.model.cards.Card;
+import com.group7.model.cards.EarthCard;
 import com.group7.model.cards.AbilityPair;
 
 
@@ -14,6 +15,8 @@ public class Player {
     int soil;
     int gainedSoil = 0;
     int gainedCards = 0;
+    int trunks = 0;
+    int sprouts = 0;
 
     Card m_islandCard, m_climateCard;
     ArrayList <Card> hand;
@@ -22,6 +25,7 @@ public class Player {
     ArrayList <Card> eventStack;
     ArrayList<ArrayList <Card>> playerTabulue;
     Game m_game;
+
     public String getName()
     {
         return playerName;
@@ -122,15 +126,34 @@ public class Player {
 
     void plant()
     {
-        // Select a card from Hand
-        // Place it in the Tabelu anywhere on first planting
-        // only adjacent to existing cards after.
+        Card cardToPlant;
+
         String message = "Select a card to plant.";
         // push message to GUI along with input for a number
-        
+        // Select a card from Hand
 
+        // cardToPlant = m_game.m_control.getCardChoice();
+
+        // Place it in the Tabelu anywhere on first planting
+        // only adjacent to existing cards after.
+        // placeInIsland(cardToPlant, x, y);
+
+        
+        // cardToPlant.get_abilities();
 
     }
+
+    private int placeInIsland(Card card)
+    {
+        // Get a specific Tile number from tui
+        // m_game.m_control.getIslandCoords();
+
+        // 
+
+        return 0;
+    }
+
+
     void activeComposting()
     {
 
@@ -161,16 +184,59 @@ public class Player {
 
     }
 
-    void abilityParser(Stack<AbilityPair> theStack) // temporary location for the ability parser function
+
+    // example ability section: 
+    // Yellow:+1 Trunks +1 Sprouts
+    void abilityParser(AbilityPair ability) // temporary location for the ability parser function
     {
-        if (theStack.isEmpty())
-            return;
-        else
+        int num = 0;
+        String number;
+        String ability_text = ability.getText();
+        String [] ability_split = ability_text.split(" ");
+        for ( String word : ability_split )
         {
-            AbilityPair currentAbility = theStack.pop();
-            if (currentAbility.getColor().equals("Black"))
+            if ( word.contains("then") )
             {
-                
+                // skip or stack maybe not sure if we need to stack abilities
+                // like this in this context
+            }
+            if (word.contains("+") || word.contains("-"))
+            {
+                number = word.substring(1);
+                num = Integer.valueOf(number);
+            }
+            else if ( word.contains("Trunks") )
+            {
+                trunks += num;
+            }
+            else if ( word.contains("Sprouts") )
+            {
+                sprouts += num;
+            }
+            else if ( word.contains("Soil") && num < 0)
+            {
+                soil += num;
+            }
+            else if ( word.contains("Soil") )
+            {
+                soil += num;
+                gainedSoil += num; 
+                // Soil gained need to be reset somewhere putting at the end of the turn for now
+            }
+            else if ( word.contains("Cards") )
+            {
+                for (int y = 0; y < num; y++)
+                {
+                    hand.add(m_game.EarthDeck.dealCard());
+                }
+            }
+            else if ( word.contains("Compost") && num < 0)
+            {
+                // Move top most compost card to discard pile
+            }
+            else if ( word.contains("Compost") )
+            {
+                // Move a card to the compost pile
             }
         }
     }
@@ -243,7 +309,7 @@ public class Player {
     {
         for ( int i = 0; i < numberToDiscard; i++)
         {
-            if (hand.size() == 0) {return;} // No discard possible, should never reach this from 
+            if (hand.size() == 0) { return; } // No discard possible, should never reach this from 
             // the way the game is designed but you never know so its here.
             Card someCardToDiscard;
             someCardToDiscard = m_game.getController().getCardChoice();
