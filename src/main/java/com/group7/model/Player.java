@@ -335,4 +335,7 @@ public class Player {
             hand.remove(someCardToDiscard);
         }
     }
+    void setGainedSoil(int amount) { soil+= amount; }
+    void setGainedTrunk(int amount) { trunks += amount; }
+    void setGainedSprout(int amount) { sprouts += amount; }
 }

@@ -116,12 +116,14 @@ public class Game {
             // The current Player taking turn
             String nextAction = activePlayer.takeTurn();
             // Now iterate to the other player and perform inactive action
+            // The go back to the current player
             for (int i = 0; i < this.players.size(); i++) {
                 if (!iter.hasNext()) {
                     iter = players.iterator();
                 }
                 iter.next().takeInactiveAction(nextAction);
             }
+            //Increment the turn and then iterate to the next player
             turn++;
             activePlayer = iter.next();
         }
