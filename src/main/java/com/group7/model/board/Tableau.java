@@ -24,6 +24,18 @@ public class Tableau {
         }
     }
 
+    public Boolean isBoardEmpty() {
+        for (Card[] row : Board){
+            for (Card column : row){
+                if(column != null){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+
     public void getPoints(){
         System.out.println("not implemented yet!");
     }
