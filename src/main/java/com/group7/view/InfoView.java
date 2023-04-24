@@ -20,7 +20,7 @@ public class InfoView {
     private JLabel lblSprouts;
     private JLabel lblSproutsVal;
     private JPanel panelGameStatusContainer;
-    private JProgressBar progressBar1;
+    private JLabel lblImageMtn;
 
 
     private CardViewer cardViewerObj;
@@ -36,6 +36,8 @@ public class InfoView {
     private String curStatusText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi quis iaculis metus. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.";
 
     public InfoView(ViewController inThisView){
+        lblImageMtn.setIcon(new ImageIcon("src/main/java/com/group7/view/images/mtnIcont.png"));
+
         cardViewerObj = new CardViewer();
 
         thisView = inThisView;

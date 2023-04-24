@@ -29,7 +29,7 @@
         <properties>
           <foreground color="-11579569"/>
         </properties>
-        <border type="none"/>
+        <border type="bevel-raised"/>
         <children/>
       </grid>
     </children>
