@@ -23,7 +23,7 @@ public class Deck {
     Card dealCard()
     {
         if (deckList.size() == 0) {
-        //    return;
+            // Exception no card left
         }
         // Return a random card from the deck
         Random random = new Random();
