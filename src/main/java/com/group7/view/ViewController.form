@@ -12,19 +12,24 @@
       <grid id="c03ab" binding="panelCLLeft" layout-manager="CardLayout" hgap="0" vgap="0">
         <constraints border-constraint="West"/>
         <properties/>
-        <border type="line"/>
+        <border type="none"/>
         <children/>
       </grid>
       <grid id="989b6" binding="panelCLCenter" layout-manager="CardLayout" hgap="0" vgap="0">
         <constraints border-constraint="Center"/>
-        <properties/>
-        <border type="none"/>
+        <properties>
+          <font/>
+          <foreground color="-14869217"/>
+        </properties>
+        <border type="bevel-lowered"/>
         <children/>
       </grid>
       <grid id="f26db" binding="panelCLBottom" layout-manager="CardLayout" hgap="0" vgap="0">
         <constraints border-constraint="South"/>
-        <properties/>
-        <border type="none"/>
+        <properties>
+          <foreground color="-11579569"/>
+        </properties>
+        <border type="bevel-raised"/>
         <children/>
       </grid>
     </children>

@@ -1,6 +1,7 @@
 package com.group7.view;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class ViewController extends JFrame{
 
@@ -21,6 +22,8 @@ public class ViewController extends JFrame{
     //private JPanel gameInfoPanel;
     //private GameInfo gameInfoObj;
     private JPanel handCardsPanel;
+    private HandCards handCardsObj;
+
 
     private JPanel infoViewPanel;
     private InfoView infoViewObj;
@@ -28,8 +31,9 @@ public class ViewController extends JFrame{
     private JPanel cardViewerPanel;
     private CardViewer cardViewerObj;
 
+    private TableauView tableauViewObj;
+    private JPanel tableauViewPanel;
 
-    private HandCards handCardsObj;
 
 
     //window title defaults to welcome
@@ -44,6 +48,10 @@ public class ViewController extends JFrame{
 
     public ViewController(){
 
+       // UIManager.getLookAndFeelDefaults()
+        //        .put("defaultFont", new Font("Arial", Font.BOLD, 14));
+
+        UIManager.put("TextArea.font", new Font("Arial", Font.BOLD, 16));
 
         //create objects for each game panel
         playerEntryObj = new PlayerEntry(this);
@@ -58,6 +66,12 @@ public class ViewController extends JFrame{
         cardViewerObj = new CardViewer(this);
         cardViewerPanel = cardViewerObj.getPanel();
 
+        tableauViewObj = new TableauView(this);
+        tableauViewPanel = tableauViewObj.getPanel();
+
+
+
+
         //fill window with main view
         setContentPane(panelMainView);
 
@@ -65,6 +79,8 @@ public class ViewController extends JFrame{
         setSize(windowX, windowY);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setVisible(true);
+
+
     }
 
     //Screen changers
@@ -74,7 +90,8 @@ public class ViewController extends JFrame{
     }
 
     public void drawGameHome(){
-        clearPanel(panelCLCenter);
+
+        changePanel(panelCLCenter, tableauViewPanel);
         changePanel(panelCLLeft, infoViewPanel);
         changePanel(panelCLBottom, handCardsPanel);
     }

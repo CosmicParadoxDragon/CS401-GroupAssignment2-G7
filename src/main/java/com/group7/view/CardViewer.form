@@ -1,53 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="com.group7.view.CardViewer">
-  <grid id="27dc6" binding="panelCardView" layout-manager="GridLayoutManager" row-count="5" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-    <margin top="0" left="0" bottom="0" right="0"/>
+  <grid id="27dc6" binding="panelCardView" layout-manager="GridLayoutManager" row-count="4" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+    <margin top="5" left="5" bottom="5" right="5"/>
     <constraints>
       <xy x="20" y="20" width="500" height="400"/>
     </constraints>
-    <properties/>
-    <border type="none"/>
+    <properties>
+      <background color="-14869217"/>
+      <foreground color="-4473925"/>
+    </properties>
+    <border type="etched"/>
     <children>
       <component id="28369" class="javax.swing.JLabel">
         <constraints>
           <grid row="0" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
+          <foreground color="-262657"/>
           <text value="Card Title"/>
-        </properties>
-      </component>
-      <component id="779e2" class="javax.swing.JTextArea" binding="taCardAbility">
-        <constraints>
-          <grid row="1" column="0" row-span="1" col-span="2" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
-            <preferred-size width="150" height="50"/>
-          </grid>
-        </constraints>
-        <properties>
-          <editable value="false"/>
-          <text value="N/A"/>
-        </properties>
-      </component>
-      <component id="e1539" class="javax.swing.JCheckBox" binding="checkboxAttributePlaceholder1">
-        <constraints>
-          <grid row="3" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <enabled value="false"/>
-          <focusPainted value="true"/>
-          <hideActionText value="false"/>
-          <label value="A true attribute"/>
-          <opaque value="true"/>
-          <selected value="true"/>
-          <text value="A true attribute"/>
-        </properties>
-      </component>
-      <component id="556b4" class="javax.swing.JCheckBox" binding="aFalseAttributeCheckBox" default-binding="true">
-        <constraints>
-          <grid row="4" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <enabled value="false"/>
-          <text value="A false attribute"/>
         </properties>
       </component>
       <component id="d74f6" class="javax.swing.JLabel" binding="lblVictoryPoints">
@@ -64,6 +34,27 @@
         </constraints>
         <properties>
           <text value="N/A"/>
+        </properties>
+      </component>
+      <component id="779e2" class="javax.swing.JTextArea" binding="taCardAbility">
+        <constraints>
+          <grid row="1" column="0" row-span="1" col-span="2" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="50"/>
+          </grid>
+        </constraints>
+        <properties>
+          <background color="-12828863"/>
+          <editable value="false"/>
+          <foreground color="-262657"/>
+          <text value="N/A"/>
+        </properties>
+      </component>
+      <component id="7b45b" class="javax.swing.JButton" binding="btnViewCard">
+        <constraints>
+          <grid row="3" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="View Card"/>
         </properties>
       </component>
     </children>

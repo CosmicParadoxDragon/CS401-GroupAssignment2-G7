@@ -13,6 +13,12 @@ public class InfoView {
     private JLabel lblVictoryPointsVal;
     private JLabel lblCardViewTitle;
     private JPanel panelCLCardView;
+    private JLabel lblSoil;
+    private JLabel lblSoilVal;
+    private JLabel lblTrunks;
+    private JLabel lblTrunksVal;
+    private JLabel lblSprouts;
+    private JLabel lblSproutsVal;
 
 
     private CardViewer cardViewerObj;
@@ -32,6 +38,7 @@ public class InfoView {
         panelInfoView.setPreferredSize(leftDimen);
 
         taGameStatus.setLineWrap(true);
+        taGameStatus.setWrapStyleWord(true);
 
 
     }
@@ -47,11 +54,12 @@ public class InfoView {
         //refresh card
 
 
-        cardViewerObj.getPanel().setPreferredSize(leftDimen);
+
         panelCLCardView.removeAll();
         panelCLCardView.add(cardViewerObj.getPanel());
         panelCLCardView.repaint();
         panelCLCardView.revalidate();
+        cardViewerObj.getPanel().setPreferredSize(leftDimen);
     }
 }
 

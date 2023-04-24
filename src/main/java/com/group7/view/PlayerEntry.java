@@ -5,7 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class PlayerEntry {
-    private JTextArea welcomeToEarthAnTextArea;
+    private JTextArea taWelcome;
     private JTextField tfPlayerName;
     private JButton btnPlayerInfoSubmit;
     private JLabel lblPlayerName;
@@ -17,6 +17,8 @@ public class PlayerEntry {
 
     public PlayerEntry(ViewController thisView){
 
+        taWelcome.setLineWrap(true);
+        taWelcome.setWrapStyleWord(true);
         btnPlayerInfoSubmit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
