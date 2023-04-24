@@ -58,7 +58,7 @@ public class Game {
         SetupPhase();
         // if ( numboerOfPlayers == 1)
         //         SetupGaia();
-        activePlayer = players.get(0);
+        playerSetup();
     }
 
     // Player now tak
@@ -121,7 +121,6 @@ public class Game {
     }
 
     public void takeASingleTurn() {
-        playerSetup();
         // Edge case check
         // Reset the iterator if it reached the last element of the players list
         if (!iter.hasNext()) {
