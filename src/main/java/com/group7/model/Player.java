@@ -122,13 +122,9 @@ public class Player {
     
     void inactivePlanting()
     {
-        // Gaia Action
-        // discarded cards become compost
-        for (int i = 0; i < 3; i ++)
-        {
-            compostPile.add(discardPile.get(discardPile.size()));
-            compostPile.remove(discardPile.size());
-        }
+        // Other players may plant one card and draw one card
+        plant();
+        hand.add(m_game.EarthDeck.dealCard());
     }
 
     void plant()

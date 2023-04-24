@@ -112,15 +112,28 @@ class AppTest {
 
 
     // Complex Testing
-
+    // Now we actually start the game
     // need the takeTurn function
     // Test if the first player taking turn is the first player in the ArrayList
-    @Test
-    void takeTurnTest()
-    {
 
+
+    @Test
+    void AfterDeckSetupTest() {
+    }
+    @Test
+    void takeASingleTurnTest()
+    {
+        game_state.takeASingleTurn();
+        assertEquals(1, game_state.getTurn());
     }
 
     @Test
-    void takeTurnTestEdgeCase() {}
+    void takeMultipleTurnTest()
+    {
+        for(int i = 0; i < 4; i++) {
+            game_state.takeASingleTurn();
+        }
+        assertEquals(4, game_state.getTurn());
+    }
+
 }

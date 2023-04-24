@@ -19,7 +19,7 @@ public class Game {
 
     int turn = 0;
     Player activePlayer;
-    
+    Iterator<Player> iter;
     // For testing purposes
     public Game(int numberOfPlayers)
     {   
@@ -31,18 +31,17 @@ public class Game {
         FuanaCards = new ArrayList<Card>();
         Scores = new ArrayList<Integer>();
         players = new ArrayList<Player>();
+
         m_numberOfPlayers = numberOfPlayers;
         // Game Setup Phase
         SetupPhase();
-        // if ( numboerOfPlayers == 1)
-        Iterator<Player> iter = players.iterator();
-        activePlayer = iter.next();
-
+        iter = players.iterator();
+        activePlayer = getNextPlayer();
         // takeTurnZero(); // Island and Climate Setup
-        mainTurnLoop(iter); // Take a regular turn, and being the checks for complete Island
+        mainTurnLoop(); // Take a regular turn, and being the checks for complete Island
     }
 
-    
+    // Setup the deck and player board
     public Game(Controller controller, int numberOfPlayers)
     {   
         m_control = controller;
@@ -59,14 +58,21 @@ public class Game {
         SetupPhase();
         // if ( numboerOfPlayers == 1)
         //         SetupGaia();
-
-        Iterator<Player> iters = players.iterator();
-        activePlayer = iters.next();
-        // takeTurnZero(); // Island and Climate Setup
-        mainTurnLoop(iters); // Take a regular turn, and being the checks for complete Island
+        activePlayer = players.get(0);
     }
-    
-    //! Assumeing Solo Game
+
+    // Player now tak
+    public void gameStart() {
+        playerSetup();
+        // takeTurnZero(); // Island and Climate Setup
+        mainTurnLoop(); // Take a regular turn, and being the checks for complete Island
+    }
+
+    public void playerSetup() {
+        iter = resetIterator();
+        activePlayer = getNextPlayer();
+    }
+    // Assumeing Solo Game
     private void SetupPhase()
     {
         try{
@@ -108,11 +114,22 @@ public class Game {
         }
     }
 
-    void mainTurnLoop(Iterator<Player> iter) {
+    void mainTurnLoop() {
         while (!isTableauDeckFilled()) {
-            if (!iter.hasNext()) {
-                iter = players.iterator();
-            }
+            takeASingleTurn();
+        }
+    }
+
+    public void takeASingleTurn() {
+        playerSetup();
+        // Edge case check
+        // Reset the iterator if it reached the last element of the players list
+        if (!iter.hasNext()) {
+            iter = resetIterator();
+        }
+        if (m_numberOfPlayers != 1)
+            activePlayer = iter.next();
+        else {
             // The current Player taking turn
             String nextAction = activePlayer.takeTurn();
             // Now iterate to the other player and perform inactive action
@@ -123,10 +140,17 @@ public class Game {
                 }
                 iter.next().takeInactiveAction(nextAction);
             }
-            //Increment the turn and then iterate to the next player
-            turn++;
-            activePlayer = iter.next();
         }
+        //Increment the turn and then iterate to the next player
+        turn++;
+    }
+
+    Player getNextPlayer() {
+        return iter.next();
+    }
+
+    Iterator<Player> resetIterator() {
+        return players.iterator();
     }
     boolean isTableauDeckFilled() {
         for (Player currentPlayer : players) {
@@ -247,6 +271,10 @@ public class Game {
      */
     public Deck getDiscardPile() {
         return discardPile;
+    }
+
+    public int getTurn() {
+        return turn;
     }
     Controller getController() { return m_control; }
 }
