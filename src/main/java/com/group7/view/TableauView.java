@@ -44,7 +44,7 @@ public class TableauView {
         tableauPanels.add(panelCLTableau16);
 
         for (int i = 0; i < 16; i++){
-            tableauCards.add(new CardViewer());
+            tableauCards.add(new CardViewer(thisView));
             tableauCards.get(i).setMiniCard();
             setTableauCardPanel(tableauPanels.get(i), tableauCards.get(i));
         }

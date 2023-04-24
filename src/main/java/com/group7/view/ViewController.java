@@ -1,10 +1,13 @@
 package com.group7.view;
 
+import com.group7.view.sfx.sfxController;
+
 import javax.swing.*;
 import java.awt.*;
 
 public class ViewController extends JFrame{
 
+    public sfxController sfx = new sfxController();
     //panel main view is the parent panel. it holds all other panels.
     private JPanel panelMainView;
 
@@ -15,44 +18,50 @@ public class ViewController extends JFrame{
     private JPanel panelCLLeft;
     private JPanel panelCLBottom;
 
-    //Panel containers for different game states. Will be placed into holder panels as needed
+    //------------------------------------------------------------------------------------------------------------------
+    //Panel containers for different game elements & states. Will be placed into holder panels as needed
 
+    //Player info entry screen
     private JPanel playerEntryPanel;
     private PlayerEntry playerEntryObj;
-    //private JPanel gameInfoPanel;
-    //private GameInfo gameInfoObj;
+
+    //Tabs for cards in hand
     private JPanel handCardsPanel;
     private HandCards handCardsObj;
 
-
+    //game information on the upper left of screen. Also contains a card view on the bottom left
     private JPanel infoViewPanel;
     private InfoView infoViewObj;
 
+    //Card viewer, both the small tiles in the tableau and the large card viewer on the bottom left
     private JPanel cardViewerPanel;
     private CardViewer cardViewerObj;
 
+    //the 4x4 tableau
     private TableauView tableauViewObj;
     private JPanel tableauViewPanel;
 
-
+    //------------------------------------------------------------------------------------------------------------------
+    //window set up, etc
 
     //window title defaults to welcome
     private String windowTitle = "Welcome!";
 
-    //Panel and window sizing
+    //Panel and window sizing. default is 720p, though it's mostly set up to be resizable
 
     private int windowX = 1280;
     private int windowY = 720;
     int leftPanelWidth = (int) (windowX * .25);
     int leftPanelHeight = (int) (windowY * .4);
 
+    //------------------------------------------------------------------------------------------------------------------
+
     public ViewController(){
 
-       // UIManager.getLookAndFeelDefaults()
-        //        .put("defaultFont", new Font("Arial", Font.BOLD, 14));
-
+        //nice, large font for text boxes
         UIManager.put("TextArea.font", new Font("Arial", Font.BOLD, 16));
 
+        //--------------------------------------------------------------------------------------------------------------
         //create objects for each game panel
         playerEntryObj = new PlayerEntry(this);
         playerEntryPanel = playerEntryObj.getPanel();
@@ -69,10 +78,10 @@ public class ViewController extends JFrame{
         tableauViewObj = new TableauView(this);
         tableauViewPanel = tableauViewObj.getPanel();
 
+        //--------------------------------------------------------------------------------------------------------------
+        //initialize game window
 
-
-
-        //fill window with main view
+        //panelMainView contains the sub panels that hold all the other elements
         setContentPane(panelMainView);
 
         setTitle(windowTitle);
@@ -83,18 +92,24 @@ public class ViewController extends JFrame{
 
     }
 
+    //------------------------------------------------------------------------------------------------------------------
     //Screen changers
 
+    //player info entry screen
     public void drawPlayerEntry(){
+
         changePanel(panelCLCenter, playerEntryPanel);
     }
 
+    //main game window with tableau, etc
     public void drawGameHome(){
 
         changePanel(panelCLCenter, tableauViewPanel);
         changePanel(panelCLLeft, infoViewPanel);
         changePanel(panelCLBottom, handCardsPanel);
     }
+
+    //method to place game element panels inside screen panels
     void changePanel(JPanel controllerPanel, JPanel inPanel){
 
         controllerPanel.removeAll();
@@ -105,22 +120,20 @@ public class ViewController extends JFrame{
         refresh();
     }
 
+    //I mostly use this for debugging
     private void clearPanel(JPanel controllerPanel){
         controllerPanel.removeAll();
         controllerPanel.repaint();
         controllerPanel.revalidate();
     }
 
-    //refreshes values displayed for all screens
-
+    //refreshes values displayed for all elements
     public void refresh(){
-        setTitle(windowTitle);
+        setTitle(windowTitle); //gets set to the players name after the entrance screen. It can be overridden below
         infoViewObj.refresh();
-        //gameInfoObj.refresh();
     }
 
     //set window title
-
     public void setWindowTitle(String inTitle){
         windowTitle = inTitle;
     }

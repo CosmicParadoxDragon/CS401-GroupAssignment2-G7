@@ -5,7 +5,10 @@ import java.awt.*;
 
 public class GameInfo {
 
+
     ViewController thisView;
+
+    //panel elements
     private JPanel panelGameInfo;
     private JTextArea taStatusText;
     private JLabel labelPlaceholder;
@@ -26,8 +29,6 @@ public class GameInfo {
 
        // panelGameInfo.setPreferredSize(leftDimen);
         taStatusText.setLineWrap(true);
-
-
 
     }
 

@@ -6,12 +6,12 @@ import java.awt.*;
 public class InfoView {
 
 
+    //panel elements
+
     private JPanel panelInfoView;
-    private JLabel lblInfoTitle;
     private JTextArea taGameStatus;
     private JLabel lblVictoryPoints;
     private JLabel lblVictoryPointsVal;
-    private JLabel lblCardViewTitle;
     private JPanel panelCLCardView;
     private JLabel lblSoil;
     private JLabel lblSoilVal;
@@ -19,10 +19,16 @@ public class InfoView {
     private JLabel lblTrunksVal;
     private JLabel lblSprouts;
     private JLabel lblSproutsVal;
+    private JPanel panelGameStatusContainer;
+    private JProgressBar progressBar1;
 
 
     private CardViewer cardViewerObj;
     private int victoryPoints = 0;
+    private int soil = 0;
+    private int sprouts = 0;
+    private int trunks = 0;
+
     private ViewController thisView;
 
     private Dimension leftDimen;
@@ -50,11 +56,12 @@ public class InfoView {
     void refresh(){
         taGameStatus.setText(curStatusText);
         lblVictoryPointsVal.setText(String.valueOf(victoryPoints));
+        lblSoilVal.setText(String.valueOf(soil));
+        lblSproutsVal.setText(String.valueOf(sprouts));
+        lblTrunksVal.setText(String.valueOf(trunks));
 
-        //refresh card
 
-
-
+        //refresh card view
         panelCLCardView.removeAll();
         panelCLCardView.add(cardViewerObj.getPanel());
         panelCLCardView.repaint();

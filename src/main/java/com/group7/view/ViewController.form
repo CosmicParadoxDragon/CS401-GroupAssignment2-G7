@@ -21,7 +21,7 @@
           <font/>
           <foreground color="-14869217"/>
         </properties>
-        <border type="bevel-lowered"/>
+        <border type="none"/>
         <children/>
       </grid>
       <grid id="f26db" binding="panelCLBottom" layout-manager="CardLayout" hgap="0" vgap="0">
@@ -29,7 +29,7 @@
         <properties>
           <foreground color="-11579569"/>
         </properties>
-        <border type="bevel-raised"/>
+        <border type="none"/>
         <children/>
       </grid>
     </children>
