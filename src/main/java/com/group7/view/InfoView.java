@@ -19,13 +19,15 @@ public class InfoView {
     private int victoryPoints = 0;
     private ViewController thisView;
 
+    private Dimension leftDimen;
+
     private String curStatusText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi quis iaculis metus. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.";
 
     public InfoView(ViewController inThisView){
         cardViewerObj = new CardViewer();
 
         thisView = inThisView;
-        Dimension leftDimen = new Dimension(thisView.leftPanelWidth,thisView.leftPanelHeight);
+        leftDimen = new Dimension(thisView.leftPanelWidth,thisView.leftPanelHeight);
 
         panelInfoView.setPreferredSize(leftDimen);
 
@@ -45,6 +47,7 @@ public class InfoView {
         //refresh card
 
 
+        cardViewerObj.getPanel().setPreferredSize(leftDimen);
         panelCLCardView.removeAll();
         panelCLCardView.add(cardViewerObj.getPanel());
         panelCLCardView.repaint();
