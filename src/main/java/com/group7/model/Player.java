@@ -2,7 +2,7 @@ package com.group7.model;
 
 import java.util.ArrayList;
 import java.util.Stack;
-
+import java.util.Random;
 import com.group7.model.board.Tableau;
 import com.group7.model.cards.Card;
 import com.group7.model.cards.EarthCard;
@@ -162,40 +162,73 @@ public class Player {
     void activeComposting()
     {
         //The active player gains five soil
-        // setGainedSoil(2);
+        setGainedSoil(2);
         // They also and adds two cards from the deck to their
         //compost pile
-//        compostPile.add
+        compostPile.add(m_game.EarthDeck.dealCard());
+        compostPile.add(m_game.EarthDeck.dealCard());
     }
 
     void inactiveComposting()
     {
+        Random rand = new Random();
         // Gain two soil or compost two card
-
+        // This should be performed randomly for now
+        // TODO Implement controller prompting user to choose between gain soils or compost cards
+        int choice = rand.nextInt(2) + 1;
+        switch (choice) {
+            case 1:
+                setGainedSoil(2);
+            case 2:
+                compostPile.add(m_game.EarthDeck.dealCard());
+        }
     }
 
     void activeWatering()
     {
-        // Gain two sprout or two soil
-
+        Random rand = new Random();
+        // Gain up to 6 Sprout
+        // Generated randomly (for now)
+        // TODO Implement control prompting user how much sprout they want to gain
+        setGainedSprout(rand.nextInt(6)+1);
+        setGainedSoil(2);
     }
     
     void inactiveWatering()
     {
+        Random rand = new Random();
         // Gain two sprout or two soil
-
+        int choice = rand.nextInt(2) + 1;
+        switch (choice) {
+            case 1:
+                setGainedSprout(2);
+            case 2:
+                setGainedSoil(2);
+        }
     }
 
     void activeGrowing()
     {
-        // Draw four card from the pile and add two growth token cards
-
+        // Draw four card from the pile and put two growth on their Flora
+        for (int i = 0; i < 4; i++) {
+            m_game.EarthDeck.dealCard();
+        }
+        // Place 2 growth on any Flora
     }
 
     void inactiveGrowing()
     {
-        // Draw two card or gain two growth
-
+        // Draw two card or put two growth on their Flora
+        Random rand = new Random();
+        // Gain two sprout or two soil
+        int choice = rand.nextInt(2) + 1;
+        switch (choice) {
+            case 1:
+                m_game.EarthDeck.dealCard();
+                m_game.EarthDeck.dealCard();
+            case 2:
+                // Place 2 growth on any non-full Flora card
+        }
     }
 
 
