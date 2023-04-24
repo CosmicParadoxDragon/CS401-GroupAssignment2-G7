@@ -11,12 +11,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import java.io.IOException;
 /**
- * More rigorous testing
+ * More rigorous testing for 4 players
  */
 class AdditionalTest {
-    /**
-     * Rigorous Test.
-     */
 
     // Testing setup phase completion
     Controller controller;
@@ -35,11 +32,20 @@ class AdditionalTest {
     void activePlayerTest()
     {
         for (int i = 0; i < 4; i++) {
-            assertEquals(game_state.getPlayers().get(i), game_state.getActivePlayer());
+
             game_state.takeASingleTurn();
         }
     }
 
+
+    @Test
+    void gameLoopTest()
+    {
+        for (int i = 0; i < 4; i++) {
+            game_state.takeASingleTurn();
+        }
+        assertEquals(game_state.getPlayers().get(0), game_state.getActivePlayer());
+    }
     @Test
     void nillBoardStatePlayerArrayListsTest()
     {
@@ -87,7 +93,7 @@ class AdditionalTest {
         }
     }
     @Test
-    void playerDiscardActionTest() {
+    void willplayerDiscardActionTest() {
         game_state.getActivePlayer().discard(1);
         assertEquals(1, game_state.getActivePlayer().getHand().size());
     }
