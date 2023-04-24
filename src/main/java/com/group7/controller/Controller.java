@@ -15,7 +15,7 @@ public class Controller {
 
     public Controller() throws IOException {
         m_game = new Game(this, 1);
-        m_tui = new gameTui(this);//this);
+        // m_tui = new gameTui(this);//this);
     }
 
     public Game getGame() {
