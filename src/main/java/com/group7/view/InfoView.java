@@ -38,7 +38,7 @@ public class InfoView {
     public InfoView(ViewController inThisView){
         lblImageMtn.setIcon(new ImageIcon("src/main/java/com/group7/view/images/mtnIcont.png"));
 
-        cardViewerObj = new CardViewer();
+        cardViewerObj = new CardViewer(inThisView);
 
         thisView = inThisView;
         leftDimen = new Dimension(thisView.leftPanelWidth,thisView.leftPanelHeight);

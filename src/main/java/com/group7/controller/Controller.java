@@ -1,9 +1,11 @@
 
 package com.group7.controller;
 
+import com.formdev.flatlaf.FlatDarkLaf;
 import com.group7.model.Game;
 import com.group7.model.cards.Card;
-import com.group7.view.gameTui;
+import com.group7.view.ViewController;
+import com.group7.view.*;
 import com.group7.model.cards.Card;
 
 import java.io.IOException;
@@ -11,11 +13,18 @@ import java.io.IOException;
 
 public class Controller {
     Game m_game;
-    gameTui m_tui;
+    //gameTui m_tui;
+
+    ViewController m_gui;
 
     public Controller() throws IOException {
         m_game = new Game(this, 1);
-        m_tui = new gameTui(this);//this);
+
+        FlatDarkLaf.setup(); //initialize gui theme
+
+        m_gui = new ViewController(this);
+
+        m_gui.drawPlayerEntry();
     }
 
     public Game getGame() {

@@ -3,7 +3,13 @@ package com.group7.view;
 import javax.swing.*;
 import java.util.ArrayList;
 
+import com.group7.model.cards.Card;
+import com.group7.model.Player;
+
 public class TableauView {
+
+    private Player curPlayer;
+
     private JPanel panelCLTableau1;
     private JPanel panelCLTableau2;
     private JPanel panelCLTableau3;

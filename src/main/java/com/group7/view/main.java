@@ -8,11 +8,11 @@ public class main {
 
     public static void main(String[] args) {
 
-        FlatDarkLaf.setup();
+      //  FlatDarkLaf.setup();
 
-        ViewController gameWindow = new ViewController();
+        //ViewController gameWindow = new ViewController();
 
-        gameWindow.drawPlayerEntry();
+       // gameWindow.drawPlayerEntry();
 
     }
 }

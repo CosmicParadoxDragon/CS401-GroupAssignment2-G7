@@ -1,11 +1,14 @@
 package com.group7.view;
 
 import com.group7.view.sfx.sfxController;
+import com.group7.controller.Controller;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class ViewController extends JFrame{
+
+    Controller controller;
 
     public sfxController sfx = new sfxController();
     //panel main view is the parent panel. it holds all other panels.
@@ -56,7 +59,10 @@ public class ViewController extends JFrame{
 
     //------------------------------------------------------------------------------------------------------------------
 
-    public ViewController(){
+    public ViewController(Controller inControl){
+
+        controller = inControl;
+
 
         //nice, large font for text boxes
         UIManager.put("TextArea.font", new Font("Arial", Font.BOLD, 16));
