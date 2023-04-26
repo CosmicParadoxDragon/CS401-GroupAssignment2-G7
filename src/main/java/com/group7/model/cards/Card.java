@@ -4,11 +4,15 @@ import java.util.ArrayList;
 import java.util.Stack;
 
 public class Card {
+    public final static String NULL_CARD = "NULL_CARD";
     String m_name, m_abilitiesLine, m_text;
     int m_victoryPoints;
     ArrayList <AbilityPair> m_encodedAbilities;
     
     Card() {  }
+
+    // Used for the Null Card
+    public Card(String name) { m_name = name; }
     
     Card(String name, String abilityLine, int victoryPoints)
     {
@@ -35,7 +39,7 @@ public class Card {
     /**
      * Will check the passed turn action and return the ability string for the 
      * activated ability of the card can be used.
-     * @param encodedString
+     // @param encodedString
      * @return a stack of ability operations to perform
      */
     Stack<AbilityPair> stackAbility(String colorOfTurnAction)

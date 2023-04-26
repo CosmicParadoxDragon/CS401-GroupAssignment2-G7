@@ -111,6 +111,12 @@ public class Game {
             // This should work if parseAbility is complete
             players.get(i).getHand().add(ClimateDeck.dealCard());
             // players.get(i).getHand().add(EcosystemDeck.dealCard()); // if we ever get here
+
+            // Stop turn Prompt user to place island and climate onto
+            // game board.  Sanity check, could be automated won't be.
+            // Card someCard = m_control.getCardChoice();
+
+
         }
     }
 

@@ -42,7 +42,7 @@ public class Controller {
     }
     public Card getCardChoice()
     {
-        Card card;
+        Card someCard;
         // This is the ideal production use case for this function, being handed a card object that 
         // the user selected from the hand based in the UI.
         // card = m_tui.getCardChoice(); // Need some way to limit choice to a specific vector of cards 
@@ -50,10 +50,11 @@ public class Controller {
 
         // this is a unplayable line that should not be included in a final release, but serves 
         // for testing purposes, as a way to discard in auto/test mode builds
-        card = getGame().getActivePlayer().getHand().get(0);
+
+        someCard = getGame().getActivePlayer().getHand().get(0);
 
 
-        return card;
+        return someCard;
 
 
     }
