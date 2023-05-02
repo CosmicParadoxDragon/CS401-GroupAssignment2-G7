@@ -15,10 +15,15 @@ public class CardViewer {
     private JLabel lblVictoryPointsVal;
     private JButton btnViewCard;
     private JLabel lblCardTitle;
+    private JButton btnPrompt1;
+    private JCheckBox cbPrompt1;
 
     private Card displayCard;
 
     String cardLocation;
+
+    boolean hasButton = false;
+    boolean hasCheckbox = false;
     int cardIndex;
 
     private boolean isMiniCard = false;
@@ -43,6 +48,20 @@ public class CardViewer {
             default:
                 break;
         }
+
+        if (thisView.isPromptActive()){
+
+            btnPrompt1.setText(thisView.getCurPrompt().getCardButtonText());
+            cbPrompt1.setText(thisView.getCurPrompt().getCardCheckboxText());
+
+            if(thisView.getCurPrompt().isCardPrompting(cardLocation, cardIndex)){
+                hasButton = thisView.getCurPrompt().hasButton(cardLocation,cardIndex);
+                hasCheckbox = thisView.getCurPrompt().hasCheckbox(cardLocation,cardIndex);
+
+            }
+        }
+
+
 
         setCardView();
 
@@ -84,6 +103,8 @@ public class CardViewer {
         else{
             lblCardTitle.setText(displayCard.getM_name());
             taCardAbility.setText(displayCard.getM_text());
+
+
 
             lblCardTitle.enable(true);
             taCardAbility.setVisible(true);

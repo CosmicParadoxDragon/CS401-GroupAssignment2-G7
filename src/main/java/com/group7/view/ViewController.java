@@ -1,6 +1,5 @@
 package com.group7.view;
 
-
 import com.group7.model.Player;
 import com.group7.model.cards.Card;
 import com.group7.view.sfx.sfxController;
@@ -19,6 +18,10 @@ public class ViewController extends JFrame{
     Card cardInViewer;
 
     Player curActivePlayer;
+
+    //prompt stuff
+    Prompting curPrompt;
+    boolean promptActive = false;
 
 
     public sfxController sfx = new sfxController();
@@ -106,6 +109,11 @@ public class ViewController extends JFrame{
         setSize(windowX, windowY);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setVisible(true);
+
+        //Prompt test
+
+
+
     }
 
     //------------------------------------------------------------------------------------------------------------------
@@ -123,6 +131,8 @@ public class ViewController extends JFrame{
         changePanel(panelCLCenter, tableauViewPanel);
         changePanel(panelCLLeft, infoViewPanel);
         changePanel(panelCLBottom, handCardsPanel);
+
+        String prompterTester = promptGeneric("Test Status; Test Target; false");
     }
 
     //method to place game element panels inside screen panels
@@ -134,6 +144,24 @@ public class ViewController extends JFrame{
         controllerPanel.revalidate();
 
         refresh();
+    }
+
+
+    public void loadPrompt(Prompting inPrompt){
+        curPrompt = inPrompt;
+        curPrompt.addViewController(this);
+        promptActive = true;
+    }
+
+    Prompting getCurPrompt(){
+        if (curPrompt != null){
+            return curPrompt;
+        }
+        else return null;
+    }
+
+    boolean isPromptActive(){
+        return promptActive;
     }
 
     public void setViewCard(String cardLocation, int inCardIndex){
@@ -160,6 +188,10 @@ public class ViewController extends JFrame{
     //set window title
     public void setWindowTitle(String inTitle){
         windowTitle = inTitle;
+    }
+
+    public void setInfoStatus (String inStatus){
+        infoViewObj.setCurStatusText(inStatus);
     }
 
     public ArrayList<Card> getViewTableauCards(){
