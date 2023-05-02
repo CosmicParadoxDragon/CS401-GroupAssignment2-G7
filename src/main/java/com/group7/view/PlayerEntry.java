@@ -10,6 +10,7 @@ import static java.lang.System.exit;
 
 public class PlayerEntry {
 
+    ViewController thisView;
     //panel elements
     private JTextArea taWelcome;
     private JTextField tfPlayerName;
@@ -20,7 +21,9 @@ public class PlayerEntry {
     private JButton btnQuit;
     private JLabel lblImageBanner;
 
-    public PlayerEntry(ViewController thisView){
+    public PlayerEntry(ViewController inThisView){
+
+        thisView = inThisView;
 
         //taWelcome.setLineWrap(true);
         //taWelcome.setWrapStyleWord(true);
@@ -57,14 +60,6 @@ public class PlayerEntry {
     public JPanel getPanel(){
         return (panelPlayerEntry);
     }
-
-
-    /* dumb.
-    public static JPanel getPanel(ViewController inThisView){
-        //PlayerEntry retPlayerEntry = new PlayerEntry(inThisView);
-        return (retPlayerEntry.panelPlayerEntry);
-    }
-    */
 }
 
 

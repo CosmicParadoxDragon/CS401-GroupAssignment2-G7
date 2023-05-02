@@ -32,13 +32,6 @@ public class GameInfo {
 
     }
 
-    /*
-    void setCardViewPanel(JPanel inCardView){
-        thisView.changePanel(panelCLCardView, inCardView);
-    }
-
-     */
-
     public void refresh(){
         taStatusText.setText(curStatusText);
         labelPlantScoreVal.setText(String.valueOf(plantScore));
@@ -48,12 +41,4 @@ public class GameInfo {
     public JPanel getPanel(){
         return (panelGameInfo);
     }
-    /*
-    public static JPanel getPanel(ViewController inThisView){
-        GameInfo ret = new GameInfo(inThisView);
-        return (ret.panelGameInfo);
-    }
-
-     */
-
 }

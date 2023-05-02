@@ -1,14 +1,25 @@
 package com.group7.view;
 
+
+import com.group7.model.Player;
+import com.group7.model.cards.Card;
 import com.group7.view.sfx.sfxController;
 import com.group7.controller.Controller;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 public class ViewController extends JFrame{
 
     Controller controller;
+
+    public ViewCardHandler cardHandler;
+
+    Card cardInViewer;
+
+    Player curActivePlayer;
+
 
     public sfxController sfx = new sfxController();
     //panel main view is the parent panel. it holds all other panels.
@@ -28,17 +39,15 @@ public class ViewController extends JFrame{
     private JPanel playerEntryPanel;
     private PlayerEntry playerEntryObj;
 
+
+
+    //game information on the upper left of screen. Also contains a card view on the bottom left
+    public JPanel infoViewPanel;
+    private InfoView infoViewObj;
+
     //Tabs for cards in hand
     private JPanel handCardsPanel;
     private HandCards handCardsObj;
-
-    //game information on the upper left of screen. Also contains a card view on the bottom left
-    private JPanel infoViewPanel;
-    private InfoView infoViewObj;
-
-    //Card viewer, both the small tiles in the tableau and the large card viewer on the bottom left
-    private JPanel cardViewerPanel;
-    private CardViewer cardViewerObj;
 
     //the 4x4 tableau
     private TableauView tableauViewObj;
@@ -50,7 +59,9 @@ public class ViewController extends JFrame{
     //window title defaults to welcome
     private String windowTitle = "Welcome!";
 
-    //Panel and window sizing. default is 720p, though it's mostly set up to be resizable
+    //Panel and window sizing on game start. default is 720p. though it's mostly set up to be resizable,
+    //some of the panel scaling is based on this default value and might get a bit strange if changed.
+    //The window can still be resized after the game opens just fine though
 
     private int windowX = 1280;
     private int windowY = 720;
@@ -62,6 +73,10 @@ public class ViewController extends JFrame{
     public ViewController(Controller inControl){
 
         controller = inControl;
+        cardHandler = new ViewCardHandler(this);
+        curActivePlayer = controller.getGame().getActivePlayer();
+
+        cardHandler.loadCards();
 
 
         //nice, large font for text boxes
@@ -72,16 +87,13 @@ public class ViewController extends JFrame{
         playerEntryObj = new PlayerEntry(this);
         playerEntryPanel = playerEntryObj.getPanel();
 
-        handCardsObj = new HandCards(this);
+        handCardsObj = new HandCards(this, controller);
         handCardsPanel = handCardsObj.getPanel();
 
         infoViewObj = new InfoView(this);
         infoViewPanel = infoViewObj.getPanel();
 
-        cardViewerObj = new CardViewer(this);
-        cardViewerPanel = cardViewerObj.getPanel();
-
-        tableauViewObj = new TableauView(this);
+        tableauViewObj = new TableauView(this, controller);
         tableauViewPanel = tableauViewObj.getPanel();
 
         //--------------------------------------------------------------------------------------------------------------
@@ -94,8 +106,6 @@ public class ViewController extends JFrame{
         setSize(windowX, windowY);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setVisible(true);
-
-
     }
 
     //------------------------------------------------------------------------------------------------------------------
@@ -103,8 +113,8 @@ public class ViewController extends JFrame{
 
     //player info entry screen
     public void drawPlayerEntry(){
-
         changePanel(panelCLCenter, playerEntryPanel);
+        //sfx.intro();
     }
 
     //main game window with tableau, etc
@@ -126,6 +136,11 @@ public class ViewController extends JFrame{
         refresh();
     }
 
+    public void setViewCard(String cardLocation, int inCardIndex){
+        infoViewObj.setCurViewCard(cardLocation, inCardIndex);
+        refresh();
+    }
+
     //I mostly use this for debugging
     private void clearPanel(JPanel controllerPanel){
         controllerPanel.removeAll();
@@ -133,15 +148,30 @@ public class ViewController extends JFrame{
         controllerPanel.revalidate();
     }
 
-    //refreshes values displayed for all elements
+    //refreshes values displayed for all elements and arrays of cards
     public void refresh(){
         setTitle(windowTitle); //gets set to the players name after the entrance screen. It can be overridden below
         infoViewObj.refresh();
+
+        curActivePlayer = controller.getGame().getActivePlayer();
     }
+
 
     //set window title
     public void setWindowTitle(String inTitle){
         windowTitle = inTitle;
+    }
+
+    public ArrayList<Card> getViewTableauCards(){
+        return cardHandler.getViewCardsInTableau();
+    }
+
+    public ArrayList<Card> getViewCardsInHand(){
+        return cardHandler.getViewCardsInHand();
+    }
+
+    public Player getViewActivePlayer(){
+        return curActivePlayer;
     }
 }
 

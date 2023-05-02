@@ -18,33 +18,97 @@ public class CardViewer {
 
     private Card displayCard;
 
+    String cardLocation;
+    int cardIndex;
+
+    private boolean isMiniCard = false;
+
     private ViewController thisView;
 
-    public CardViewer(ViewController inThisView, Card displayCard){
+    public CardViewer(ViewController inThisView, String inCardLocation, int inCardIndex){
+
         thisView = inThisView;
-        btnViewCard.setVisible(false);
+        cardLocation = inCardLocation;
+        cardIndex = inCardIndex;
 
-        lblCardTitle.setText(displayCard.getM_name());
+        switch (cardLocation){
+            case "HAND":
+                displayCard = thisView.getViewCardsInHand().get(cardIndex);
+                break;
 
+            case "TABLEAU":
+                displayCard = thisView.getViewTableauCards().get(cardIndex);
+                break;
+
+            default:
+                break;
+        }
+
+        setCardView();
 
         btnViewCard.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 thisView.sfx.cardFlip();
+                thisView.setViewCard(cardLocation, cardIndex);
             }
         });
     }
 
-    public CardViewer(ViewController inThisView){
-        btnViewCard.setVisible(false);
 
-
+    public boolean isEmpty(){
+         if ((displayCard == null) || (displayCard.getM_name() == Card.NULL_CARD)){
+             return true;
+         }
+         else{
+             return false;
+         }
     }
+
+    private void setEmptySpace(){
+        lblCardTitle.setText("Card Space");
+        lblCardTitle.enable(false); //enable = false grays out text
+
+        //make empty sections not visible
+        taCardAbility.setVisible(false);
+        lblVictoryPoints.setVisible(false);
+        lblVictoryPointsVal.setVisible(false);
+        btnViewCard.setVisible(false);
+    }
+
+    private void setCardView(){
+
+        if(isEmpty()) {
+            setEmptySpace();
+        }
+        else{
+            lblCardTitle.setText(displayCard.getM_name());
+            taCardAbility.setText(displayCard.getM_text());
+
+            lblCardTitle.enable(true);
+            taCardAbility.setVisible(true);
+            lblVictoryPoints.setVisible(true);
+            lblVictoryPointsVal.setVisible(true);
+            btnViewCard.setVisible(isMiniCard);
+
+        }
+        //Need a way to get card color
+
+        //lblVictoryPointsVal.setText();
+    }
+
+
+    void setNewCard(Card inDisplayCard){
+        displayCard = inDisplayCard;
+        setCardView();
+    }
+
+
 
     //changes card to small tile. removes ability text box and adds a view card button
     void setMiniCard(){
-        //taCardAbility.setVisible(false);
-        btnViewCard.setVisible(true);
+        isMiniCard = true;
+        setCardView();
     }
 
     JPanel getPanel(){

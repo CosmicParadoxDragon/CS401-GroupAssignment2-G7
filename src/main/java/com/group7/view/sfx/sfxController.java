@@ -28,6 +28,12 @@ public class sfxController {
         filePath = "src/main/java/com/group7/view/sfx/ack.wav";
         playSound(filePath);
     }
+
+    public void intro(){
+        filePath = "src/main/java/com/group7/view/sfx/intro.wav";
+        playSound(filePath);
+    }
+
     public void playSound(String filePath){
         // create AudioInputStream object
         try {
