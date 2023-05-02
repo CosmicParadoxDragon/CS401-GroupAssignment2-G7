@@ -19,7 +19,7 @@ public class ViewCardHandler {
 
 
     }
-    void loadCards(){
+    public void loadCards(){
 
         viewCardsInTableau.clear();
         viewCardsInHand.clear();
@@ -38,7 +38,7 @@ public class ViewCardHandler {
                 viewCardsInHand.add(thisView.getViewActivePlayer().getHand().get(i));
             }
 
-            viewCardsInTableau.set(0, viewCardsInHand.get(0));
+//            viewCardsInTableau.set(0, viewCardsInHand.get(0));
     }
 
     public ArrayList<Card> getViewCardsInHand(){

@@ -8,6 +8,7 @@ import com.group7.view.ViewController;
 import com.group7.view.*;
 import com.group7.model.cards.Card;
 
+import javax.swing.text.View;
 import java.io.IOException;
 
 
@@ -16,7 +17,9 @@ public class Controller {
     //gameTui m_tui;
 
     ViewController m_gui;
-
+    public Controller(String threaded) {
+        FlatDarkLaf.setup();
+    }
     public Controller() throws IOException {
         m_game = new Game(this, 1);
 
@@ -24,13 +27,14 @@ public class Controller {
 
         m_gui = new ViewController(this);
 
-        m_gui.drawPlayerEntry();
+//        m_gui.drawPlayerEntry();
     }
-
+    public void setGame (Game gameObj) { m_game = gameObj; }
+    public void setGui (ViewController viewObj) { m_gui = viewObj; }
     public Game getGame() {
         return m_game;
     }
-
+    public ViewController getGui() { return m_gui; }
 
     public String getActionChoice()
     {

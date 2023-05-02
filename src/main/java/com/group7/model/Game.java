@@ -16,7 +16,7 @@ public class Game {
     Deck ClimateDeck;
     Deck FuanaDeck;
     Deck discardPile;
-
+    boolean actionFlag = true;
     int turn = 0;
     Player activePlayer;
     Iterator<Player> iter;
@@ -41,7 +41,7 @@ public class Game {
         mainTurnLoop(); // Take a regular turn, and being the checks for complete Island
     }
 
-    // Setup the deck and player board
+    // Set up the deck and player board
     public Game(Controller controller, int numberOfPlayers)
     {   
         m_control = controller;
@@ -54,26 +54,44 @@ public class Game {
         Scores = new ArrayList<Integer>();
         players = new ArrayList<Player>();
         m_numberOfPlayers = numberOfPlayers;
-        // Game Setup Phase
-        SetupPhase();
-        // if ( numboerOfPlayers == 1)
-        //         SetupGaia();
+        for (int i = 0; i < m_numberOfPlayers; i++) {
+            players.add(new Player(this));
+        }
         playerSetup();
+
+        // SetupPhase();
+        // if ( numberOfPlayers == 1)
+        //     SetupGaia();
+        // GameStart();
+    }
+    public void GameStart() {
+        actionFlag = true;
+        // Players -> Turn 0 actions place island and climate onto board
+        String action = "";
+        // Stop turn Prompt user to place island and climate onto
+        // game board.  Sanity check, could be automated won't be.
+        // Card someCard = m_control.getCardChoice();
+        getActivePlayer().takeTurnZero();
+
     }
 
     // Player now tak
-    public void gameStart() {
-        playerSetup();
-        // takeTurnZero(); // Island and Climate Setup
-        mainTurnLoop(); // Take a regular turn, and being the checks for complete Island
+    // public void gameStart() {
+    //      playerSetup();
+    //      // takeTurnZero(); // Island and Climate Setup
+    //      mainTurnLoop(); // Take a regular turn, and being the checks for complete Island
+    //  }
+
+    public void takeATurn(){
+        // Taking an nth turn
     }
 
     public void playerSetup() {
         iter = resetIterator();
         activePlayer = getNextPlayer();
     }
-    // Assumeing Solo Game
-    private void SetupPhase()
+    // Assuming Solo Game
+    public void SetupPhase()
     {
         try{
             EarthDeck.fillEarthDeck();
@@ -81,13 +99,8 @@ public class Game {
             FuanaDeck.fillFuanaDeck();
             IslandDeck.fillIslandDeck();
         }
-        catch (Exception e)
-        {
+        catch (Exception e) {
             System.out.println(e.toString());
-        }
-        for (int i = 0; i < m_numberOfPlayers; i++)
-        {
-            players.add(new Player(this));
         }
 
         for (int j = 0; j<4; j++)
@@ -95,11 +108,11 @@ public class Game {
             FuanaCards.add(FuanaDeck.dealCard());
         }
         // 1 Player game is standard expect everything to break
-        PlayerSetup();
+        // PlayerSetup();
     }
 
     
-    private void PlayerSetup()
+    public void PlayerSetup()
     {
         for (int i = 0; i < m_numberOfPlayers; i++)
         {
@@ -111,12 +124,6 @@ public class Game {
             // This should work if parseAbility is complete
             players.get(i).getHand().add(ClimateDeck.dealCard());
             // players.get(i).getHand().add(EcosystemDeck.dealCard()); // if we ever get here
-
-            // Stop turn Prompt user to place island and climate onto
-            // game board.  Sanity check, could be automated won't be.
-            // Card someCard = m_control.getCardChoice();
-
-
         }
     }
 
@@ -202,7 +209,7 @@ public class Game {
         // Gaia Action
         // Compost 2 cards, Compost 1 for every 2 soil gained this turn
 
-        // Trugger Red and Multicolored Abilities
+        // Trigger Red and Multicolored Abilities
     }
 
     void watering()
@@ -282,4 +289,5 @@ public class Game {
         return turn;
     }
     Controller getController() { return m_control; }
+    public void flipActionFlag() { actionFlag = !actionFlag; }
 }

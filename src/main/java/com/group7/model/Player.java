@@ -55,7 +55,7 @@ public class Player {
         m_climateCard = cliamteCard;
     }
 
-    void placeCardontoTableau(int row, int collumn, Card cardDrawn) {
+    void placeCardOntoTableau(int row, int collumn, Card cardDrawn) {
         playerTableau.setCard(row, collumn, cardDrawn);
     }
 
@@ -83,6 +83,23 @@ public class Player {
         }
 
         return actionChosen;
+    }
+
+    public void takeTurnZero(){
+        // Player placing the island and climate into their board
+        String action = "";
+        // action = m_game.m_control.getGui().promptGeneric("Select a card to place in Island Slot: ");
+        // Need to pause execution here to wait for response.
+        synchronized (this){
+            try {
+                wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        // Execute the response
+
+
     }
     
     String selectAction()
