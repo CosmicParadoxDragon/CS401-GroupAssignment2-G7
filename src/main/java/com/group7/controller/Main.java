@@ -4,12 +4,12 @@ package com.group7.controller;
 import com.formdev.flatlaf.FlatDarkLaf;
 
 // import com.group7.view.
-// import com.group7.Model.Cards.Card;
+// import com.group7.model.Cards.Card;
 
 
 import java.io.IOException;
 
-public final class Main {
+public final class Main extends Thread{
     public static void main(String[] args) throws IOException {
 
 
@@ -22,7 +22,17 @@ public final class Main {
 
 
         //try {
-            Controller controller = new Controller();
+        Controller controller = new Controller();
+        controller.getGame().SetupPhase();
+        controller.getGame().PlayerSetup();
+
+
+        controller.getGui().drawPlayerEntry();
+//        controller.getGui().cardHandler.loadCards();
+        new Thread("GameThread") {
+            @Override public void run () { controller.getGame().GameStart(); }
+        }.start();
+
 
         //} catch (IOException e)
         //{
