@@ -1,6 +1,7 @@
 package com.group7.view;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -24,6 +25,8 @@ public class CardViewer {
 
     boolean hasButton = false;
     boolean hasCheckbox = false;
+
+    boolean isChecked = false;
     int cardIndex;
 
     private boolean isMiniCard = false;
@@ -33,35 +36,8 @@ public class CardViewer {
     public CardViewer(ViewController inThisView, String inCardLocation, int inCardIndex){
 
         thisView = inThisView;
-        cardLocation = inCardLocation;
-        cardIndex = inCardIndex;
 
-        switch (cardLocation){
-            case "HAND":
-                displayCard = thisView.getViewCardsInHand().get(cardIndex);
-                break;
-
-            case "TABLEAU":
-                displayCard = thisView.getViewTableauCards().get(cardIndex);
-                break;
-
-            default:
-                break;
-        }
-
-        if (thisView.isPromptActive()){
-
-            btnPrompt1.setText(thisView.getCurPrompt().getCardButtonText());
-            cbPrompt1.setText(thisView.getCurPrompt().getCardCheckboxText());
-
-            if(thisView.getCurPrompt().isCardPrompting(cardLocation, cardIndex)){
-                hasButton = thisView.getCurPrompt().hasButton(cardLocation,cardIndex);
-                hasCheckbox = thisView.getCurPrompt().hasCheckbox(cardLocation,cardIndex);
-
-            }
-        }
-
-
+        setNewCard(inCardLocation, inCardIndex);
 
         setCardView();
 
@@ -70,6 +46,26 @@ public class CardViewer {
             public void actionPerformed(ActionEvent e) {
                 thisView.sfx.cardFlip();
                 thisView.setViewCard(cardLocation, cardIndex);
+            }
+        });
+        cbPrompt1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                boolean selected = cbPrompt1.isSelected();
+
+                if(selected)thisView.sfx.check();
+                else thisView.sfx.uncheck();
+
+
+                if (cardLocation == "HAND"){
+                    thisView.getViewCards().setHandCheckboxState(cardIndex, selected);
+                } else if (cardLocation == "TABLEAU") {
+                    thisView.getViewCards().setTableauCheckboxState(cardIndex, selected);
+                }
+
+                //allows tableau to indicate which cards have been selected via checkbox
+                thisView.softRefresh();
+
             }
         });
     }
@@ -93,6 +89,8 @@ public class CardViewer {
         lblVictoryPoints.setVisible(false);
         lblVictoryPointsVal.setVisible(false);
         btnViewCard.setVisible(false);
+        btnPrompt1.setVisible(false);
+        cbPrompt1.setVisible(false);
     }
 
     private void setCardView(){
@@ -104,13 +102,38 @@ public class CardViewer {
             lblCardTitle.setText(displayCard.getM_name());
             taCardAbility.setText(displayCard.getM_text());
 
+            //debug
+            String debugText;
+
+            debugText = "Card Location: " + cardLocation + "\n"
+            + "Card Index: " + cardIndex + "\n"
+            + "Viewer Is Checked: " + isChecked + "\n"
+            ;
+
+            taCardAbility.setText(debugText);
+
 
 
             lblCardTitle.enable(true);
             taCardAbility.setVisible(true);
             lblVictoryPoints.setVisible(true);
             lblVictoryPointsVal.setVisible(true);
-            btnViewCard.setVisible(isMiniCard);
+
+            if(isMiniCard){
+                btnViewCard.setVisible(isMiniCard);
+                btnPrompt1.setVisible(false);
+                cbPrompt1.setVisible(false);
+            }
+            else {
+                btnViewCard.setVisible(false);
+                btnPrompt1.setVisible(hasButton);
+                cbPrompt1.setVisible(hasCheckbox);
+                cbPrompt1.setSelected(isChecked);
+            }
+
+            if(isChecked){
+                panelCardView.setBackground(Color.gray);
+            }
 
         }
         //Need a way to get card color
@@ -119,9 +142,50 @@ public class CardViewer {
     }
 
 
-    void setNewCard(Card inDisplayCard){
-        displayCard = inDisplayCard;
+    void setNewCard(String inCardLocation, int inCardIndex){
+
+        cardLocation = inCardLocation;
+        cardIndex = inCardIndex;
+
+        hasButton = false;
+        hasCheckbox = false;
+        isChecked = false;
+
+        switch (cardLocation){
+            case "HAND":
+                if (thisView.isPromptActive()) {
+                    btnPrompt1.setText(thisView.getCurPrompt().getCardButtonText());
+                    cbPrompt1.setText(thisView.getCurPrompt().getCardCheckboxText());
+                    hasButton = thisView.getViewCards().hasHandButton(inCardIndex);
+                    hasCheckbox = thisView.getViewCards().hasHandCheckbox(inCardIndex);
+                    isChecked = thisView.getViewCards().getHandCheckboxState(inCardIndex);
+                }
+                //displayCard = thisView.getViewCardsInHand().get(cardIndex);
+                displayCard = thisView.getViewCards().getViewCardInHand(inCardIndex);
+                break;
+
+            case "TABLEAU":
+                if (thisView.isPromptActive()) {
+                    btnPrompt1.setText(thisView.getCurPrompt().getCardButtonText());
+                    cbPrompt1.setText(thisView.getCurPrompt().getCardCheckboxText());
+                    hasButton = thisView.getViewCards().hasTableauButton(inCardIndex);
+                    hasCheckbox = thisView.getViewCards().hasTableauCheckbox(inCardIndex);
+                    isChecked = thisView.getViewCards().getTableauCheckboxState(inCardIndex);
+                }
+                //displayCard = thisView.getViewTableauCards().get(cardIndex);
+                displayCard = thisView.getViewCards().getViewCardInTableau(inCardIndex);
+                break;
+
+            case "ClimateIsland":
+
+                break;
+
+            default:
+                break;
+        }
+
         setCardView();
+
     }
 
 

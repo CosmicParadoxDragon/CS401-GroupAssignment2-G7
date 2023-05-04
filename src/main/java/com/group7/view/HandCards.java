@@ -19,6 +19,8 @@ public class HandCards {
     private ArrayList<Card> cardsInHand;
 
     private JPanel panelCardTabs;
+
+    private JPanel emptyPanelCardTabs;
     private JPanel panelCardContainer;
 
 
@@ -28,15 +30,22 @@ public class HandCards {
         controller = inControl;
 
 
+        refresh();
+    }
+
+    public void refresh(){
+
         //I'm completely stumped as to why, but unless I add a cardtab outside
         //of the loop first, I can't add any within the loop. It started happening when I created
         //ViewCardHandler. Will investigate more later, but for now this works.
 
+        panelCardTabs.removeAll();
+
         panelCardTabs.add(new CardTabs().getPanel());
 
-            for (int i = 0; i < thisView.getViewCardsInHand().size(); i++) {
-                panelCardTabs.add(new CardTabs(i, thisView).getPanel());
-            }
+        for (int i = 0; i < thisView.getViewCards().getViewHandSize(); i++) {
+            panelCardTabs.add(new CardTabs(i, thisView).getPanel());
+        }
     }
     public JPanel getPanel(){
         return (panelCardTabs);

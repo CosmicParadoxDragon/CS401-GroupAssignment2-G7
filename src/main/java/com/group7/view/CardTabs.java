@@ -26,10 +26,15 @@ public class CardTabs {
         thisView = inThisView;
         cardIndex = inCardIndex;
 
-        //debug
-        curCard = thisView.getViewCardsInHand().get(cardIndex);
+
+        //curCard = thisView.getViewCardsInHand().get(cardIndex);
+        curCard = thisView.getViewCards().getViewCardInHand(inCardIndex);
 
         btnCardTab.setText(curCard.getM_name());
+
+        if(thisView.getViewCards().getHandCheckboxState(cardIndex)) {
+            pbCardColor.setBackground(Color.lightGray);
+        }
 
         if (cardIndex == 0){
             cardSep.setVisible(false);

@@ -29,6 +29,21 @@ public class sfxController {
         playSound(filePath);
     }
 
+    public void check(){
+        filePath = "src/main/java/com/group7/view/sfx/check.wav";
+        playSound(filePath);
+    }
+
+    public void uncheck(){
+        filePath = "src/main/java/com/group7/view/sfx/uncheck.wav";
+        playSound(filePath);
+    }
+
+    public void ping(){
+        filePath = "src/main/java/com/group7/view/sfx/ping.wav";
+        playSound(filePath);
+    }
+
     public void intro(){
         filePath = "src/main/java/com/group7/view/sfx/intro.wav";
         playSound(filePath);

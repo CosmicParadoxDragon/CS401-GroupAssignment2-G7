@@ -78,7 +78,7 @@ public class ViewController extends JFrame{
         controller = inControl;
         cardHandler = new ViewCardHandler(this);
         curActivePlayer = controller.getGame().getActivePlayer();
-
+        curPrompt = new Prompting(this);
         cardHandler.loadCards();
 
 
@@ -93,7 +93,7 @@ public class ViewController extends JFrame{
         handCardsObj = new HandCards(this, controller);
         handCardsPanel = handCardsObj.getPanel();
 
-        infoViewObj = new InfoView(this);
+        infoViewObj = new InfoView(this, controller);
         infoViewPanel = infoViewObj.getPanel();
 
         tableauViewObj = new TableauView(this, controller);
@@ -132,7 +132,7 @@ public class ViewController extends JFrame{
         changePanel(panelCLLeft, infoViewPanel);
         changePanel(panelCLBottom, handCardsPanel);
 
-        String prompterTester = promptGeneric("Test Status; Test Target; false");
+       // String prompterTester = promptGeneric("Test Status; Test Target; false");
     }
 
     //method to place game element panels inside screen panels
@@ -143,30 +143,35 @@ public class ViewController extends JFrame{
         controllerPanel.repaint();
         controllerPanel.revalidate();
 
-        refresh();
+        softRefresh();
     }
 
 
-    public void loadPrompt(Prompting inPrompt){
-        curPrompt = inPrompt;
-        curPrompt.addViewController(this);
+    public void promptActivate(){
         promptActive = true;
+        setInfoStatus(curPrompt.getStatusText());
+        softRefresh();
     }
 
-    Prompting getCurPrompt(){
+    public void promptDeactivate(){
+        promptActive = false;
+        softRefresh();
+    }
+
+    public Prompting getCurPrompt(){
         if (curPrompt != null){
             return curPrompt;
         }
         else return null;
     }
 
-    boolean isPromptActive(){
+    public boolean isPromptActive(){
         return promptActive;
     }
 
     public void setViewCard(String cardLocation, int inCardIndex){
         infoViewObj.setCurViewCard(cardLocation, inCardIndex);
-        refresh();
+        softRefresh();
     }
 
     //I mostly use this for debugging
@@ -176,12 +181,21 @@ public class ViewController extends JFrame{
         controllerPanel.revalidate();
     }
 
-    //refreshes values displayed for all elements and arrays of cards
-    public void refresh(){
+    //refreshes values displayed, but does not load cards or mess with prompts
+    public void softRefresh(){
         setTitle(windowTitle); //gets set to the players name after the entrance screen. It can be overridden below
         infoViewObj.refresh();
 
+        tableauViewObj.refresh();
+
+        handCardsObj.refresh();
+
         curActivePlayer = controller.getGame().getActivePlayer();
+    }
+
+    //same as soft refresh, but reloads cards from backend and erases prompt
+    public void hardRefresh(){
+
     }
 
 
@@ -194,13 +208,25 @@ public class ViewController extends JFrame{
         infoViewObj.setCurStatusText(inStatus);
     }
 
+    /*
     public ArrayList<Card> getViewTableauCards(){
         return cardHandler.getViewCardsInTableau();
     }
 
+     */
+
+/*
     public ArrayList<Card> getViewCardsInHand(){
         return cardHandler.getViewCardsInHand();
     }
+
+ */
+
+    public ViewCardHandler getViewCards(){
+        return cardHandler;
+    }
+
+
 
     public Player getViewActivePlayer(){
         return curActivePlayer;

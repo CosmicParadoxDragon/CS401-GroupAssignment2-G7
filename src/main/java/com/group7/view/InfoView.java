@@ -1,15 +1,18 @@
 package com.group7.view;
 
-import com.group7.model.cards.Card;
+import com.group7.controller.Controller;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class InfoView {
 
 
-    private Card curViewCard;
+    //private Card curViewCard;
+
+    String cardLocation;
     private int cardIndex;
 
     private CardViewer cardViewerObj;
@@ -39,14 +42,20 @@ public class InfoView {
     private JLabel lblSproutsVal;
     private JPanel panelGameStatusContainer;
     private JLabel lblImageMtn;
+    private JButton btnPrompt1;
+
+    private Controller controller;
 
 
-    public InfoView(ViewController inThisView){
+    public InfoView(ViewController inThisView, Controller inControl){
+        thisView = inThisView;
+        controller = inControl;
+
         lblImageMtn.setIcon(new ImageIcon("src/main/java/com/group7/view/images/mtnIcont.png"));
 
         cardViewerObj = new CardViewer(inThisView, "NULL", 0);
 
-        thisView = inThisView;
+
         leftDimen = new Dimension(thisView.leftPanelWidth,thisView.leftPanelHeight);
 
         panelInfoView.setPreferredSize(leftDimen);
@@ -54,21 +63,24 @@ public class InfoView {
         taGameStatus.setLineWrap(true);
         taGameStatus.setWrapStyleWord(true);
 
+        btnPrompt1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                thisView.promptDeactivate();
+                thisView.sfx.ping();
+                controller.waiter.countDown();
+            }
+        });
     }
 
-    void setCurViewCard(String cardLocation, int cardIndex){
-        switch (cardLocation){
-            case "HAND":
-                curViewCard = thisView.getViewCardsInHand().get(cardIndex);
-            break;
+    void setCurViewCard(String inCardLocation, int inCardIndex){
 
-            case "TABLEAU":
-                curViewCard = thisView.getViewTableauCards().get(cardIndex);
-                break;
+        cardLocation = inCardLocation;
+        cardIndex = inCardIndex;
 
-            default:
-                break;
-        }
+        //cardViewerObj.setNewCard(cardLocation, cardIndex);
+
+        cardViewerObj = new CardViewer(thisView, cardLocation, cardIndex);
     }
 
     JPanel getPanel(){
@@ -85,9 +97,17 @@ public class InfoView {
         lblSproutsVal.setText(String.valueOf(sprouts));
         lblTrunksVal.setText(String.valueOf(trunks));
 
+        if(thisView.promptActive){
+            btnPrompt1.setVisible(thisView.getCurPrompt().infoButton);
+            btnPrompt1.setText(thisView.getCurPrompt().infoButtonText);
+        }
 
         //refresh card view
-        cardViewerObj.setNewCard(curViewCard);
+        //cardViewerObj.setNewCard(cardLocation, cardIndex);
+
+        if(!cardViewerObj.isEmpty()){
+            cardViewerObj = new CardViewer(thisView, cardLocation,cardIndex);
+        }
         panelCLCardView.removeAll();
         panelCLCardView.add(cardViewerObj.getPanel());
         panelCLCardView.repaint();

@@ -7,48 +7,43 @@ import java.util.Iterator;
 
 public class Prompting {
 
-    ArrayList<String> parsedParameters;
-
-    ArrayList<PromptLoc> tableauPromptLocations = new ArrayList<PromptLoc>();
-    ArrayList<PromptLoc> handPromptLocations = new ArrayList<PromptLoc>();
-
     String statusText;
     String cardButtonText;
     String infoButtonText;
     String checkboxText;
 
+    boolean infoButton = false;
+
     ViewController thisView;
 
-    String promptTestString = "";
+    Prompting(ViewController inThisView){
+        thisView = inThisView;
+    }
 
-    /*
-    parameter string should be laid out like this:
-
-    Your Status Text; Target Card Type; Button 1 text (false if no button)
-
-     */
-    public Prompting(String inStatusText, String inCardButtonText, String inInfoButtonText, String inCheckboxText){
-
-        //thisView = inThisView;
+    public void initializePrompt(String inStatusText, String inCardButtonText, String inCheckboxText, String inInfoButtonText, boolean drawInfoButton){
         statusText = inStatusText;
         cardButtonText = inCardButtonText;
         infoButtonText = inInfoButtonText;
         checkboxText = inCheckboxText;
-
-
-        //promptTest();
-
+        infoButton = drawInfoButton;
     }
+
+
 
     //add prompt for tableau
     public void addCardPrompt(int inCardX, int inCardY, boolean inCardButton, boolean inCardCheckbox){
-        tableauPromptLocations.add(new PromptLoc(inCardX,inCardY,inCardButton,inCardCheckbox));
+        int tableauIndex;
+
+        tableauIndex = thisView.getViewCards().getCardIndex(inCardX,inCardY);
+        thisView.getViewCards().setTableauButton(tableauIndex, inCardButton);
+        thisView.getViewCards().setTableauCheckbox(tableauIndex,inCardCheckbox);
     }
 
     public void addCardPrompt(int inCardX, boolean inCardButton, boolean inCardCheckbox){
-        handPromptLocations.add(new PromptLoc(inCardX,inCardButton,inCardCheckbox));
+        //handPromptLocations.add(new PromptLoc(inCardX,inCardButton,inCardCheckbox));
+        thisView.getViewCards().setHandButton(inCardX, inCardButton);
+        thisView.getViewCards().setHandCheckbox(inCardX,inCardCheckbox);
     }
-
 
     public void addViewController(ViewController inThisView){
         thisView = inThisView;
@@ -60,6 +55,10 @@ public class Prompting {
 
     public String getCardCheckboxText() {
         return checkboxText;
+    }
+
+    public String getStatusText(){
+        return statusText;
     }
 
     public boolean isCardPrompting(String cardLocation, int cardIndex) {
@@ -80,51 +79,9 @@ public class Prompting {
             default:
                 break;
         }
-
+        return 0;
     }
-
-
-    /*
-    private ArrayList<String> getParsedParameters(String inParameters){
-        String[] paraSplit = inParameters.split("; ");
-
-        ArrayList<String> arParaSplit = new ArrayList<String>(Arrays.asList(paraSplit));
-
-        return arParaSplit;
-    }
-
-     */
-
-
-    /*
-    private void promptTest(){
-
-        String button = "";
-
-        promptTestString = promptTestString + "Test Status: " + statusText + "\n";
-        promptTestString = promptTestString + "Test Target: " + targetCards + "\n";
-
-        if (btn1 == false){
-            button = "Button 1 is inactive";
-        }
-        else {
-            button = "Button 1 is active with text " + btn1Text;
-        }
-
-        promptTestString = promptTestString + button + "\n";
-
-        thisView.setInfoStatus(promptTestString);
-    }
-
-    private class promptLoc{
-        int cardX;
-        int cardY;
-
-        promptLoc(int cardX, String inCardLocation){
-
-        }
-    }
-
-     */
 }
+
+
 

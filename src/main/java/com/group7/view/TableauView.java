@@ -43,11 +43,17 @@ public class TableauView {
         thisView = inThisView;
         controller = inControl;
 
-
         curPlayer = inControl.getGame().getActivePlayer();
 
+
+    }
+
+    public void refresh(){
         //it's just a prank bro
         //camera's over there
+        tableauPanels.clear();
+        tableauCards.clear();
+
         tableauPanels.add(panelCLTableau1);
         tableauPanels.add(panelCLTableau2);
         tableauPanels.add(panelCLTableau3);
@@ -64,9 +70,6 @@ public class TableauView {
         tableauPanels.add(panelCLTableau14);
         tableauPanels.add(panelCLTableau15);
         tableauPanels.add(panelCLTableau16);
-
-
-
 
         for (int i = 0; i < 16; i++) {
             tableauCards.add(new CardViewer(thisView, "TABLEAU", i));
