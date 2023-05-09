@@ -11,6 +11,7 @@ public class Prompting {
     String cardButtonText;
     String infoButtonText;
     String checkboxText;
+
     boolean infoButton = false;
     ArrayList<PromptCards> promptSelections = new ArrayList<PromptCards>();
 
@@ -91,6 +92,10 @@ public class Prompting {
 
     String getStatusText(){
         return statusText;
+    }
+
+    public boolean isInfoButton() {
+        return infoButton;
     }
 
     public void setStatusText(String statusText) {

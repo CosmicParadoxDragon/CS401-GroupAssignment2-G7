@@ -1,6 +1,7 @@
 package com.group7.view;
 
 import javax.swing.*;
+import java.awt.*;
 import java.util.ArrayList;
 
 import com.group7.controller.Controller;
@@ -38,6 +39,10 @@ public class TableauView {
     private JPanel panelCLTableau16;
     private JPanel panelTableauContainer;
 
+    private Dimension tableauCardSize;
+
+    Dimension panelSize;
+
     public TableauView(ViewController inThisView, Controller inControl){
 
         thisView = inThisView;
@@ -45,6 +50,7 @@ public class TableauView {
 
         curPlayer = inControl.getGame().getActivePlayer();
 
+        tableauCardSize = new Dimension(thisView.tableauCardWidth, thisView.tableauCardHeight);
 
     }
 
@@ -76,6 +82,9 @@ public class TableauView {
 
             tableauCards.get(i).setMiniCard();
             setTableauCardPanel(tableauPanels.get(i), tableauCards.get(i));
+
+            tableauPanels.get(i).setMinimumSize(tableauCardSize);
+            tableauPanels.get(i).setMaximumSize(tableauCardSize);
         }
     }
 

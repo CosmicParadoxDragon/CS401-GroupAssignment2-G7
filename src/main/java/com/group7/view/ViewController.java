@@ -75,6 +75,9 @@ public class ViewController extends JFrame{
     int leftPanelWidth = (int) (windowX * .25);
     int leftPanelHeight = (int) (windowY * .4);
 
+    int tableauCardWidth = (windowX - leftPanelWidth - 50)/4;
+    int tableauCardHeight = (windowY- 200)/4;
+
     //------------------------------------------------------------------------------------------------------------------
 
     public ViewController(Controller inControl){
@@ -133,12 +136,15 @@ public class ViewController extends JFrame{
     //main game window with tableau, etc
     public void drawGameHome(){
         cardHandler.loadCards();
+        EventQueue.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                changePanel(panelCLCenter, tableauViewPanel);
+                changePanel(panelCLLeft, infoViewPanel);
+                changePanel(panelCLBottom, handCardsPanel);
 
-
-        changePanel(panelCLCenter, tableauViewPanel);
-        changePanel(panelCLLeft, infoViewPanel);
-        changePanel(panelCLBottom, handCardsPanel);
-
+            }
+        });
     }
 
     //method to place game element panels inside screen panels
@@ -200,14 +206,21 @@ public class ViewController extends JFrame{
 
     //refreshes values displayed, but does not load cards or mess with prompts
     public void softRefresh(){
-        setTitle(windowTitle); //gets set to the players name after the entrance screen. It can be overridden below
-        infoViewObj.refresh();
 
-        tableauViewObj.refresh();
+        EventQueue.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                setTitle(windowTitle); //gets set to the players name after the entrance screen. It can be overridden below
+                infoViewObj.refresh();
 
-        handCardsObj.refresh();
+                tableauViewObj.refresh();
 
-        curActivePlayer = controller.getGame().getActivePlayer();
+                handCardsObj.refresh();
+
+                curActivePlayer = controller.getGame().getActivePlayer();
+            }
+        });
+
     }
 
     //same as soft refresh, but reloads cards from backend and erases prompt

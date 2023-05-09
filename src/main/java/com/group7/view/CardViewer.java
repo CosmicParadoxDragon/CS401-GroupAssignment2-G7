@@ -139,6 +139,7 @@ public class CardViewer {
                 btnViewCard.setVisible(isMiniCard);
                 btnPrompt1.setVisible(false);
                 cbPrompt1.setVisible(false);
+                taCardAbility.setVisible(false);
             }
             else {
                 btnViewCard.setVisible(false);

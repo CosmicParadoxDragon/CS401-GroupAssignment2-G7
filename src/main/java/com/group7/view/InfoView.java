@@ -99,13 +99,20 @@ public class InfoView {
         lblSoilVal.setText(String.valueOf(soil));
         lblSproutsVal.setText(String.valueOf(sprouts));
         lblTrunksVal.setText(String.valueOf(trunks));
+        btnPrompt1.setVisible(true);
 
         if(thisView.promptActive){
-            btnPrompt1.setVisible(thisView.getCurPrompt().infoButton);
-            btnPrompt1.setText(thisView.getCurPrompt().infoButtonText);
+            //btnPrompt1.setVisible(thisView.getCurPrompt().infoButton);
+            if(thisView.getCurPrompt().isInfoButton()){
+                btnPrompt1.setEnabled(true);
+                btnPrompt1.setText(thisView.getCurPrompt().infoButtonText);
+            }
+            else {btnPrompt1.setEnabled(false);}
         }
         else{
-            btnPrompt1.setVisible(false);
+
+            btnPrompt1.setText(" ");
+            btnPrompt1.setEnabled(false);
         }
 
         //refresh card view
