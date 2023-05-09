@@ -15,6 +15,8 @@ public class ViewController extends JFrame{
 
     public ViewCardHandler cardHandler;
 
+
+
     Card cardInViewer;
 
     Player curActivePlayer;
@@ -79,6 +81,7 @@ public class ViewController extends JFrame{
         cardHandler = new ViewCardHandler(this);
         curActivePlayer = controller.getGame().getActivePlayer();
         curPrompt = new Prompting(this);
+        curPrompt.reset();
         cardHandler.loadCards();
 
 
@@ -127,12 +130,13 @@ public class ViewController extends JFrame{
 
     //main game window with tableau, etc
     public void drawGameHome(){
+        cardHandler.loadCards();
+
 
         changePanel(panelCLCenter, tableauViewPanel);
         changePanel(panelCLLeft, infoViewPanel);
         changePanel(panelCLBottom, handCardsPanel);
 
-       // String prompterTester = promptGeneric("Test Status; Test Target; false");
     }
 
     //method to place game element panels inside screen panels
@@ -149,16 +153,27 @@ public class ViewController extends JFrame{
 
     public void promptActivate(){
         promptActive = true;
-        setInfoStatus(curPrompt.getStatusText());
+        if(curPrompt.getStatusText() != "") {
+            setStatus(curPrompt.getStatusText());
+        }
         softRefresh();
     }
 
     public void promptDeactivate(){
         promptActive = false;
-        softRefresh();
+        curPrompt.promptSelections.clear();
+
+        hardRefresh();
     }
 
     public Prompting getCurPrompt(){
+        if (curPrompt != null){
+            return curPrompt;
+        }
+        else return null;
+    }
+
+    public Prompting prompt(){
         if (curPrompt != null){
             return curPrompt;
         }
@@ -195,7 +210,9 @@ public class ViewController extends JFrame{
 
     //same as soft refresh, but reloads cards from backend and erases prompt
     public void hardRefresh(){
-
+        curPrompt.promptSelections.clear();
+        cardHandler.loadCards();
+        softRefresh();
     }
 
 
@@ -204,8 +221,9 @@ public class ViewController extends JFrame{
         windowTitle = inTitle;
     }
 
-    public void setInfoStatus (String inStatus){
+    public void setStatus (String inStatus){
         infoViewObj.setCurStatusText(inStatus);
+        softRefresh();
     }
 
     /*

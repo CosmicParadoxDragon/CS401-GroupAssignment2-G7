@@ -59,7 +59,9 @@ public class Game {
         }
         playerSetup();
 
-        // SetupPhase();
+        SetupPhase();
+
+        PlayerSetup();
         // if ( numberOfPlayers == 1)
         //     SetupGaia();
         // GameStart();
@@ -124,6 +126,7 @@ public class Game {
             // This should work if parseAbility is complete
             players.get(i).getHand().add(ClimateDeck.dealCard());
             // players.get(i).getHand().add(EcosystemDeck.dealCard()); // if we ever get here
+
         }
     }
 

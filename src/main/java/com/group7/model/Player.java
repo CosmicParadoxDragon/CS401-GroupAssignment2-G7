@@ -7,6 +7,7 @@ import com.group7.model.board.Tableau;
 import com.group7.model.cards.Card;
 import com.group7.model.cards.EarthCard;
 import com.group7.model.cards.AbilityPair;
+import com.group7.view.Prompting;
 
 
 public class Player {
@@ -90,13 +91,15 @@ public class Player {
         String action = "";
         // action = m_game.m_control.getGui().promptGeneric("Select a card to place in Island Slot: ");
         // Need to pause execution here to wait for response.
-        synchronized (this){
-            try {
-                wait();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
+
+
+//        synchronized (this){
+//            try {
+//                wait();
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+//        }
         // Execute the response
 
 

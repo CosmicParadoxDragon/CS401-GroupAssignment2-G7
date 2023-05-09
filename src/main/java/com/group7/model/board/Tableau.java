@@ -31,10 +31,11 @@ public class Tableau {
     }
 
     public void setCard(int row, int column, Card insertCard){
-        if(getCard(row, column) != null) {
+        if(getCard(row, column).getM_name() != "NULL_CARD") {
             ; /** do nothing, there's already a card here*/
         } else {
-            m_board.get(row).add(insertCard);
+            //m_board.get(row).add(insertCard);
+            m_board.get(row).set(column, insertCard);
             System.out.println("card upkeep not implemented yet!");
             /** upkeep for card insertion here*/
 

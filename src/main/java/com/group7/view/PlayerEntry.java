@@ -35,7 +35,8 @@ public class PlayerEntry {
 
                 thisView.sfx.acknowledge();
                 thisView.setWindowTitle(tfPlayerName.getText());
-                thisView.drawGameHome();
+                thisView.controller.getWaiter().countDown();
+
             }
         });
 

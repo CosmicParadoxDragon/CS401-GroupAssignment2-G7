@@ -59,6 +59,7 @@ public class CardViewer {
 
                 if (cardLocation == "HAND"){
                     thisView.getViewCards().setHandCheckboxState(cardIndex, selected);
+
                 } else if (cardLocation == "TABLEAU") {
                     thisView.getViewCards().setTableauCheckboxState(cardIndex, selected);
                 }
@@ -66,6 +67,21 @@ public class CardViewer {
                 //allows tableau to indicate which cards have been selected via checkbox
                 thisView.softRefresh();
 
+            }
+        });
+        btnPrompt1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                thisView.sfx.ping();
+
+                if (cardLocation == "HAND"){
+                    thisView.getViewCards().setHandButtonState(cardIndex, true);
+
+                } else if (cardLocation == "TABLEAU") {
+                    //thisView.getViewCards().setTableauCheckboxState(cardIndex, selected);
+                }
+
+                thisView.controller.getWaiter().countDown();
             }
         });
     }

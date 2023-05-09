@@ -55,7 +55,6 @@ public class InfoView {
 
         cardViewerObj = new CardViewer(inThisView, "NULL", 0);
 
-
         leftDimen = new Dimension(thisView.leftPanelWidth,thisView.leftPanelHeight);
 
         panelInfoView.setPreferredSize(leftDimen);
@@ -66,9 +65,8 @@ public class InfoView {
         btnPrompt1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                thisView.promptDeactivate();
                 thisView.sfx.ping();
-                controller.waiter.countDown();
+                controller.getWaiter().countDown();
             }
         });
     }
@@ -92,6 +90,7 @@ public class InfoView {
         taGameStatus.setText(curStatusText);
 
 
+
         lblVictoryPointsVal.setText(String.valueOf(victoryPoints));
         lblSoilVal.setText(String.valueOf(soil));
         lblSproutsVal.setText(String.valueOf(sprouts));
@@ -100,6 +99,9 @@ public class InfoView {
         if(thisView.promptActive){
             btnPrompt1.setVisible(thisView.getCurPrompt().infoButton);
             btnPrompt1.setText(thisView.getCurPrompt().infoButtonText);
+        }
+        else{
+            btnPrompt1.setVisible(false);
         }
 
         //refresh card view

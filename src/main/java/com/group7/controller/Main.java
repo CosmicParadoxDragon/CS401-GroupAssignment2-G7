@@ -23,15 +23,13 @@ public final class Main extends Thread{
 
         //try {
         Controller controller = new Controller();
-        controller.getGame().SetupPhase();
-        controller.getGame().PlayerSetup();
 
 
-        controller.getGui().drawPlayerEntry();
-//        controller.getGui().cardHandler.loadCards();
-        new Thread("GameThread") {
-            @Override public void run () { controller.getGame().GameStart(); }
-        }.start();
+
+
+//        new Thread("GameThread") {
+//            @Override public void run () { controller.getGame().GameStart(); }
+//        }.start();
 
 
         //} catch (IOException e)
