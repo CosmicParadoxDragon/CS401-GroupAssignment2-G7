@@ -56,12 +56,9 @@ public class Controller {
         m_gui.prompt().reset();
 
         String promptTutorial = "";
-        promptTutorial = "You selected the card at "
+        m_gui.setStatus("You selected the card at "
                 + promptTutorialOutput(promptOut, promptTutorial)
-                + "Note that a y value of -1 indicates that the card is in the player's hand.\nIsn't that slick?";
-
-        m_gui.setStatus(promptTutorial);
-        m_gui.prompt().reset();
+                + "Note that a y value of -1 indicates that the card is in the player's hand.\nIsn't that slick?");
         m_gui.prompt().setLeftPanelButton(true);
         m_gui.prompt().setLeftPanelButtonText("It Sure Is!");
         m_gui.promptActivate();
