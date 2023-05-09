@@ -25,7 +25,7 @@ public class InfoView {
 
     private Dimension leftDimen;
 
-    private String curStatusText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi quis iaculis metus. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.";
+    private String curStatusText = "";
 
     //panel elements
 
@@ -140,8 +140,7 @@ public class InfoView {
 
     public void setCurStatusText(String inStat){
         curStatusText = inStat;
-
-        refresh();
+        taGameStatus.setText(inStat);
     }
 }
 

@@ -75,7 +75,7 @@ public class ViewController extends JFrame{
     int leftPanelWidth = (int) (windowX * .25);
     int leftPanelHeight = (int) (windowY * .4);
 
-    int tableauCardWidth = (windowX - leftPanelWidth - 50)/4;
+    int tableauCardWidth = (windowX - leftPanelWidth - 60)/4;
     int tableauCardHeight = (windowY- 200)/4;
 
     //------------------------------------------------------------------------------------------------------------------
@@ -237,8 +237,41 @@ public class ViewController extends JFrame{
     }
 
     public void setStatus (String inStatus){
-        infoViewObj.setCurStatusText(inStatus);
-        softRefresh();
+        try {
+            Thread.sleep(300);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        char curChar;
+        String outStat = "";
+        int charSleep = 10;
+        int punctSleep = 50;
+        int crSleep = 100;
+
+        int curSleep;
+
+        for (int i = 0; i < inStatus.length(); i++) {
+            curChar = inStatus.charAt(i);
+            outStat = outStat + curChar;
+
+            if(curChar == '.'|| curChar == ',' || curChar == ':'){
+                curSleep = punctSleep;
+            } else if (curChar == '\n') {
+                curSleep = crSleep;
+            } else {
+                curSleep = charSleep;
+            }
+
+            infoViewObj.setCurStatusText(outStat);
+
+            try {
+                Thread.sleep(curSleep);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+
+        }
     }
 
     /*

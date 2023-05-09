@@ -119,14 +119,14 @@ public class CardViewer {
             taCardAbility.setText(displayCard.getM_text());
 
             //debug
-            String debugText;
+//            String debugText;
+//
+//            debugText = "Card Location: " + cardLocation + "\n"
+//            + "Card Index: " + cardIndex + "\n"
+//            + "Viewer Is Checked: " + isChecked + "\n"
+//            ;
 
-            debugText = "Card Location: " + cardLocation + "\n"
-            + "Card Index: " + cardIndex + "\n"
-            + "Viewer Is Checked: " + isChecked + "\n"
-            ;
-
-            taCardAbility.setText(debugText);
+//            taCardAbility.setText(debugText);
 
 
 

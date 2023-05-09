@@ -21,22 +21,6 @@
           <text value="Card Title"/>
         </properties>
       </component>
-      <component id="d74f6" class="javax.swing.JLabel" binding="lblVictoryPoints">
-        <constraints>
-          <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <text value="Victory Points:"/>
-        </properties>
-      </component>
-      <component id="d6522" class="javax.swing.JLabel" binding="lblVictoryPointsVal">
-        <constraints>
-          <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <text value="N/A"/>
-        </properties>
-      </component>
       <component id="779e2" class="javax.swing.JTextArea" binding="taCardAbility">
         <constraints>
           <grid row="1" column="0" row-span="1" col-span="2" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
@@ -50,7 +34,7 @@
       </component>
       <component id="7b45b" class="javax.swing.JButton" binding="btnViewCard">
         <constraints>
-          <grid row="5" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+          <grid row="4" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
           <text value="View Card"/>
@@ -68,7 +52,7 @@
       </vspacer>
       <component id="eed6d" class="javax.swing.JButton" binding="btnPrompt1">
         <constraints>
-          <grid row="4" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+          <grid row="3" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
           <text value="Prompt Button 1"/>
@@ -76,10 +60,26 @@
       </component>
       <component id="1ebea" class="javax.swing.JCheckBox" binding="cbPrompt1">
         <constraints>
-          <grid row="3" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+          <grid row="2" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
           <text value="CheckBox"/>
+        </properties>
+      </component>
+      <component id="d74f6" class="javax.swing.JLabel" binding="lblVictoryPoints">
+        <constraints>
+          <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Victory Points:"/>
+        </properties>
+      </component>
+      <component id="d6522" class="javax.swing.JLabel" binding="lblVictoryPointsVal">
+        <constraints>
+          <grid row="5" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="N/A"/>
         </properties>
       </component>
     </children>
