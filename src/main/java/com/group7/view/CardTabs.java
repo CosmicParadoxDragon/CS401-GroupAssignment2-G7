@@ -52,6 +52,27 @@ public class CardTabs {
         });
     }
 
+    public CardTabs(boolean isIslandClimate, int cardIndex, ViewController inThisView){
+        thisView = inThisView;
+        pbCardColor.setVisible(false);
+        cardSep.setVisible(false);
+
+        curCard = thisView.getViewCards().getViewCardIslCli(cardIndex);
+
+        if(curCard != null) {
+            btnCardTab.setText(curCard.getM_name());
+        }else {
+            btnCardTab.setText("N/A");
+        }
+
+        btnCardTab.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                thisView.sfx.cardFlip();
+                thisView.setViewCard("ISLANDCLIMATE", cardIndex);
+            }
+        });
+    }
 
     //blank card tab
     public CardTabs(){

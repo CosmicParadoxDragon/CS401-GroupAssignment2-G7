@@ -192,8 +192,8 @@ public class CardViewer {
                 displayCard = thisView.getViewCards().getViewCardInTableau(inCardIndex);
                 break;
 
-            case "ClimateIsland":
-
+            case "ISLANDCLIMATE":
+                displayCard = thisView.getViewCards().getViewCardIslCli(inCardIndex);
                 break;
 
             default:

@@ -43,6 +43,10 @@ public class InfoView {
     private JPanel panelGameStatusContainer;
     private JLabel lblImageMtn;
     private JButton btnPrompt1;
+    private JLabel lblIslandCard;
+    private JPanel panelIslandCard;
+    private JLabel lblClimateCard;
+    private JPanel panelClimateCard;
 
     private Controller controller;
 
@@ -106,6 +110,16 @@ public class InfoView {
 
         //refresh card view
         //cardViewerObj.setNewCard(cardLocation, cardIndex);
+
+        panelIslandCard.removeAll();
+        panelIslandCard.add(new CardTabs(true, 0, thisView).getPanel());
+        panelIslandCard.repaint();
+        panelIslandCard.revalidate();
+
+        panelClimateCard.removeAll();
+        panelClimateCard.add(new CardTabs(true,1,thisView).getPanel());
+        panelClimateCard.repaint();
+        panelClimateCard.revalidate();
 
         if(!cardViewerObj.isEmpty()){
             cardViewerObj = new CardViewer(thisView, cardLocation,cardIndex);

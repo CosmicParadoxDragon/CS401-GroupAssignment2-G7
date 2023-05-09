@@ -14,6 +14,10 @@ public class ViewCardHandler {
     ArrayList<CardLoc> viewCardsInHand = new ArrayList<CardLoc>();
     ArrayList<CardLoc> viewCardsInTableau = new ArrayList<CardLoc>();
 
+
+
+    ArrayList<Card> viewCardsIslCli = new ArrayList<Card>();
+
     public ViewCardHandler(ViewController inThisView){
         thisView = inThisView;
 
@@ -23,6 +27,7 @@ public class ViewCardHandler {
 
         viewCardsInTableau.clear();
         viewCardsInHand.clear();
+        viewCardsIslCli.clear();
 
 
         //gets cards from player tableau and dumps into one-dimensional array list
@@ -38,6 +43,9 @@ public class ViewCardHandler {
             for (int i = 0; i < thisView.getViewActivePlayer().getHand().size(); i++){
                 viewCardsInHand.add(new CardLoc(i, thisView.getViewActivePlayer().getHand().get(i)));
             }
+
+            viewCardsIslCli.add(thisView.getViewActivePlayer().getM_islandCard());
+            viewCardsIslCli.add(thisView.getViewActivePlayer().getM_climateCard());
     }
 
     public Card getViewCardInHand(int inCardIndex){
@@ -49,6 +57,10 @@ public class ViewCardHandler {
         return viewCardsInTableau.get(inCardIndex).getCard();
     }
 
+    public Card getIslandClimate(int inCardIndex){
+        return viewCardsIslCli.get(inCardIndex);
+    }
+
     //for getting card based on 2D location
     public Card getViewCardInTableau(int inCardX, int inCardY){
         for (int i = 0; i < viewCardsInTableau.size(); i++){
@@ -57,6 +69,10 @@ public class ViewCardHandler {
             }
         }
         return null;
+    }
+
+    public Card getViewCardIslCli(int inCardIndex) {
+        return viewCardsIslCli.get(inCardIndex);
     }
 
     int getCardIndex(int inCardX, int inCardY){

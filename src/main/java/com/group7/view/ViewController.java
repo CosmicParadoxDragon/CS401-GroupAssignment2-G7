@@ -15,6 +15,8 @@ public class ViewController extends JFrame{
 
     public ViewCardHandler cardHandler;
 
+    //public int gameScreen = 0;
+
 
 
     Card cardInViewer;
