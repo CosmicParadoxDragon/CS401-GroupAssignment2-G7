@@ -57,7 +57,7 @@ public class Controller {
 
         String promptTutorial = "";
         m_gui.setStatus("You selected the card at "
-                + promptTutorialOutput(promptOut, promptTutorial)
+                + promptTutorialOutput(promptOut)
                 + "Note that a y value of -1 indicates that the card is in the player's hand.\nIsn't that slick?");
         m_gui.prompt().setLeftPanelButton(true);
         m_gui.prompt().setLeftPanelButtonText("It Sure Is!");
@@ -112,18 +112,46 @@ public class Controller {
             }
         }
 
-        promptTutorial = "";
         m_gui.setStatus("You selected the card(s)\n"
-                + promptTutorialOutput(prompts, promptTutorial)
-                + "How awesome is that?");
+                + promptTutorialOutput(prompts));
 
         m_gui.prompt().reset();
         prompts.clear();
         m_gui.promptDeactivate();
+
+        m_gui.prompt().setLeftPanelButtonText("Cool");
+        m_gui.prompt().setLeftPanelButton(true);
+        m_gui.promptActivate();
+
+        setWait(1);
+        startWaiting();
+
+        m_gui.promptDeactivate();
+        m_gui.prompt().reset();
+
+        m_gui.setStatus("Select a card from the tableau.");
+        m_gui.prompt().setCardButtonText("Select");
+        prompts.add(new PromptCards(1,3,false,true));
+        m_gui.prompt().addPromptCardList(prompts);
+        m_gui.promptActivate();
+
+        setWait(1);
+        startWaiting();
+
+        promptOut = m_gui.prompt().getSelections();
+
+        m_gui.setStatus("You selected " + promptTutorialOutput(prompts));
+
+        m_gui.prompt().reset();
+        m_gui.promptDeactivate();
+
+
+
     }
 
-    public String promptTutorialOutput(ArrayList<PromptCards> inPrompts, String testSelection){
+    public String promptTutorialOutput(ArrayList<PromptCards> inPrompts){
 
+        String testSelection = "";
         for(int i = 0; i < inPrompts.size(); i++) {
             PromptCards curCard = inPrompts.get(i);
                     testSelection = testSelection

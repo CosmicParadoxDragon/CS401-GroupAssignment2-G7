@@ -36,7 +36,7 @@ public class ViewCardHandler {
 
             for (int i = 0; i < 4; i++) {
                 for (int j = 0; j < 4; j++) {
-                    viewCardsInTableau.add(new CardLoc(i, j, thisView.getViewActivePlayer().getPlayerTableau().getCard(i, j)));
+                    viewCardsInTableau.add(new CardLoc(j, i, thisView.getViewActivePlayer().getPlayerTableau().getCard(j, i)));
                 }
             }
 
