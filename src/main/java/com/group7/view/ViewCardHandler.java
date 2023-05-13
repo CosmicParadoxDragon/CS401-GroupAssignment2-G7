@@ -49,7 +49,12 @@ public class ViewCardHandler {
     }
 
     public Card getViewCardInHand(int inCardIndex){
-        return viewCardsInHand.get(inCardIndex).getCard();
+        if (inCardIndex > viewCardsInHand.size() || viewCardsInHand.size() == 0){
+            return null;
+        }
+        else {
+            return viewCardsInHand.get(inCardIndex).getCard();
+        }
     }
 
     //for getting card based on 1D index
