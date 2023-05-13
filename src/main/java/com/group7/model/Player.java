@@ -7,6 +7,7 @@ import com.group7.model.board.Tableau;
 import com.group7.model.cards.Card;
 import com.group7.model.cards.EarthCard;
 import com.group7.model.cards.AbilityPair;
+import com.group7.view.PromptCards;
 import com.group7.view.Prompting;
 
 
@@ -88,21 +89,20 @@ public class Player {
 
     public void takeTurnZero(){
         // Player placing the island and climate into their board
-        String action = "";
+//        String action = "";
         // action = m_game.m_control.getGui().promptGeneric("Select a card to place in Island Slot: ");
         // Need to pause execution here to wait for response.
+        Card islandCard = m_game.getController().promptForIsland();
+        setIsland(islandCard);
+        hand.remove(islandCard);
+        hand.trimToSize();
+        m_game.getController().redraw();
 
-
-//        synchronized (this){
-//            try {
-//                wait();
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            }
-//        }
-        // Execute the response
-
-
+        Card climateCard = m_game.getController().promptForClimate();
+        setClimate(climateCard);
+        hand.remove(climateCard);
+        hand.trimToSize();
+        m_game.getController().redraw();
     }
     
     String selectAction()

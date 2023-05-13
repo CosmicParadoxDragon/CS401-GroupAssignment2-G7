@@ -4,6 +4,7 @@ package com.group7.controller;
 import com.formdev.flatlaf.FlatDarkLaf;
 import com.group7.model.Game;
 import com.group7.model.cards.Card;
+import com.group7.model.cards.ClimateCard;
 import com.group7.view.ViewController;
 import com.group7.view.*;
 import com.group7.model.cards.Card;
@@ -21,9 +22,27 @@ public class Controller {
     CountDownLatch waiter;
 
     ViewController m_gui;
-    public Controller(String threaded) {
-        FlatDarkLaf.setup();
+
+    // Actual Game
+    public Controller(String mode) {
+        m_game = new Game(this, 1);
+
+
+        FlatDarkLaf.setup(); //initialize gui theme
+        m_gui = new ViewController(this);
+
+        m_gui.drawPlayerEntry();
+
+        setWait(1); //view will decrement this number by one on submit button presses. Waiting for one button press
+        startWaiting(); //waiting for button press from view
+
+        m_gui.drawGameHome();
+        m_game.GameStart();
+        // m_gui.drawGameHome();
+
+
     }
+    // GUI Interface tutorial
     public Controller() throws IOException {
         m_game = new Game(this, 1);
         m_game.GameStart();
@@ -201,20 +220,112 @@ public class Controller {
 
 
     }
+    public Card promptForIsland() {
+        Card islandToPlace;
+        // This is the ideal production use case for this function, being handed a card object that
+        // the user selected from the hand based in the UI.
+        getGui().setStatus("Welcome, to the Earth Game!\n" +
+                "You have been dealt your Island and Climate card.\n" +
+                "Please select your Island Card to insert into the game board.");
+        getGui().prompt().setCardButtonText("Place in Island");
+
+
+        getPrompts().add(new PromptCards(0,false,true));
+        getGui().prompt().addPromptCardList(getPrompts());
+
+
+        getGui().promptActivate();
+
+        setWait(1);
+        startWaiting();
+
+        ArrayList<PromptCards> promptOut = getGui().prompt().getSelections();
+        getGui().promptDeactivate();
+        getGui().prompt().reset();
+
+
+        islandToPlace = processPromptCard(promptOut.get(0));
+
+        getGui().setStatus("Good Job!");
+        getGui().promptActivate();
+        getGui().promptDeactivate();
+        getGui().prompt().reset();
+
+        return islandToPlace;
+
+
+    }
+    public Card promptForClimate() {
+        Card climateToPlace;
+        // This is the ideal production use case for this function, being handed a card object that
+        // the user selected from the hand based in the UI.
+        getGui().setStatus("Now, please select your Climate Card \nto insert into the game board.");
+        getGui().prompt().setCardButtonText("Place Climate in board.");
+
+        int search = 1;
+        for (Card card : getGame().getActivePlayer().getHand() ) {
+            if ( card instanceof ClimateCard ){
+                search = getGame().getActivePlayer().getHand().indexOf(card);
+            }
+        }
+
+        getPrompts().add(new PromptCards(search,false,true));
+        getGui().prompt().addPromptCardList(getPrompts());
+
+
+        getGui().promptActivate();
+
+        setWait(1);
+        startWaiting();
+
+        ArrayList<PromptCards> promptOut = getGui().prompt().getSelections();
+        getGui().promptDeactivate();
+        getGui().prompt().reset();
+
+        climateToPlace = processPromptCard(promptOut.get(0));
+
+
+        getGui().setStatus("Good Job!");
+        getGui().promptActivate();
+        getGui().promptDeactivate();
+        getGui().prompt().reset();
+
+
+        return climateToPlace;
+
+
+    }
+    public Card processPromptCard(PromptCards pc ) {
+        if ( pc.getCardY() == -1 ) { // Search Hand
+            return getGame().getActivePlayer().getHand().get(pc.getCardX());
+        }
+        else {
+            return getGame().getActivePlayer().getPlayerTableau().getCard(pc.getCardX(), pc.getCardY());
+        }
+    }
 
     public CountDownLatch getWaiter() {
         return waiter;
     }
 
     //sets number of countdowns to wait for
-    void setWait(int inWait) {
+    public void setWait(int inWait) {
         this.waiter = new CountDownLatch(inWait);
     }
 
-    void startWaiting(){
+
+    public void startWaiting(){
         try {
             waiter.await(); //when waiter gets to zero, execution in controller advances past this block
         }catch (InterruptedException e){
         }
+    }
+
+    public ArrayList<PromptCards> getPrompts() {
+        return prompts;
+    }
+
+    public void redraw() {
+        m_gui.drawGameHome();
     }
 }

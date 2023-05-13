@@ -20,9 +20,9 @@ public final class Main extends Thread{
 
         // gameTui Interface = new gameTui(currentGame);
 
-
+        Controller game_controller = new Controller("game");
         //try {
-        Controller controller = new Controller();
+//        Controller tutorial_controller = new Controller();
 
 
 
