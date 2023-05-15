@@ -11,29 +11,31 @@ import java.util.Scanner;
 import com.group7.model.cards.*;
 
 public class Deck {
-    ArrayList <Card> deckList;
-    Deck() { deckList = new ArrayList<Card>(); /* Suppose to start by building a deck from a given file */ }
-
-    Deck(String Test)
-    {
-        // this is exists to trigger the testing state deck 
-
+    Deck() {
+        /* Suppose to start by building a deck from a given file */
+        deckList = new ArrayList<Card>();
     }
+    ArrayList <Card> deckList;
 
     Card dealCard()
     {
         if (deckList.size() == 0) {
-            // Exception no card left
+            System.out.println("Deck Size 0");
+            return new Card("NULL");
         }
-        // Return a random card from the deck
-        Random random = new Random();
-        int cardDrawnIndex = random.nextInt(deckList.size());
-        Card drawnCard = deckList.get(cardDrawnIndex);
-        // Remove the card from the deck
-        // deckList.remove(cardDrawnIndex);
-        // The shuffle the remaining card
-        Collections.shuffle(deckList);
-        return drawnCard;
+        else {
+            // Return a random card from the deck
+            Random random = new Random();
+            int cardDrawnIndex = random.nextInt(deckList.size() - 1);
+
+            Card drawnCard = deckList.get(cardDrawnIndex);
+            // Remove the card from the deck
+            deckList.remove(cardDrawnIndex);
+            deckList.trimToSize();
+            // The shuffle the remaining cards
+            // Collections.shuffle(deckList);
+            return drawnCard;
+        }
     }
 
     /**
@@ -68,7 +70,7 @@ public class Deck {
             deck_file.close();
         }
         catch(Exception e) {
-            System.out.println(e.toString());
+            e.printStackTrace();
         }
         // deckList.add(new TerrainCard("Prairie", "Sunny|Rocky|Cold", "Green:+1 cards 3 Victory Points per Herb in this Row", 4, 2));
     }   
@@ -98,7 +100,7 @@ public class Deck {
             deck_file.close();
         }
         catch(Exception e) {
-            System.out.println(e.toString());
+            e.printStackTrace();
         }
     }
 
@@ -114,6 +116,7 @@ public class Deck {
             deck_file.nextLine();
             deck_file.nextLine();
             deck_file.nextLine();
+
             while (deck_file.hasNext()) {
                 String line = deck_file.nextLine();
                 String[] list = line.split(",");
@@ -125,7 +128,7 @@ public class Deck {
             deck_file.close();
         }
         catch(Exception e) {
-            System.out.println(e.toString());
+            e.printStackTrace();
         }
     }
 
@@ -157,7 +160,7 @@ public class Deck {
             deck_file.close();
         }
         catch(Exception e) {
-            System.out.println(e.toString());
+            e.printStackTrace();
         }
     }
 
@@ -167,4 +170,12 @@ public class Deck {
         deckList.remove(deckList.size()-1);
     }
     public boolean isEmpty () { return deckList.isEmpty();}
+
+    public ArrayList<Card> draw(int numOfCards){
+        ArrayList<Card> result = new ArrayList<>();
+        for  (int i = 0; i < numOfCards; i++) {
+            result.add(dealCard());
+        }
+        return result;
+    }
 }

@@ -7,6 +7,11 @@ public class AbilityPair {
         m_color = item1;
         m_text = item2;
     }
+    public AbilityPair(String wholeLine) {
+        String [] forExtractionColor = wholeLine.split(":");
+        m_color = forExtractionColor[0];
+        m_text = forExtractionColor[1];
+    }
 
     public String getColor () { return m_color; }
     public String getText () { return m_text; }

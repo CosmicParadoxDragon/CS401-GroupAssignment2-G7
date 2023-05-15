@@ -10,7 +10,7 @@ public class FuanaCard extends Card
     Vector <Player> achievedPlayers = new Vector<Player>();
     public FuanaCard(String name, String abilityLine)
     {
-        super(name, abilityLine, 0);
+        super(name, "Fuana", abilityLine, 0);
     }
 
     /**

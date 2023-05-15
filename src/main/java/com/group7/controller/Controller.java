@@ -7,9 +7,7 @@ import com.group7.model.cards.Card;
 import com.group7.model.cards.ClimateCard;
 import com.group7.view.ViewController;
 import com.group7.view.*;
-import com.group7.model.cards.Card;
 
-import javax.swing.text.View;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.concurrent.CountDownLatch;
@@ -17,15 +15,20 @@ import java.util.concurrent.CountDownLatch;
 
 public class Controller {
     Game m_game;
-    ArrayList<PromptCards> prompts = new ArrayList<PromptCards>();
-    ArrayList<PromptCards> promptOut = new ArrayList<PromptCards>();
+    ViewController m_gui;
     CountDownLatch waiter;
 
-    ViewController m_gui;
+    ArrayList<PromptCards> prompts = new ArrayList<PromptCards>();
+    ArrayList<PromptCards> promptOut = new ArrayList<PromptCards>();
+    ArrayList<Card> actionChoices = new ArrayList<Card>();
 
     // Actual Game
     public Controller(String mode) {
         m_game = new Game(this, 1);
+        actionChoices.add(new Card("Planting"));
+        actionChoices.add(new Card("Composting"));
+        actionChoices.add(new Card("Watering"));
+        actionChoices.add(new Card("Growing"));
 
 
         FlatDarkLaf.setup(); //initialize gui theme
@@ -41,11 +44,12 @@ public class Controller {
         // m_gui.drawGameHome();
 
 
+
     }
     // GUI Interface tutorial
     public Controller() throws IOException {
         m_game = new Game(this, 1);
-        m_game.GameStart();
+        m_game.GUITutorialGameStart();
 
         FlatDarkLaf.setup(); //initialize gui theme
         m_gui = new ViewController(this);
@@ -95,7 +99,8 @@ public class Controller {
         m_gui.hardRefresh(); //reloads cards from backend. Also resets list of prompted cards
 
         m_gui.setStatus("You can even have the user select multiple cards by adding checkboxes. " +
-                "Two of the cards in the tableau and one card in your hand are selectable. Select them, then press submit!");
+                "Two of the cards in the tableau and one card in your hand are selectable. " +
+                "Select them, then press submit!");
         m_gui.prompt().setLeftPanelButton(true);
         m_gui.prompt().setLeftPanelButtonText("Submit");
         m_gui.prompt().setCheckboxText("Select");
@@ -189,28 +194,79 @@ public class Controller {
 
     public void setGame (Game gameObj) { m_game = gameObj; }
     public void setGui (ViewController viewObj) { m_gui = viewObj; }
-    public Game getGame() {
-        return m_game;
-    }
+    public Game getGame() { return m_game; }
     public ViewController getGui() { return m_gui; }
 
     public String getActionChoice()
     {
-        String action = "planting";
-        // Assumeing planting for testing and progression purposes
-        // m_tui.promptForActionChoice();
+
+        ArrayList<Card> tmpHand = new ArrayList<Card>();
+        tmpHand = (ArrayList<Card>) m_game.getActivePlayer().getHand().clone();
+        m_game.getActivePlayer().getHand().clear();
+        m_game.getActivePlayer().getHand().addAll(actionChoices);
+        redraw();
+
+        String action = "";
+
+        m_gui.setStatus("Please Select a Turn Action!");
+        m_gui.prompt().setCardButtonText("Select Action");
+        prompts.add(new PromptCards(0,false,true));
+        prompts.add(new PromptCards(1,false,true));
+        prompts.add(new PromptCards(2,false,true));
+        prompts.add(new PromptCards(3,false,true));
+        m_gui.prompt().addPromptCardList(prompts);
+        m_gui.promptActivate();
+
+        setWait(1);
+        startWaiting();
+
+        promptOut = m_gui.prompt().getSelections();
+        m_gui.prompt().reset();
+        m_gui.promptDeactivate();
+
+        for (PromptCards output : promptOut ) {
+            if (output.isCardButton()){
+                action = processPromptCard(promptOut.get(promptOut.indexOf(output))).getM_name();
+            }
+        }
+        m_game.getActivePlayer().getHand().clear();
+        m_game.getActivePlayer().getHand().addAll(tmpHand);
+        tmpHand.clear();
+        redraw();
+
+        m_gui.setStatus("You have selected " + action);
+        m_gui.prompt().setLeftPanelButton(true);
+        m_gui.prompt().setLeftPanelButtonText("Continue.");
+        m_gui.promptActivate();
+
+        setWait(1);
+        startWaiting();
+        m_gui.promptDeactivate();
+        m_gui.prompt().reset();
 
         return action;
+    }
+    public Card getPlantChoice()
+    {
+        Card someCard;
+
+
+        someCard = new Card("");
+
+
+        return someCard;
+
+
     }
     public Card getCardChoice()
     {
         Card someCard;
-        // This is the ideal production use case for this function, being handed a card object that 
+        // This is the ideal production use case for this function, being handed a card object that
         // the user selected from the hand based in the UI.
-        // card = m_tui.getCardChoice(); // Need some way to limit choice to a specific vector of cards 
+        // card = m_tui.getCardChoice(); // Need some way to limit choice to a specific vector of cards
         // System.out.print("Enter a card number to discard: ");
 
-        // this is a unplayable line that should not be included in a final release, but serves 
+        // this is a unplayable line that should not be included in a final release, but serves
         // for testing purposes, as a way to discard in auto/test mode builds
 
         someCard = getGame().getActivePlayer().getHand().get(0);
@@ -250,7 +306,8 @@ public class Controller {
         getGui().promptActivate();
         getGui().promptDeactivate();
         getGui().prompt().reset();
-
+        promptOut.clear();
+        prompts.clear();
         return islandToPlace;
 
 
@@ -289,7 +346,8 @@ public class Controller {
         getGui().promptActivate();
         getGui().promptDeactivate();
         getGui().prompt().reset();
-
+        promptOut.clear();
+        prompts.clear();
 
         return climateToPlace;
 

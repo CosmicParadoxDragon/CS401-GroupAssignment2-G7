@@ -72,39 +72,50 @@ public class Player {
         // Switch to correct branch
         actionChosen = selectAction();
 
-        switch (actionChosen)
-        {
-            case "planting":
-                activePlanting(); break;
-            case "composting":
-                activeComposting(); break;
-            case "growing":
-                activeGrowing(); break;
-            case "watering":
-                activeWatering(); break;
-        }
+        // switch (actionChosen)
+        // {
+        //     case "Planting":
+        //         activePlanting(); break;
+        //     case "Composting":
+        //         activeComposting(); break;
+        //     case "Growing":
+        //         activeGrowing(); break;
+        //     case "Watering":
+        //         activeWatering(); break;
+        // }
 
         return actionChosen;
     }
 
-    public void takeTurnZero(){
+    public void takeTurnZero() {
         // Player placing the island and climate into their board
 //        String action = "";
         // action = m_game.m_control.getGui().promptGeneric("Select a card to place in Island Slot: ");
         // Need to pause execution here to wait for response.
         Card islandCard = m_game.getController().promptForIsland();
-        setIsland(islandCard);
-        hand.remove(islandCard);
-        hand.trimToSize();
+        playIslandCard(islandCard);
+
         m_game.getController().redraw();
 
         Card climateCard = m_game.getController().promptForClimate();
+        playClimateCard(climateCard);
+
+        m_game.getController().redraw();
+    }
+
+    private void playIslandCard(Card islandCard) {
+
+
+        setIsland(islandCard);
+        hand.remove(islandCard);
+        hand.trimToSize();
+    }
+    private void playClimateCard(Card climateCard ) {
         setClimate(climateCard);
         hand.remove(climateCard);
         hand.trimToSize();
-        m_game.getController().redraw();
     }
-    
+
     String selectAction()
     {
         String action;// = "planting";
@@ -152,6 +163,7 @@ public class Player {
         Card cardToPlant;
 
         String message = "Select a card to plant.";
+
         // push message to GUI along with input for a number
         // Select a card from Hand
 
@@ -386,4 +398,9 @@ public class Player {
     void setGainedSoil(int amount) { soil+= amount; }
     void setGainedTrunk(int amount) { trunks += amount; }
     void setGainedSprout(int amount) { sprouts += amount; }
+
+    private void parseCardAbility(Card playedCard) {
+
+
+    }
 }

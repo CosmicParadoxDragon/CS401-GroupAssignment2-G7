@@ -57,7 +57,8 @@ public class Game {
         for (int i = 0; i < m_numberOfPlayers; i++) {
             players.add(new Player(this));
         }
-        playerSetup();
+        iter = players.iterator();
+        activePlayerSetup();
 
         SetupPhase();
 
@@ -75,8 +76,14 @@ public class Game {
         // Card someCard = m_control.getCardChoice();
         getActivePlayer().takeTurnZero();
 
-    }
 
+        takeATurn();
+
+    }
+    public void GUITutorialGameStart() {
+        actionFlag = true;
+        String action = "";
+    }
     // Player now tak
     // public void gameStart() {
     //      playerSetup();
@@ -85,10 +92,10 @@ public class Game {
     //  }
 
     public void takeATurn(){
-        // Taking an nth turn
+        String actionTaken = getActivePlayer().takeTurn();
     }
 
-    public void playerSetup() {
+    public void activePlayerSetup() {
         iter = resetIterator();
         activePlayer = getNextPlayer();
     }
@@ -102,7 +109,7 @@ public class Game {
             IslandDeck.fillIslandDeck();
         }
         catch (Exception e) {
-            System.out.println(e.toString());
+            System.out.println(e.getStackTrace());
         }
 
         for (int j = 0; j<4; j++)
@@ -110,7 +117,7 @@ public class Game {
             FuanaCards.add(FuanaDeck.dealCard());
         }
         // 1 Player game is standard expect everything to break
-        // PlayerSetup();
+
     }
 
     

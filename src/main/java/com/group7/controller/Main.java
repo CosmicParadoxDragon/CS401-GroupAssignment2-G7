@@ -14,32 +14,31 @@ public final class Main extends Thread{
 
 
 
-        // Game currentGame = new Game(1);
-
-        // System.out.println("Hello, Maven!");
-
-        // gameTui Interface = new gameTui(currentGame);
-
+       //  Game currentGame = new Game(1);
+       //
+       //  System.out.println("Hello, Maven!");
+       //
+       //  gameTui Interface = new gameTui(currentGame);
         Controller game_controller = new Controller("game");
-        //try {
-//        Controller tutorial_controller = new Controller();
-
-
-
-
-//        new Thread("GameThread") {
-//            @Override public void run () { controller.getGame().GameStart(); }
-//        }.start();
-
-
-        //} catch (IOException e)
-        //{
-            
-        //}
-        //catch (Exception e)
-        //{
-        //    System.out.println(e.getStackTrace());
-        //}
+       //  try {
+       // Controller tutorial_controller = new Controller();
+       //
+       //
+       //
+       //
+       // new Thread("GameThread") {
+       //     @Override public void run () { controller.getGame().GameStart(); }
+       // }.start();
+       //
+       //
+       //  } catch (IOException e)
+       //  {
+       //
+       //  }
+       //  catch (Exception e)
+       //  {
+       //     System.out.println(e.getStackTrace());
+       //  }
 
     }
 }

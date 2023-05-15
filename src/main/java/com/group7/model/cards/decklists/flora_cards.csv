@@ -4,33 +4,33 @@ name,subtype,habitat,abilityLine,cost,sproutsMax,growthMax,victoryPoints,canopyS
 Dict Animal Names { Cat,Elephant,Fly,Dragon,Ram,Canary }
 Dict Geography Terms { European,Japanese,African,Roman,West India,American,Southern,Canary Island }
 
-Japanese Maple,Tree,Rocky|Cold,Yellow:+1 Trunks +1 Sprouts,3,4,3,2,4
-African Baobab,Tree,Sunny|Rocky,Black:+3 Trunks,6,2,5,4,7
-Cat Grass,Herb,Sunny|Rocky,Blue:+2 Sprouts,0,6,1,0,1
-Black Thorn,Bush,Wet|Cold,Red:+2 Soil +1 Compost,4,2,3,2,4
-Marula,Tree,Sunny,Blue:-1 Compost then +1 Soil +1 Sprouts +1 Trunks,4,5,3,1,5
-Elephant Grass,Herb,None,Yellow:+1 Cards +1 Trunks,6,3,6,1,10
-Roman Brown,Mushroom,Cold,Blue:-1 Compost then +3 Soil,2,3,0,2,0
-Stiptic Fungus,Mushroom,All,Yellow:-1 Compost then +3 Soil,0,1,1,0,1
-Penny Bun,Mushroom,Sunny,Red:+1 Compost then +2 Soil,1,3,2,0,2
-White Oak,Tree,Wet,Yellow:+2 Cards,4,2,4,2,4
-Basil,Herb,Wet,Red:+1 Cards,3,6,2,3,2
-West India Lantana,Bush,Sunny|Wet,Yellow:+2 Trunks,3,6,2,1,3
-Yellow Morel,Mushroom,Rocky|Cold,Blue:-2 Trunks then +4 Sprouts,6,4,1,7,3
-Fly Agaric,Mushroom,Wet|Rocky|Cold,Yellow:+1 Cards Red:+2 Compost,2,3,2,1,2
-Dragon Blood Tree,Tree,Sunny|Rocky|Cold,Yellow:+1 Trunks Red:+1 Soil,1,2,2,1,2
-Tall Fescue,Herb,None,Red:+1 Compost then +1 Soil Blue:-1 Compost then +2 Soil,4,3,3,0,4
-Heather,Bush,Sunny,Yellow:+1 Cards Red:+2 Compost,2,2,3,2,3
-American Sycamore,Tree,All,Yellow:+1 Trunks Blue:-1 Trunks then +2 Sprouts,3,4,5,1,4
-Rosemary,Herb,None,Red:+2 Compost Blue:-1 Compost then +2 Soil,3,5,1,1,2
-Ram's Head,Mushroom,Sunny|Wet,Yellow:-1 Sprouts then +2 Trunks Blue:+1 Sprouts,3,5,2,2,2
-Southern Magnolia,Tree,Wet,Red:-1 Sprouts then +2 Soil Blue:+1 Sprouts,1,2,2,1,2
-Oleander,Bush,None,Yellow:+1 Cards Blue:+1 Sprouts,1,3,2,1,3
-Canary Island Palm,Tree,Sunny,Yellow:+2 Cards,7,4,4,1,8
-Spearmint,Herb,All,Blue:+1 Sprouts +1 Compost,0,6,0,1,0
-Japanese Andromeda,Bush,Sunny,Yellow:+2 Soil,0,3,1,1,1
-Milk-Cap,Mushroom,Cold,Yellow:+2 Trunks,1,4,2,2,2
-Reddish Corky Fungus,Mushroom,Sunny|Rocky|Cold,Red:+1 Trunks +1 Sprouts,3,6,1,2,2
-Brown-Rot Fungus,Mushroom,Wet,Blue:+1 Trunks +1 Sprouts,4,6,3,2,4
-Red Birch,Tree,Wet|Rocky,Red:+2 Compost Blue:-1 Compost then +2 Sprouts,2,5,2,1,2
-European White Birch,Tree,Cold,Red:+1 Compost then +2 Soil,3,4,3,0,3
+Japanese Maple,Tree,Rocky|Cold,Yellow:Trunks +1 Sprouts +1',3,4,3,2,4
+African Baobab,Tree,Sunny|Rocky,Black:Trunks +3',6,2,5,4,7
+Cat Grass,Herb,Sunny|Rocky,Blue:Sprouts +2',0,6,1,0,1
+Black Thorn,Bush,Wet|Cold,Red:Soil +2 Compost +1',4,2,3,2,4
+Marula,Tree,Sunny,Blue:-1 Compost then +1 Soil +1 Sprouts +1 Trunks',4,5,3,1,5
+Elephant Grass,Herb,None,Yellow:+1 Cards +1 Trunks',6,3,6,1,10
+Roman Brown,Mushroom,Cold,Blue:-1 Compost then +3 Soil',2,3,0,2,0
+Stiptic Fungus,Mushroom,All,Yellow:-1 Compost then +3 Soil',0,1,1,0,1
+Penny Bun,Mushroom,Sunny,Red:+1 Compost then +2 Soil',1,3,2,0,2
+White Oak,Tree,Wet,Yellow:+2 Cards',4,2,4,2,4
+Basil,Herb,Wet,Red:+1 Cards',3,6,2,3,2
+West India Lantana,Bush,Sunny|Wet,Yellow:+2 Trunks',3,6,2,1,3
+Yellow Morel,Mushroom,Rocky|Cold,Blue:-2 Trunks then +4 Sprouts',6,4,1,7,3
+Fly Agaric,Mushroom,Wet|Rocky|Cold,Yellow:Cards +1'Red:+2 Compost,2,3,2,1,2
+Dragon Blood Tree,Tree,Sunny|Rocky|Cold,Yellow:Trunks +1'Red:Soil +1,1,2,2,1,2
+Tall Fescue,Herb,None,Red:+1 Compost then +1 Soil'Blue:-1 Compost then +2 Soil,4,3,3,0,4
+Heather,Bush,Sunny,Yellow:+1 Cards'Red:+2 Compost,2,2,3,2,3
+American Sycamore,Tree,All,Yellow:+1 Trunks'Blue:-1 Trunks then +2 Sprouts,3,4,5,1,4
+Rosemary,Herb,None,Red:+2 Compost'Blue:-1 Compost then +2 Soil,3,5,1,1,2
+Ram's Head,Mushroom,Sunny|Wet,Yellow:-1 Sprouts then +2 Trunks'Blue:+1 Sprouts,3,5,2,2,2
+Southern Magnolia,Tree,Wet,Red:-1 Sprouts then +2 Soil'Blue:+1 Sprouts,1,2,2,1,2
+Oleander,Bush,None,Yellow:+1 Cards'Blue:+1 Sprouts,1,3,2,1,3
+Canary Island Palm,Tree,Sunny,Yellow:+2 Cards',7,4,4,1,8
+Spearmint,Herb,All,Blue:+1 Sprouts +1 Compost',0,6,0,1,0
+Japanese Andromeda,Bush,Sunny,Yellow:+2 Soil',0,3,1,1,1
+Milk-Cap,Mushroom,Cold,Yellow:+2 Trunks',1,4,2,2,2
+Reddish Corky Fungus,Mushroom,Sunny|Rocky|Cold,Red:+1 Trunks +1 Sprouts',3,6,1,2,2
+Brown-Rot Fungus,Mushroom,Wet,Blue:+1 Trunks +1 Sprouts',4,6,3,2,4
+Red Birch,Tree,Wet|Rocky,Red:+2 Compost'Blue:-1 Compost then +2 Sprouts,2,5,2,1,2
+European White Birch,Tree,Cold,Red:+1 Compost then +2 Soil',3,4,3,0,3
