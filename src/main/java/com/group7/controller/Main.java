@@ -19,10 +19,16 @@ public final class Main extends Thread{
        //  System.out.println("Hello, Maven!");
        //
        //  gameTui Interface = new gameTui(currentGame);
-        Controller game_controller = new Controller("game");
        //  try {
-       // Controller tutorial_controller = new Controller();
-       //
+
+        // Both of these work individually.
+
+         Controller game_controller = new Controller("game");
+        // Controller tutorial_controller = new Controller();
+
+
+
+        //
        //
        //
        //

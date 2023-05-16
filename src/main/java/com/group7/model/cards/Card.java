@@ -28,8 +28,7 @@ public class Card {
         m_name = name;
         m_abilitiesLine = abilityLine;
         m_encodedAbilities = new ArrayList<AbilityPair>();
-        // encodeAbilities();
-
+        encodeAbilities();
     }
 
     Card(String name, String type, String text, int victoryPoints)

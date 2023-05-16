@@ -14,6 +14,10 @@ import java.util.concurrent.CountDownLatch;
 
 
 public class Controller {
+    final String PLANTING = "Planting";
+    final String WATERING = "Watering";
+    final String COMPOSTING = "Composting";
+    final String GROWING = "Growing";
     Game m_game;
     ViewController m_gui;
     CountDownLatch waiter;
@@ -25,10 +29,10 @@ public class Controller {
     // Actual Game
     public Controller(String mode) {
         m_game = new Game(this, 1);
-        actionChoices.add(new Card("Planting"));
-        actionChoices.add(new Card("Composting"));
-        actionChoices.add(new Card("Watering"));
-        actionChoices.add(new Card("Growing"));
+        actionChoices.add(new Card(PLANTING));
+        actionChoices.add(new Card(WATERING));
+        actionChoices.add(new Card(COMPOSTING));
+        actionChoices.add(new Card(GROWING));
 
 
         FlatDarkLaf.setup(); //initialize gui theme
@@ -234,7 +238,20 @@ public class Controller {
         tmpHand.clear();
         redraw();
 
-        m_gui.setStatus("You have selected " + action);
+        String output = "You have selected " + action;
+        if (action.equals(PLANTING)) {
+            output += "\nYou will select up to two cards to plant\ninto your island " +
+                    "board.\nThen you will draw four cards and\nkeep one, discarding the rest";
+        }
+        else if (action.equals(WATERING)) {
+            output += "--IN DEVELOPMENT--";
+        }else if (action.equals(GROWING)) {
+            output += "--IN DEVELOPMENT--";
+        }else if (action.equals(COMPOSTING)) {
+            output += "--IN DEVELOPMENT--";
+        }
+
+        m_gui.setStatus(output);
         m_gui.prompt().setLeftPanelButton(true);
         m_gui.prompt().setLeftPanelButtonText("Continue.");
         m_gui.promptActivate();
@@ -245,6 +262,61 @@ public class Controller {
         m_gui.prompt().reset();
 
         return action;
+    }
+    public ArrayList<Card> getDiscardChoice(int numberToDiscard) {
+        ArrayList<Card> toDiscard = new ArrayList<>();
+
+        m_gui.hardRefresh();
+
+        m_gui.setStatus("Please select " + numberToDiscard + " cards\n" +
+                "then press submit!");
+        m_gui.prompt().setLeftPanelButton(true);
+        m_gui.prompt().setLeftPanelButtonText("Submit");
+        m_gui.prompt().setCheckboxText("Select");
+
+        prompts.clear();
+        promptOut.clear();
+        for ( int u = 0; u < m_game.getActivePlayer().getHand().size(); u++) {
+            prompts.add( new PromptCards(u, true, false));
+        }
+
+        int numSelectedCards;
+        while(true){
+            numSelectedCards = 0;
+            m_gui.promptDeactivate();
+            m_gui.prompt().addPromptCardList(prompts);
+            m_gui.promptActivate();
+
+            setWait(1);
+            startWaiting();
+
+            promptOut = m_gui.prompt().getSelections();
+
+            for (int i = 0; i < promptOut.size(); i++){
+                if(promptOut.get(i).isCheckBox()){
+                    numSelectedCards = numSelectedCards + 1;
+                }
+            }
+            if (numSelectedCards == numberToDiscard){
+                break;
+            }
+            else {
+                m_gui.setStatus("You selected " + numSelectedCards +". Please select three cards instead.");
+            }
+        }
+
+        for (PromptCards cardSelection : promptOut) {
+            if (cardSelection.isCheckBox()) {
+                toDiscard.add(m_game.getActivePlayer().getHand().get(cardSelection.getCardX()));
+            }
+        }
+
+        m_gui.prompt().reset();
+        prompts.clear();
+        m_gui.promptDeactivate();
+
+        return toDiscard;
+
     }
     public Card getPlantChoice()
     {
@@ -266,7 +338,7 @@ public class Controller {
         // card = m_tui.getCardChoice(); // Need some way to limit choice to a specific vector of cards
         // System.out.print("Enter a card number to discard: ");
 
-        // this is a unplayable line that should not be included in a final release, but serves
+        // this is an unplayable line that should not be included in a final release, but serves
         // for testing purposes, as a way to discard in auto/test mode builds
 
         someCard = getGame().getActivePlayer().getHand().get(0);

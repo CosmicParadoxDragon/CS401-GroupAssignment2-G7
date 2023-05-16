@@ -13,7 +13,10 @@ import com.group7.view.Prompting;
 
 public class Player {
     String playerName = "John Smith";
-    
+    String BLACK = "Black";
+    String YELLOW = "Yellow";
+    String BLUE = "Blue";
+    String GREEN = "Green";
     int soil;
     int gainedSoil = 0;
     int gainedCards = 0;
@@ -92,15 +95,17 @@ public class Player {
 //        String action = "";
         // action = m_game.m_control.getGui().promptGeneric("Select a card to place in Island Slot: ");
         // Need to pause execution here to wait for response.
-        Card islandCard = m_game.getController().promptForIsland();
-        playIslandCard(islandCard);
-
-        m_game.getController().redraw();
-
         Card climateCard = m_game.getController().promptForClimate();
         playClimateCard(climateCard);
-
         m_game.getController().redraw();
+
+        Card islandCard = m_game.getController().promptForIsland();
+        playIslandCard(islandCard);
+        m_game.getController().redraw();
+
+
+
+
     }
 
     private void playIslandCard(Card islandCard) {
@@ -108,6 +113,13 @@ public class Player {
 
         setIsland(islandCard);
         hand.remove(islandCard);
+        m_game.m_control.redraw();
+
+        for (AbilityPair resolveBlack : islandCard.get_abilities() ) {
+            if (resolveBlack.getColor().equals(BLACK)) {
+                abilityParser(resolveBlack);
+            }
+        }
         hand.trimToSize();
     }
     private void playClimateCard(Card climateCard ) {
@@ -140,13 +152,13 @@ public class Player {
     {
         switch (inactiveAction)
         {
-            case "planting":
+            case "Planting":
                 inactivePlanting(); break;
-            case "composting":
+            case "Composting":
                 inactiveComposting(); break;
-            case "growing":
+            case "Growing":
                 inactiveGrowing(); break;
-            case "watering":
+            case "Watering":
                 inactiveWatering(); break;
         }
     }
@@ -263,60 +275,56 @@ public class Player {
     }
 
 
-    // example ability section: 
-    // Yellow:+1 Trunks +1 Sprouts
+    // example ability section:
+    // Island Cards
+    // Black:Cards +12 Compost +5 Soil +6'Green: +1
+    // AbilityPair object contains Black and Cards +12 Compost +5 Soil +6
     void abilityParser(AbilityPair ability) // temporary location for the ability parser function
     {
-        int num = 0;
-        String number;
-        String ability_text = ability.getText();
-        String [] ability_split = ability_text.split(" ");
-        for ( String word : ability_split )
-        {
-            if ( word.contains("then") )
-            {
-                // skip or stack maybe not sure if we need to stack abilities
-                // like this in this context
-            }
-            if (word.contains("+") || word.contains("-"))
-            {
-                number = word.substring(1);
-                num = Integer.valueOf(number);
-            }
-            else if ( word.contains("Trunks") )
-            {
-                trunks += num;
-            }
-            else if ( word.contains("Sprouts") )
-            {
-                sprouts += num;
-            }
-            else if ( word.contains("Soil") && num < 0)
-            {
-                soil += num;
-            }
-            else if ( word.contains("Soil") )
-            {
-                soil += num;
-                gainedSoil += num; 
-                // Soil gained need to be reset somewhere putting at the end of the turn for now
-            }
-            else if ( word.contains("Cards") )
-            {
-                for (int y = 0; y < num; y++)
-                {
-                    hand.add(m_game.EarthDeck.dealCard());
-                }
-            }
-            else if ( word.contains("Compost") && num < 0)
-            {
-                // Move top most compost card to discard pile
-            }
-            else if ( word.contains("Compost") )
-            {
-                // Move a card to the compost pile
+        String [] individual_functions = ability.getText().split(" ");
+        for ( int i = 0; i < individual_functions.length; i = i + 2 ) {
+            if ( individual_functions [i+1].contains("+") || individual_functions [i+1].contains("-") ) {
+                processAbilityIncreaseResource(individual_functions[i], individual_functions[i+1]);
             }
         }
+
+    }
+    private void processAbilityIncreaseResource(String resource, String directionAmount) {
+        boolean isNegative = directionAmount.contains("-");
+        String subDirectionAmount = directionAmount.substring(1);
+        int amount = Integer.parseInt(subDirectionAmount);
+        if (isNegative) {
+            amount -= 2 * amount;
+        }
+        switch (resource) {
+            case "Cards":
+                hand.addAll(m_game.EarthDeck.draw(amount));
+                gainedCards += amount;
+                break;
+            case "Compost":
+                discard(amount);
+                break;
+            case "Soil":
+                gainSoil(amount);
+            case "Trunks":
+                gainTrunks(amount);
+                break;
+            // case  :
+        }
+    }
+    void gainSoil(int amount) {
+        soil += amount;
+        gainedSoil += amount;
+    }
+    void gainTrunks(int amount) {
+        trunks += amount;
+        // Nothing yet measures gainedTrunks but
+        // imma put it here anyway
+        // gainedTrunks += amount;
+    }
+    private void parseCardAbility(Card playedCard) {
+
+
     }
 
     /**
@@ -385,22 +393,17 @@ public class Player {
     // Public for testing purposes
     public void discard(int numberToDiscard)
     {
-        for ( int i = 0; i < numberToDiscard; i++)
-        {
-            if (hand.size() == 0) { return; } // No discard possible, should never reach this from 
-            // the way the game is designed but you never know so its here.
-            Card someCardToDiscard;
-            someCardToDiscard = m_game.getController().getCardChoice();
-            // someCard = getHand().get(0); // TODO way to select a card from the hand
-            hand.remove(someCardToDiscard);
+        ArrayList<Card> toRemove = m_game.m_control.getDiscardChoice(numberToDiscard);
+        for (Card in : toRemove) {
+            discardPile.add(in);
+            hand.remove(in);
+
         }
+        m_game.m_control.redraw();
     }
     void setGainedSoil(int amount) { soil+= amount; }
     void setGainedTrunk(int amount) { trunks += amount; }
     void setGainedSprout(int amount) { sprouts += amount; }
 
-    private void parseCardAbility(Card playedCard) {
 
-
-    }
 }
