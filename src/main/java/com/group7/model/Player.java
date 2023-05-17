@@ -1,14 +1,13 @@
 package com.group7.model;
 
 import java.util.ArrayList;
-import java.util.Stack;
 import java.util.Random;
+
+import com.group7.controller.Controller;
+import com.group7.model.board.CardPair;
 import com.group7.model.board.Tableau;
 import com.group7.model.cards.Card;
-import com.group7.model.cards.EarthCard;
 import com.group7.model.cards.AbilityPair;
-import com.group7.view.PromptCards;
-import com.group7.view.Prompting;
 
 
 public class Player {
@@ -69,23 +68,26 @@ public class Player {
     }
     String takeTurn()
     {
+        setGainedSoil(0);
+        setGainedCards(0);
+
         String actionChosen = "";
 
         //Choose an action
         // Switch to correct branch
         actionChosen = selectAction();
 
-        // switch (actionChosen)
-        // {
-        //     case "Planting":
-        //         activePlanting(); break;
-        //     case "Composting":
-        //         activeComposting(); break;
-        //     case "Growing":
-        //         activeGrowing(); break;
-        //     case "Watering":
-        //         activeWatering(); break;
-        // }
+        switch (actionChosen)
+        {
+            case Controller.PLANTING:
+                activePlanting(); break;
+            case "Composting":
+                activeComposting(); break;
+            case "Growing":
+                activeGrowing(); break;
+            case "Watering":
+                activeWatering(); break;
+        }
 
         return actionChosen;
     }
@@ -95,24 +97,21 @@ public class Player {
 //        String action = "";
         // action = m_game.m_control.getGui().promptGeneric("Select a card to place in Island Slot: ");
         // Need to pause execution here to wait for response.
-        Card climateCard = m_game.getController().promptForClimate();
-        playClimateCard(climateCard);
-        m_game.getController().redraw();
-
         Card islandCard = m_game.getController().promptForIsland();
         playIslandCard(islandCard);
         m_game.getController().redraw();
 
-
-
+        Card climateCard = m_game.getController().promptForClimate();
+        playClimateCard(climateCard);
+        m_game.getController().redraw();
 
     }
 
     private void playIslandCard(Card islandCard) {
 
-
         setIsland(islandCard);
         hand.remove(islandCard);
+        hand.trimToSize();
         m_game.m_control.redraw();
 
         for (AbilityPair resolveBlack : islandCard.get_abilities() ) {
@@ -121,6 +120,7 @@ public class Player {
             }
         }
         hand.trimToSize();
+        m_game.m_control.redraw();
     }
     private void playClimateCard(Card climateCard ) {
         setClimate(climateCard);
@@ -130,9 +130,23 @@ public class Player {
 
     String selectAction()
     {
-        String action;// = "planting";
+        String action;// = "Planting";
         action = m_game.getActionChoice();
         return action;
+    }
+    void takeInactiveAction(String inactiveAction)
+    {
+        switch (inactiveAction)
+        {
+            case Controller.PLANTING:
+                inactivePlanting(); break;
+            case Controller.COMPOSTING:
+                inactiveComposting(); break;
+            case Controller.GROWING:
+                inactiveGrowing(); break;
+            case Controller.WATERING:
+                inactiveWatering(); break;
+        }
     }
 
     void activePlanting()
@@ -140,27 +154,14 @@ public class Player {
         // Active Player Action
         // Plant 2 Cards
         plant();
+        m_game.m_control.redraw();
         plant();
+        m_game.m_control.redraw();
         // Draw 4 Discard 3 (not compost)
         // tableau.plant(Card, Card);
         for (int i = 0; i < 4; i++)
             hand.add(m_game.EarthDeck.dealCard());
         discard(3);
-    }
-
-    void takeInactiveAction(String inactiveAction)
-    {
-        switch (inactiveAction)
-        {
-            case "Planting":
-                inactivePlanting(); break;
-            case "Composting":
-                inactiveComposting(); break;
-            case "Growing":
-                inactiveGrowing(); break;
-            case "Watering":
-                inactiveWatering(); break;
-        }
     }
     
     void inactivePlanting()
@@ -172,38 +173,32 @@ public class Player {
 
     void plant()
     {
-        Card cardToPlant;
+        boolean plantFlag = m_game.m_control.promptYesNo("Would you like to plant?");
+        if (plantFlag) {
 
-        String message = "Select a card to plant.";
 
-        // push message to GUI along with input for a number
-        // Select a card from Hand
+            CardPair targetAndLocation = m_game.m_control.getPlantChoice();
 
-        // cardToPlant = m_game.m_control.getCardChoice();
-        int x = 0,y = 0;
-        
-        // Place it in the Tabelu anywhere on first planting
-        // only adjacent to existing cards after.
+            // push message to GUI along with input for a number
+            // Select a card from Hand
 
-        // m_tableau.setCard(x, y, cardToPlant);
-        
-        // cardToPlant.get_abilities();
+            // cardToPlant = m_game.m_control.getCardChoice();
+            int x = 0,y = 0;
 
+            // Place it in the Tabelu anywhere on first planting
+            // only adjacent to existing cards after.
+
+            // TODO This card isn't setting right now
+            m_tableau.setCard(targetAndLocation.getX(), targetAndLocation.getY(),
+                    targetAndLocation.getFirst());
+
+            hand.remove(targetAndLocation.getFirst());
+            m_game.m_control.redraw();
+            // targetAndLocation.getFirst().getAbilities();
+        }
     }
 
-    private int placeInIsland(Card card)
-    {
-        // Get a specific Tile number from tui
-        // m_game.m_control.getIslandCoords();
-
-        // 
-
-        return 0;
-    }
-
-
-    void activeComposting()
-    {
+    void activeComposting() {
         //The active player gains five soil
         setGainedSoil(2);
         // They also and adds two cards from the deck to their
@@ -212,8 +207,7 @@ public class Player {
         compostPile.add(m_game.EarthDeck.dealCard());
     }
 
-    void inactiveComposting()
-    {
+    void inactiveComposting() {
         Random rand = new Random();
         // Gain two soil or compost two card
         // This should be performed randomly for now
@@ -327,6 +321,10 @@ public class Player {
 
     }
 
+    private void setGainedCards(int amount) {
+        gainedCards = amount;
+    }
+
     /**
      * @return the compostPile
      */
@@ -365,14 +363,14 @@ public class Player {
     /**
      * @return the m_climateCard
      */
-    public Card getM_climateCard() {
+    public Card getClimateCard() {
         return m_climateCard;
     }
 
     /**
      * @return the m_islandCard
      */
-    public Card getM_islandCard() {
+    public Card getIslandCard() {
         return m_islandCard;
     }
 
@@ -391,8 +389,7 @@ public class Player {
     }
 
     // Public for testing purposes
-    public void discard(int numberToDiscard)
-    {
+    public void discard(int numberToDiscard) {
         ArrayList<Card> toRemove = m_game.m_control.getDiscardChoice(numberToDiscard);
         for (Card in : toRemove) {
             discardPile.add(in);
@@ -405,5 +402,8 @@ public class Player {
     void setGainedTrunk(int amount) { trunks += amount; }
     void setGainedSprout(int amount) { sprouts += amount; }
 
+    public void setTableau(Tableau toSet) {
+        m_tableau = toSet;
+    }
 
 }

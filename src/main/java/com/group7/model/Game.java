@@ -28,9 +28,9 @@ public class Game {
         ClimateDeck = new Deck();
         FuanaDeck = new Deck();
         discardPile = new Deck();
-        FuanaCards = new ArrayList<Card>();
-        Scores = new ArrayList<Integer>();
-        players = new ArrayList<Player>();
+        FuanaCards = new ArrayList<>();
+        Scores = new ArrayList<>();
+        players = new ArrayList<>();
 
         m_numberOfPlayers = numberOfPlayers;
         // Game Setup Phase
@@ -50,9 +50,9 @@ public class Game {
         ClimateDeck = new Deck();
         FuanaDeck = new Deck();
         discardPile = new Deck();
-        FuanaCards = new ArrayList<Card>();
-        Scores = new ArrayList<Integer>();
-        players = new ArrayList<Player>();
+        FuanaCards = new ArrayList<>();
+        Scores = new ArrayList<>();
+        players = new ArrayList<>();
         m_numberOfPlayers = numberOfPlayers;
         for (int i = 0; i < m_numberOfPlayers; i++) {
             players.add(new Player(this));
@@ -77,7 +77,7 @@ public class Game {
         getActivePlayer().takeTurnZero();
 
 
-        takeATurn();
+        action = takeATurn();
 
     }
     public void GUITutorialGameStart() {
@@ -91,8 +91,10 @@ public class Game {
     //      mainTurnLoop(); // Take a regular turn, and being the checks for complete Island
     //  }
 
-    public void takeATurn(){
+    public String takeATurn(){
         String actionTaken = getActivePlayer().takeTurn();
+
+        return actionTaken;
     }
 
     public void activePlayerSetup() {
@@ -100,8 +102,7 @@ public class Game {
         activePlayer = getNextPlayer();
     }
     // Assuming Solo Game
-    public void SetupPhase()
-    {
+    public void SetupPhase() {
         try{
             EarthDeck.fillEarthDeck();
             ClimateDeck.fillClimateDeck();
@@ -121,8 +122,7 @@ public class Game {
     }
 
     
-    public void PlayerSetup()
-    {
+    public void PlayerSetup() {
         for (int i = 0; i < m_numberOfPlayers; i++)
         {
             Card island = IslandDeck.dealCard();
@@ -183,23 +183,19 @@ public class Game {
         return false;
    }
 
-    String getActionChoice()
-    {
+    String getActionChoice() {
         return m_control.getActionChoice();
     }
     
-    public ArrayList<Card> getFuanaCards()
-    {
+    public ArrayList<Card> getFuanaCards() {
         return FuanaCards;
     }
 
-    public ArrayList<Player> getPlayers()
-    {
+    public ArrayList<Player> getPlayers() {
         return players;
     }
     public Player getActivePlayer() {return activePlayer;}
-    void planting()
-    {
+    void planting() {
         // Active Player Action
         // Plant 2 Cards
         // Draw 4 Discard 3 (not compost)
@@ -210,8 +206,7 @@ public class Game {
         // Trigger Green Abilities
     }
 
-    void compostion()
-    {
+    void compostion() {
         // Player Action
         // Gain 5 Soil
         // Compost 2 Cards from the EarthDeck
@@ -222,8 +217,7 @@ public class Game {
         // Trigger Red and Multicolored Abilities
     }
 
-    void watering()
-    {
+    void watering() {
         //Player Action
         // Gain 6 sprouts
         // May gain 2 soul
@@ -234,8 +228,7 @@ public class Game {
         // Trigger all blue and multicolored abilities
     }
     
-    void growing()
-    {
+    void growing() {
         // Player Action
         // Draw 4 to hand
         // Place 2 growth
@@ -284,7 +277,7 @@ public class Game {
     /**
      * @return the m_numberOfPlayers
      */
-    public int getM_numberOfPlayers() {
+    public int getNumberOfPlayers() {
         return m_numberOfPlayers;
     }
 

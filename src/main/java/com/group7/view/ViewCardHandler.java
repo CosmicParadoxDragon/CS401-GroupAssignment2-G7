@@ -3,7 +3,6 @@ package com.group7.view;
 import com.group7.model.Player;
 import com.group7.model.cards.Card;
 
-import javax.swing.text.View;
 import java.util.ArrayList;
 
 public class ViewCardHandler {
@@ -44,8 +43,8 @@ public class ViewCardHandler {
                 viewCardsInHand.add(new CardLoc(i, thisView.getViewActivePlayer().getHand().get(i)));
             }
 
-            viewCardsIslCli.add(thisView.getViewActivePlayer().getM_islandCard());
-            viewCardsIslCli.add(thisView.getViewActivePlayer().getM_climateCard());
+            viewCardsIslCli.add(thisView.getViewActivePlayer().getIslandCard());
+            viewCardsIslCli.add(thisView.getViewActivePlayer().getClimateCard());
     }
 
     public Card getViewCardInHand(int inCardIndex){

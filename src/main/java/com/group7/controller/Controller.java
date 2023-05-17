@@ -3,10 +3,12 @@ package com.group7.controller;
 
 import com.formdev.flatlaf.FlatDarkLaf;
 import com.group7.model.Game;
+import com.group7.model.board.Tableau;
 import com.group7.model.cards.Card;
 import com.group7.model.cards.ClimateCard;
 import com.group7.view.ViewController;
 import com.group7.view.*;
+import com.group7.model.board.CardPair;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -14,17 +16,23 @@ import java.util.concurrent.CountDownLatch;
 
 
 public class Controller {
-    final String PLANTING = "Planting";
-    final String WATERING = "Watering";
-    final String COMPOSTING = "Composting";
-    final String GROWING = "Growing";
+    public final static String PLANTING = "Planting";
+    public final static String WATERING = "Watering";
+    public final static String COMPOSTING = "Composting";
+    public final static String GROWING = "Growing";
+    final String YES = "YES";
+    final String NO = "NO";
+    final String VALID_PLANTING = "VALID PLANTING";
     Game m_game;
     ViewController m_gui;
     CountDownLatch waiter;
 
-    ArrayList<PromptCards> prompts = new ArrayList<PromptCards>();
-    ArrayList<PromptCards> promptOut = new ArrayList<PromptCards>();
-    ArrayList<Card> actionChoices = new ArrayList<Card>();
+    ArrayList<PromptCards> prompts = new ArrayList<>();
+    ArrayList<PromptCards> promptOut = new ArrayList<>();
+    ArrayList<Card> actionChoices = new ArrayList<>();
+    ArrayList<Card> yesNoChoices = new ArrayList<>();
+
+    Tableau validPlantingLocations = new Tableau();
 
     // Actual Game
     public Controller(String mode) {
@@ -34,6 +42,10 @@ public class Controller {
         actionChoices.add(new Card(COMPOSTING));
         actionChoices.add(new Card(GROWING));
 
+        yesNoChoices.add(new Card(YES));
+        yesNoChoices.add(new Card(NO));
+
+        validPlantingLocations = new Tableau(new Card(VALID_PLANTING));
 
         FlatDarkLaf.setup(); //initialize gui theme
         m_gui = new ViewController(this);
@@ -204,7 +216,7 @@ public class Controller {
     public String getActionChoice()
     {
 
-        ArrayList<Card> tmpHand = new ArrayList<Card>();
+        ArrayList<Card> tmpHand;
         tmpHand = (ArrayList<Card>) m_game.getActivePlayer().getHand().clone();
         m_game.getActivePlayer().getHand().clear();
         m_game.getActivePlayer().getHand().addAll(actionChoices);
@@ -230,7 +242,7 @@ public class Controller {
 
         for (PromptCards output : promptOut ) {
             if (output.isCardButton()){
-                action = processPromptCard(promptOut.get(promptOut.indexOf(output))).getM_name();
+                action = processPromptCard(promptOut.get(promptOut.indexOf(output))).getName();
             }
         }
         m_game.getActivePlayer().getHand().clear();
@@ -240,8 +252,8 @@ public class Controller {
 
         String output = "You have selected " + action;
         if (action.equals(PLANTING)) {
-            output += "\nYou will select up to two cards to plant\ninto your island " +
-                    "board.\nThen you will draw four cards and\nkeep one, discarding the rest";
+            output += "\nYou may select up to two cards to plant into your island " +
+                    "board. Then you will draw four cards and keep one, discarding the rest";
         }
         else if (action.equals(WATERING)) {
             output += "--IN DEVELOPMENT--";
@@ -311,22 +323,100 @@ public class Controller {
             }
         }
 
-        m_gui.prompt().reset();
         prompts.clear();
         m_gui.promptDeactivate();
+        m_gui.prompt().reset();
 
         return toDiscard;
 
     }
-    public Card getPlantChoice()
-    {
-        Card someCard;
+    public CardPair getPlantChoice() {
+        CardPair someCardAndLocation;
 
+        // Selection of one card from hand and one representative card
+        // form the tableau
+        // m_gui.hardRefresh();
 
-        someCard = new Card("");
+        m_gui.setStatus("Please select a card from the hand to plant and a space " +
+                "on the board to plant in.");
+        m_gui.prompt().setLeftPanelButton(true);
+        m_gui.prompt().setLeftPanelButtonText("Submit");
+        m_gui.prompt().setCheckboxText("Select");
 
+        prompts.clear();
+        promptOut.clear();
+        for ( int u = 0; u < m_game.getActivePlayer().getHand().size(); u++) {
+            prompts.add( new PromptCards(u, true, false));
+        }
+        m_game.getActivePlayer().getPlayerTableau().makeValidPlantLocations();
+        for (int x = 0; x < 4; x++) {
+            for (int y = 0; y < 4; y++) {
+                if (m_game.getActivePlayer().getPlayerTableau().getCard(x,y).getName().equals(VALID_PLANTING)) {
+                    prompts.add(new PromptCards(x,y,true, false));
+                }
+            }
+        }
 
-        return someCard;
+        redraw();
+
+        boolean handFlag;
+        boolean boardFlag;
+        int numSelectedCards;
+        while(true){
+            numSelectedCards = 0;
+            handFlag = false;
+            boardFlag = false;
+            m_gui.promptDeactivate();
+            m_gui.prompt().addPromptCardList(prompts);
+            m_gui.promptActivate();
+
+            setWait(1);
+            startWaiting();
+
+            promptOut = m_gui.prompt().getSelections();
+
+            for (int i = 0; i < promptOut.size(); i++){
+                if(promptOut.get(i).isCheckBox()){
+                    numSelectedCards = numSelectedCards + 1;
+                }
+                if (promptOut.get(i).getCardY() == -1 && promptOut.get(i).isCheckBox()) {
+                    handFlag = !handFlag;
+                }
+                if (promptOut.get(i).getCardY() > -1 && promptOut.get(i).isCheckBox()) {
+                    boardFlag = !boardFlag;
+                }
+            }
+            if (numSelectedCards == 2 && handFlag && boardFlag){
+                break;
+            }
+            else {
+                m_gui.setStatus("Invalid selection, try again!" + "Failed with: number of cards: "
+                        + numSelectedCards + "\nHand flag: " + handFlag + "\nBoard Flag: " + boardFlag);
+                promptOut.clear();
+
+            }
+        }
+        PromptCards first = promptOut.get(0);
+        PromptCards last = promptOut.get(0);
+        for (PromptCards search : promptOut) {
+            if (search.isCheckBox() && search.getCardY() == -1 ) {
+                first = search;
+            }
+            if (search.isCheckBox() && search.getCardY() > -1) {
+                last = search;
+            }
+        }
+
+        someCardAndLocation = new CardPair(last.getCardX(), last.getCardY(), processPromptCard(first));
+
+        m_gui.promptDeactivate();
+        m_gui.prompt().reset();
+        promptOut.clear();
+        prompts.clear();
+        // someCardAndLocation.first = ;
+        redraw();
+
+        return someCardAndLocation;
 
 
     }
@@ -352,10 +442,9 @@ public class Controller {
         Card islandToPlace;
         // This is the ideal production use case for this function, being handed a card object that
         // the user selected from the hand based in the UI.
-        getGui().setStatus("Welcome, to the Earth Game!\n" +
-                "You have been dealt your Island and Climate card.\n" +
-                "Please select your Island Card to insert into the game board.");
-        getGui().prompt().setCardButtonText("Place in Island");
+
+        getGui().setStatus("Now, please select your Island Card \nto insert into the game board.");
+        getGui().prompt().setCardButtonText("Place Island in board.");
 
 
         getPrompts().add(new PromptCards(0,false,true));
@@ -388,8 +477,10 @@ public class Controller {
         Card climateToPlace;
         // This is the ideal production use case for this function, being handed a card object that
         // the user selected from the hand based in the UI.
-        getGui().setStatus("Now, please select your Climate Card \nto insert into the game board.");
-        getGui().prompt().setCardButtonText("Place Climate in board.");
+        getGui().setStatus("Welcome, to the Earth Game!\n" +
+                "You have been dealt your Island and Climate card.\n" +
+                "Please select your Climate Card to insert into the game board.");
+        getGui().prompt().setCardButtonText("Place in Climate");
 
         int search = 1;
         for (Card card : getGame().getActivePlayer().getHand() ) {
@@ -457,5 +548,46 @@ public class Controller {
 
     public void redraw() {
         m_gui.drawGameHome();
+
+
+    }
+
+    // @return true for yes
+    public boolean promptYesNo(String question) {
+        boolean result = false;
+
+        ArrayList<Card> handStore;
+        handStore = (ArrayList<Card>) m_game.getActivePlayer().getHand().clone();
+
+        m_game.getActivePlayer().getHand().clear();
+        m_game.getActivePlayer().getHand().addAll(yesNoChoices);
+        redraw();
+
+        prompts.clear();
+        promptOut.clear();
+        m_gui.setStatus(question);
+        m_gui.prompt().setCardButtonText("Confirm");
+        prompts.add(new PromptCards(0, false, true));
+        prompts.add(new PromptCards(1, false, true));
+        m_gui.prompt().addPromptCardList(prompts);
+
+        m_gui.promptActivate();
+
+        setWait(1);
+        startWaiting();
+
+        promptOut = m_gui.prompt().getSelections();
+        m_gui.promptDeactivate();
+        m_gui.prompt().reset();
+
+        if (promptOut.get(0).isCardButton()) {
+            result = true;
+        }
+
+        m_game.getActivePlayer().getHand().clear();
+        m_game.getActivePlayer().getHand().addAll(handStore);
+        handStore.clear();
+        redraw();
+        return result;
     }
 }

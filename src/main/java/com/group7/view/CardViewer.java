@@ -88,7 +88,7 @@ public class CardViewer {
 
 
     public boolean isEmpty(){
-         if ((displayCard == null) || (displayCard.getM_name() == Card.NULL_CARD)){
+         if ((displayCard == null) || (displayCard.getName() == Card.NULL_CARD)){
              return true;
          }
          else{
@@ -115,7 +115,7 @@ public class CardViewer {
             setEmptySpace();
         }
         else{
-            lblCardTitle.setText(displayCard.getM_name());
+            lblCardTitle.setText(displayCard.getName());
             taCardAbility.setText(displayCard.getM_text());
 
             //debug

@@ -7,8 +7,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import com.group7.view.sfx.sfxController;
-
 public class CardTabs {
 
     int cardIndex;
@@ -30,7 +28,7 @@ public class CardTabs {
         //curCard = thisView.getViewCardsInHand().get(cardIndex);
         curCard = thisView.getViewCards().getViewCardInHand(inCardIndex);
 
-        btnCardTab.setText(curCard.getM_name());
+        btnCardTab.setText(curCard.getName());
 
         if(thisView.getViewCards().getHandCheckboxState(cardIndex)) {
             pbCardColor.setBackground(Color.lightGray);
@@ -60,7 +58,7 @@ public class CardTabs {
         curCard = thisView.getViewCards().getViewCardIslCli(cardIndex);
 
         if(curCard != null) {
-            btnCardTab.setText(curCard.getM_name());
+            btnCardTab.setText(curCard.getName());
         }else {
             btnCardTab.setText("N/A");
         }

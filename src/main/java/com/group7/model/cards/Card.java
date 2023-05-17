@@ -1,7 +1,6 @@
 package com.group7.model.cards;
 
 import java.util.ArrayList;
-import java.util.Stack;
 
 public class Card {
     public final static String NULL_CARD = "NULL_CARD";
@@ -50,7 +49,7 @@ public class Card {
     /**
      * @return the m_name
      */
-    public String getM_name() {
+    public String getName() {
         return m_name;
     }
     /**
